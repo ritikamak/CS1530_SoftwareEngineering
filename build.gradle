@@ -1,6 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
-mainClassName = "Helloworld"
+mainClassName = "Helloworld" //obviously, this will change in later sprints.
 repositories {
 	mavenCentral()
 }
