@@ -1,6 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
-mainClassName = "Helloworld" //obviously, this will change in later sprints.
+mainClassName = "Chess" 
 repositories {
 	mavenCentral()
 }
@@ -12,5 +12,8 @@ run {
  /* This is slightly different than Laboon's example, I added an if-statement to allow for instances of no command line arguments */
  if(System.getProperty("args") != null){
 	args System.getProperty("args").split()
+ }
+ else{
+	standardInput = System.in //added for running testDriver.java
  }
 }
