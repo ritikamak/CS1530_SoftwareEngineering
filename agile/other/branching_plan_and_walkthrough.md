@@ -6,7 +6,7 @@ This is a small branching and integration plan and walkthrough. If you are unfam
 	* We want to keep the work done in branches relatively small, so that we can more quickly merge it with the master branch. In doing so, we minimize the amount of merge conflicts to be resolved. 	
 	* Moreover, this allows for other team members to develop their own features alongside the most recent changes to the master branch. 
 	* Early on, some branches might be rather large as our architecture gets put in place. Thats ok!
-	![Creating a branch locally](branch_guide_screenshots/image2.jpg "Creating a branch locally")
+	![Creating a branch locally](agile/other/branch_guide_screenshots/image2.jpg "Creating a branch locally")
 3. Using the command ```git branch``` will show which branch you are currently working on. You can use the command ```git checkout [name_of_branch]``` to switch between branches. 
 	* When working on a branch, you use ```git add .``` and ```git commit``` as you would normally. The only difference comes when you want to push the changes to remote repository.
 	![Checking your current branch](branch_guide_screenshots/image4.jpg "checking your current branch")
