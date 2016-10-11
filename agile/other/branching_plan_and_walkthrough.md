@@ -1,5 +1,5 @@
 # Branching Plan and Walkthrough!
-This is a small branching and integration plan and walkthrough. If you are unfamiliar with using github branches, this guide proved to be helpful: https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches
+This is a small branching and integration plan and walkthrough. If you are unfamiliar with using github branches, as I was, this guide proved to be helpful: https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches. I've condensed the relevant stuff below:
 
 1. Navigate to your local repository folder from the command line ```cd  path/to/folder/CS1530groupproject```
 2. After selecting an appropriately sized feature/user-story, create a branch for that feature from the command line with ```git checkout -b [name_of_your_new_branch]```
