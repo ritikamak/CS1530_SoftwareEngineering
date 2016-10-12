@@ -10,7 +10,47 @@ public class ChessGUI extends javax.swing.JFrame {
     public ChessGUI() {
         initComponents();
     }
-
+	
+	/**
+	* Displays GUI depending on show parameter (true = show, false = hide). returns boolean on success
+	*/
+	public boolean display(boolean show){
+		/* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                this.setVisible(true);
+            }
+        });
+		*/
+		try{
+			this.setVisible(show);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
+	/**
+	* Displays GUI, returns false on exception
+	*/
+	public boolean display(){
+		/* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                this.setVisible(true);
+            }
+        });
+		*/
+		try{
+			this.setVisible(true);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
