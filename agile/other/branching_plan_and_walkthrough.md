@@ -23,7 +23,7 @@ This is a small branching and integration plan and walkthrough. If you are unfam
 	* To approve a merge, just make sure the branch does not break anything and works as intended. Remember, Agile wants working software all the time.
 	* If something is discovered to be broken later--don't sweat it-- make another branch, fix the problem, make another pull request.	
 10. Thats it! Once someone someone approves the merge, your branch has been integrated with the master branch! The End!
-11. ...or is it? Once your branch has been merged with the master branch it is time to prune (read: delete) it. To do this, return to the branches page of the repo, making sure that there is a purple "merged" status next to your branch name, and click the delete can image on the right-hand side.
+11. ...or is it? Once your branch has been merged with the master branch it is time to prune (read: delete) it. To do this, return to the branches page of the repo, making sure that there is a purple "merged" status next to your branch name, and click the delete-can image on the right-hand side.
 	* Why delete it? Well, the master branch now has the functionality you've added, and to add more you will probably make a new branch anyway. Keeping old branches around is just clutter.
 	* So if you know you aren't going to be using the branch ever again: please delete it to keep the repo clean. From here on out, _everybody is responsible for deleting __only their own branches_.__
 	* You definitely don't have to delete every branch you create if you don't want to. You may want to keep certain branches around maybe to continue development later or some other reason. Thats totally cool. 
