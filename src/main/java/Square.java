@@ -1,5 +1,5 @@
 import java.util.*;
-/* Each Square object represents a square on the chessboard grid. A Square may contain a Piece object */ 
+/* Each Square object represents a square on the chessboard grid. A Square may contain a Piece object */
 public class Square
 {
 	/* CONSTANTS */
@@ -23,66 +23,74 @@ public class Square
 	public static final int SIX = 5;
 	public static final int SEVEN = 6;
 	public static final int EIGHT = 7;
-	
+
 	/* VARIABLES */
-	int file;
-	int rank;
+	int file; //column, horizontal (a-h)
+	int rank; //row, vertical (1-8)
 	boolean occupied;
 	Piece piece;
-	
+
 	/* CONSTRUCTORS */
-	public Square(int f, int r)
+	public Square(int f, int r) //file rank 
 	{
 		file = f;
 		rank = r;
 		occupied = false;
 	}
-	
+
 	/* METHODS */
 	public void placePiece(Piece p)
 	{
 		piece = p;
 		occupied = true;
 	}
-	
-	public Piece removePiece() 
+
+	public Piece removePiece()
 	{
 		occupied = false;
 		return piece;
 	}
-	
+
 	//Getters
 	public int getFile()
 	{
 		return file;
 	}
-	
+
 	public int getRank()
 	{
 		return rank;
 	}
-	
+
 	public boolean isOccupied()
 	{
 		return occupied;
 	}
-	
+
 	public Piece getPiece()
 	{
 		return piece;
 	}
-	
+
 	//Setters
 	public void setOccupied(boolean o)
 	{
 		occupied = o;
 	}
-	
+
 	public void setPiece(Piece p)
 	{
 		piece = p;
 	}
-	
+	//equals
+	public boolean equals (Square s){
+		if (s.getFile() == file && s.getRank() == rank){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	//toString
 	public String toString()
 	{
