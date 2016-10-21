@@ -23,12 +23,13 @@ public class Board
 	public static final int SIX = 5;
 	public static final int SEVEN = 6;
 	public static final int EIGHT = 7;
-	
+
 	/* VARIABLES */
-	Square[][] board; /* A board is a 8x8 grid of squares. The grid is traditionally labeled by columns called file (a-h) 
-		and rows called rank (1-8). Square 'a1' is the bottom left corner of the board, and is board[A][ONE] 
+	Square[][] board;
+	/* A board is a 8x8 grid of squares. The grid is traditionally labeled by columns called file (a-h)
+		and rows called rank (1-8). Square 'a1' is the bottom left corner of the board, and is board[A][ONE]
 		in our array representation of it. */
-		
+
 	/* CONSTRUCTORS */
 	public Board()
 	{
@@ -39,17 +40,22 @@ public class Board
 			}
 		}
 	}
-	
+
 	/* METHODS */
 	public Square getSquareAt(int file, int rank)
 	{
 		if(file < 0 || file > 7 || rank < 0 || rank > 7){
 			return null; //I don't love returning null values in Java, hopefully in the future we will have some custom exceptions in place
 		}
-		
+
 		else{
 			return board[file][rank];
 		}
 	}
-	
+	public void setSquare(Square s){
+		int file = s.getFile();
+		int rank = s.getRank();
+		board[file][rank] = s;
+	}
+
 }
