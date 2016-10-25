@@ -62,12 +62,22 @@ public class Game
 			wpcs = player2.getPieces();
 			bpcs = player1.getPieces();
 		}
+		/**
+		two for loops
+		Using the circular relationship between to place and Square
+		set each square on the board the piece's square
+		*/
 		for(Piece s: wpcs){
-			board.setSquare(s.getPosition());
+			Square position = s.getPosition();
+			position.placePiece(s);
+			board.setSquare(position);
 		}
 		for(Piece s: bpcs){
-			board.setSquare(s.getPosition());
+			Square position = s.getPosition();
+			position.placePiece(s);
+			board.setSquare(position);
 		}
+
 		/* NOT SURE IF THIS IS NEEDED
 		//in test setup, we are just setting 16 generic pieces at the two ends of the board
 		if(mode.equals("test")){
