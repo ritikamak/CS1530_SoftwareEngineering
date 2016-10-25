@@ -30,10 +30,20 @@ public class Queen extends Piece
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
-		if(d_file == p_file){
+		int slope = (d_rank/p_rank)/(d_file/p_file);
+		if(d_file > 7 || d_rank > 7){
+			return false;
+		}
+		if(d_file < 0 || d_rank < 0){
+			return false;
+		}
+		if(slope == 1 || slope == -1){
 			return true;
 		}
-		if(d_rank == p_rank){
+		else if(d_file == p_file){
+			return true;
+		}
+		else if(d_rank == p_rank){
 			return true;
 		}
 		return false;

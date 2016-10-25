@@ -31,7 +31,7 @@ public class Square
 	Piece piece;
 
 	/* CONSTRUCTORS */
-	public Square(int f, int r) //file rank 
+	public Square(int f, int r) //file rank
 	{
 		file = f;
 		rank = r;

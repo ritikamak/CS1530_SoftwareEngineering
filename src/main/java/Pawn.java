@@ -31,26 +31,52 @@ public class Pawn extends Piece
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
 		//movement
-		//any row
-		if(d_file == p_file++ && d_rank == p_rank++){
-			return true;
+		if(d_file > 7 || d_rank > 7){
+			return false;
 		}
-		//first fow
-
+		if(d_file < 0 || d_rank < 0){
+			return false;
+		}
 		if(color == WHITE){
+			//movment for first row
 			if(d_rank == 4 && p_rank == 2){
 				return true;
 			}
+			//any row
+			if(d_file == p_file && d_rank == p_rank++){
+				return true;
+			}
+			//capture
+			if(destination.isOccupied()){
+				if(d_file == p_file+1 && d_rank == p_rank++){
+					return true;
+				}
+				if(d_file == p_file-1 && d_rank == p_rank++){
+					return true;
+				}
+			}
+			//TODO: EN PASSENT
 		}
 		else if (color == BLACK){
+			//movment for first row
 			if(d_rank == 5 && p_rank == 7){
 				return true;
 			}
+			//any row
+			if(d_file == p_file && d_rank == p_rank--){
+				return true;
+			}
+			if(destination.isOccupied()){
+				if(d_file == p_file+1 && d_rank == p_rank--){
+					return true;
+				}
+				if(d_file == p_file-1 && d_rank == p_rank--){
+					return true;
+				}
+			}
+			//TODO: EN PASSENT
 		}
-		//promotion
-		//capture
-
-		//en passent
+		//TODO PROMOTION
 		return false;
 	}
 
