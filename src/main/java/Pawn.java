@@ -40,18 +40,23 @@ public class Pawn extends Piece
 		if(color == WHITE){
 			//movment for first row
 			if(d_rank == 4 && p_rank == 2){
+				position = destination;
 				return true;
 			}
 			//any row
 			if(d_file == p_file && d_rank == p_rank++){
+				position = destination;
 				return true;
 			}
 			//capture
+			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
 			if(destination.isOccupied()){
 				if(d_file == p_file+1 && d_rank == p_rank++){
+					position = destination;
 					return true;
 				}
 				if(d_file == p_file-1 && d_rank == p_rank++){
+					position = destination;
 					return true;
 				}
 			}
@@ -60,17 +65,23 @@ public class Pawn extends Piece
 		else if (color == BLACK){
 			//movment for first row
 			if(d_rank == 5 && p_rank == 7){
+				position = destination;
 				return true;
 			}
 			//any row
 			if(d_file == p_file && d_rank == p_rank--){
+				position = destination;
 				return true;
 			}
+			//capture
+			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
 			if(destination.isOccupied()){
 				if(d_file == p_file+1 && d_rank == p_rank--){
+					position = destination;
 					return true;
 				}
 				if(d_file == p_file-1 && d_rank == p_rank--){
+					position = destination;
 					return true;
 				}
 			}

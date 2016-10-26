@@ -37,27 +37,35 @@ public class Knight extends Piece
 			return false;
 		}
 		if(d_file == (p_file-1) && d_rank == (p_rank+2)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+1) && d_rank == (p_rank+2)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+2) && d_rank == (p_rank+1)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+2) && d_rank == (p_rank-1)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+1) && d_rank == (p_rank-2)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-1) && d_rank == (p_rank-2)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-2) && d_rank == (p_rank-1)){
+			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-2) && d_rank == (p_rank+1)){
+			position = destination;
 			return true;
 		}
 		return false;

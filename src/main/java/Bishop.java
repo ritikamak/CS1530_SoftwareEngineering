@@ -38,6 +38,7 @@ public class Bishop extends Piece
 			return false;
 		}
 		if(slope == 1 || slope == -1){
+			position = destination;
 			return true;
 		}
 		return false;

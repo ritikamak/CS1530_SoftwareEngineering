@@ -38,9 +38,11 @@ public class Rook extends Piece
 		}
 
 		if(d_file == p_file){
+			position = destination;
 			return true;
 		}
 		else if(d_rank == p_rank){
+			position = destination;
 			return true;
 		}
 		return false;
