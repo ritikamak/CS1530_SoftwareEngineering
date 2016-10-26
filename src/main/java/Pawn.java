@@ -25,21 +25,24 @@ public class Pawn extends Piece
 	}
 
 	/* METHODS */
+	/**
+	@param Square destiation is the location the piece will move to
+	@return returns true is the move is valid, false if otherwise
+	*/
 	public boolean movePiece(Square destination){
 		int p_file = position.getFile();
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
 		//USE ONLY FOR TESTING
-		// System.out.println("original file: " + p_file + " original rank: " + p_rank);
-		// System.out.println("desination file: " + d_file + " desination rank: " + d_rank);
-		//movement
+		//check if in bounds
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
 		else if(d_file < 0 || d_rank < 0){
 			return false;
 		}
+		//check three cases for white: single move, double move, capture
 		else if(color == WHITE){
 			//movment for first row
 			if(d_rank == 4 && p_rank == 2){
@@ -54,17 +57,25 @@ public class Pawn extends Piece
 			//capture
 			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
 			else if(destination.isOccupied()){
-				if(d_file == p_file+1 && d_rank == p_rank+1){
-					position = destination;
-					return true;
+				Piece p = destination.getPiece();
+				if(p.getColor() != color){
+					if(d_file == p_file+1 && d_rank == p_rank+1){
+						position = destination;
+						return true;
+					}
+					else if(d_file == p_file-1 && d_rank == p_rank+1){
+						position = destination;
+						return true;
+					}
 				}
-				else if(d_file == p_file-1 && d_rank == p_rank+1){
-					position = destination;
-					return true;
+				//return false if capture piece is of the same color
+				else{
+					return false;
 				}
 			}
 			//TODO: EN PASSENT
 		}
+		//check three cases for white: single move, double move, capture
 		else if (color == BLACK){
 			//movment for first row
 			if(d_rank == 5 && p_rank == 7){
@@ -79,13 +90,20 @@ public class Pawn extends Piece
 			//capture
 			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
 			else if(destination.isOccupied()){
-				if(d_file == p_file+1 && d_rank == p_rank-1){
-					position = destination;
-					return true;
+				Piece p = destination.getPiece();
+				if(p.getColor() != color){
+					if(d_file == p_file+1 && d_rank == p_rank-1){
+						position = destination;
+						return true;
+					}
+					else if(d_file == p_file-1 && d_rank == p_rank-1){
+						position = destination;
+						return true;
+					}
 				}
-				else if(d_file == p_file-1 && d_rank == p_rank-1){
-					position = destination;
-					return true;
+				//return false if capture piece is of the same color
+				else{
+					return false;
 				}
 			}
 			//TODO: EN PASSENT
@@ -137,6 +155,10 @@ public class Pawn extends Piece
 		str = c + " " + name;
 		return str;
 	}
+	/**
+	This main method should never be called under normal cases
+	Main exists soley for testing purposes
+	*/
 	public static void main(String[] args){
 		//check out of bounds
 		Piece k = new Pawn(true, new Square(3,2));
