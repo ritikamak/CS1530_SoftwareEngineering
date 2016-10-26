@@ -76,6 +76,13 @@ public class BishopTest{
           Square test_square = new Square(4,7);
           assertTrue(test.movePiece(test_square));
      }
-
-
+     /**
+     test bad move
+     */
+     @Test
+     public void testBishopBadMove_1(){
+          Piece test = new Bishop (false, new Square(3,3));
+          Square test_square = new Square(0,3);
+          assertFalse(test.movePiece(test_square));
+     }
 }

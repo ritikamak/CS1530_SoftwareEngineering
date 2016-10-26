@@ -76,5 +76,14 @@ public class RookTest{
           Square test_square = new Square(0,3);
           assertTrue(test.movePiece(test_square));
      }
+     /**
+     test bad move
+     */
+     @Test
+     public void testRookBadMove_1(){
+          Piece test = new Rook (false, new Square(3,3));
+          Square test_square = new Square(4,4);
+          assertFalse(test.movePiece(test_square));
+     }
 
 }
