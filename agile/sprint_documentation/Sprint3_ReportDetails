@@ -1,0 +1,200 @@
+COVER PAGE
+______________________________________________________________________
+
+
+CHESS APPLICATION
+
+Charlie Mietzner -- clm133
+Ritika Maknoor -- ritikamak
+Peter Stamos (Scrum Master) -- petestamos
+Rohan Patel --patelrohanv
+
+27 October 2016
+
+CS 1530 – SPRINT 3 DELIVERABLE
+
+
+
+
+
+DESCRIPTION OF SPRINT
+______________________________________________________________________
+
+
+---not completed yet
+
+
+
+
+
+LISTING OF COMPLETED USER STORIES & STORY POINTS
+______________________________________________________________________
+
+
+-	As a player
+  I want to play against a computer
+  So that I can simulate playing against a person.
+	STORY POINTS: 2
+-	As a player
+  I want the game to run on the JVM
+  So that it can be portable.
+	STORY POINTS: 1
+-	As a player
+  I want the application to run on a 512mb machine
+  So that it can run on a variety of systems.
+	STORY POINTS: 1
+-	As a player
+  I want a chess game that follows FIDE regulations for Standard American Chess
+  So that I have an accurate chess simulator that abides by national tournament standards.
+	STORY POINTS: 4
+-	As a player
+  I want the pieces for each player to be set-up in their correct position/squares on the board at the start of a game
+  So that the game follows standard chess rules.
+	STORY POINTS: 4
+-	As a player
+  I want the board to be organized so that no 2 pieces can ever occupy the same square
+  So that the game follows standard chess rules.
+	STORY POINTS: 4 (not completed)
+-	As a player
+  I want special movements to be legal- such as “en passant”, “promotion”, and “castling” 
+  So that the game follows standard chess rules.
+	STORY POINTS: 8 (not completed)
+-	As a player
+  I want pieces to not make illegal moves
+  So that neither player can cheat.
+	STORY POINTS: 16
+-	As a player
+  I want the game to prevent any pieces from moving outside of their range/path 
+  So that the game follows standard chess rules.
+	STORY POINTS: 16
+-	As a player
+  I want synchronized steps for movement for all pieces 
+  So that the game is smooth and no pieces require special clicks and such.
+	STORY POINTS: 8
+TOTAL VELOCIY = 52
+
+
+
+
+
+LINK TO CODE ON GITHUB
+______________________________________________________________________
+
+
+On GitHub: https://github.com/clm133/CS1530groupproject
+
+
+
+
+
+DETAILS OF WHY USER STORIES WERE CHOSEN
+______________________________________________________________________
+
+
+---not completed yet
+
+
+
+
+
+LISTING OF DEFECTS
+______________________________________________________________________
+
+
+SUMMARY: 
+The bishop class currently cannot check if its movement path is impeded. 
+DESCRIPTION:
+When observing the bishop class’ implementation of movement, does not check if there is a piece that impedes the path between the current position and destination.
+REPRODUCTION STEPS:
+1. Refer to source code for the Bishop class.
+2. Inspect the implementation for movePiece method.
+EXPECTED BEHAVIOR:
+The method should return false if the path is impeded.
+OBSERVED BEHAVIOR:
+The method returns true if the destination is valid according to a bishop’s legal moves, not if it is valid in accordance to the board.
+NOTES:
+This sprint we focused on implementing movement for all pieces and setting up a relationship between all piece classes; we agreed to focus on the movement in regard to game mechanics in the next sprint. Will address this defect further then.
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The rook class currently cannot check if its movement path is impeded. 
+DESCRIPTION:
+When observing the rook class’ implementation of movement, does not check if there is a piece that impedes the path between the current position and destination.
+REPRODUCTION STEPS:
+1. Refer to source code for the Rook class.
+2. Inspect the implementation for movePiece method.
+EXPECTED BEHAVIOR:
+The method should return false if the path is impeded.
+OBSERVED BEHAVIOR:
+The method returns true if the destination is valid according to a rook’s legal moves, not if it is valid in accordance to the board.
+NOTES:
+This sprint focused on implementing movement for all pieces and setting up a relationship between all piece classes; we agreed to focus on the movement in regard to game mechanics in the next sprint. Will address this defect further then.
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The queen class currently cannot check if its movement path is impeded. 
+DESCRIPTION:
+When observing the queen class’ implementation of movement, does not check if there is a piece that impedes the path between the current position and destination.
+REPRODUCTION STEPS:
+1. Refer to source code for the Queen class.
+2. Inspect the implementation for movePiece method.
+EXPECTED BEHAVIOR:
+The method should return false if the path is impeded.
+OBSERVED BEHAVIOR:
+The method returns true if the destination is valid according to a queen legal moves, not if it is valid in accordance to the board.
+NOTES:
+This sprint focused on implementing movement for all pieces and setting up a relationship between all piece classes; we agreed to focus on the movement in regard to game mechanics in the next sprint. Will address this defect further then. 
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The pawn class currently cannot check if its movement path is impeded. 
+DESCRIPTION:
+The pawn has an implementation of capture that incorporates capturing pieces in occupied squares. However, it does not check if the square it is moving to vertically is currently occupied or not.
+REPRODUCTION STEPS:
+1. Refer to source code for the Pawn class.
+2. Inspect the implementation for movePiece method.
+EXPECTED BEHAVIOR:
+The method should return false if the path is impeded.
+OBSERVED BEHAVIOR:
+The method returns true if the destination is valid according to a pawn legal moves. It should return false if the move is illegal or square is occupied (unless it is a capture).
+NOTES:
+This sprint focused on implementing movement for all pieces and setting up a relationship between all piece classes; we agreed to focus on the movement in regard to game mechanics in the next sprint. Will address this defect further then. 
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The pawn class currently cannot check if its captured piece is an enemy.
+DESCRIPTION:
+The pawn has an implementation of capture that incorporates capturing pieces. However, it does not check if the square it is moving to is currently occupied by a piece of the opposite player’s color. 
+REPRODUCTION STEPS:
+1. Refer to source code for the Pawn class.
+2. Inspect the implementation for movePiece method.
+EXPECTED BEHAVIOR:
+The method should return false if the piece to be captured is of the same color.
+OBSERVED BEHAVIOR:
+The method returns true if the piece being captured is either of the opposing color or of the same color. Returns true for both cases.
+NOTES:
+This defect was corrected by making changes the Piece class’ implementation of movement- where it checks the piece in the square it wants to capture. Checks the color of the piece in currently occupying the square. If the piece is of the same color, it will now return false; else, it will return true.
+
+
+
+
+
+DETAILS OF ARCHITECTURAL DECISIONS
+______________________________________________________________________
+
+
+
+---not completed yet
+
+-	Board is split up into an 8x8 grid of squares. Each square can contain a piece. It keeps track of its location- where the square is in relation to the board. For pieces- they are split up into an abstract superclass for the piece. This was because when we want to move a piece, there is a uniform move method. So instead of having each piece such as each pawn have its own movement and such, we have it all abstracted away so it’s all uniform. Otherwise, would have to click a piece, then find what kind of piece it is, and then move it according to that. While here we can just say piece p = new …etc. and then can just do the movement like that because all of them have the same methods. This also comes in use later on once we implement pawn promotion because then we can just re-reference it as a different piece- when it reaches end of the board and it can turn into anything it wants- anything but a king, typically a queen. 
+-	Then, we also worked on the algs for the movement such that each individual piece has to validate what piece its calling to to make sure it’s a valid move. This sets it up for future captures so that when we want to move to a square that’s occupied, then you can just delete the old/captured piece from there. 
+-	We grouped it into 2 subsystems- piece and board. We want to implement a 3rd system that handles the actual user input- ex. controller. We technically also have a subsystem for the GUI which only represents the backend- the current state of the board so what it has. Its basically a visual representation of the board class. 
+-	in the future, we can look into implementing capturing/castling/special cases as a subset of either the game class/controlled or the backend pieces. 
