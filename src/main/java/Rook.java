@@ -33,14 +33,15 @@ public class Rook extends Piece
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
-		if(d_file < 0 || d_rank < 0){
+		else if(d_file < 0 || d_rank < 0){
 			return false;
 		}
-
-		if(d_file == p_file){
+		else if(d_file == p_file){
+			position = destination;
 			return true;
 		}
 		else if(d_rank == p_rank){
+			position = destination;
 			return true;
 		}
 		return false;
