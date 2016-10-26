@@ -68,8 +68,48 @@ public class PawnTest{
 	public void testPawnMove_5(){
 		Piece test = new Pawn (false, new Square(3,2));
 		Square test_square = new Square(2,3);
-		test_square.placePiece(new Pawn(false, new Square(2,3)));
+		test_square.placePiece(new Pawn(true, new Square(2,3)));
 		assertTrue(test.movePiece(test_square));
+	}
+	/**
+	Test white pawn capture own piece
+	*/
+	@Test
+	public void testPawnIllegalCapture_1(){
+		Piece test = new Pawn (false, new Square(3,2));
+		Square test_square = new Square(2,3);
+		test_square.placePiece(new Pawn(false, new Square(2,3)));
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test white pawn making illegal move
+	Move too far vertically
+	*/
+	@Test
+	public void testPawnBadMove_1(){
+		Piece test = new Pawn (false, new Square(3,2));
+		Square test_square = new Square(3,5);
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test white pawn making illegal move
+	Move horizontally
+	*/
+	@Test
+	public void testPawnBadMove_2(){
+		Piece test = new Pawn (false, new Square(3,2));
+		Square test_square = new Square(5,2);
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test white pawn making illegal move
+	Move backwards
+	*/
+	@Test
+	public void testPawnBadMove_3(){
+		Piece test = new Pawn (false, new Square(3,2));
+		Square test_square = new Square(3,1);
+		assertFalse(test.movePiece(test_square));
 	}
 	/**
 	Test black pawn movment one square
@@ -99,5 +139,46 @@ public class PawnTest{
 		test_square.placePiece(new Pawn(false, new Square(5,4)));
 		assertTrue(test.movePiece(test_square));
 	}
+	/**
+	Test black pawn capture own piece
+	*/
+	@Test
+	public void testPawnIllegalCapture_2(){
+		Piece test = new Pawn (true, new Square(6,5));
+		Square test_square = new Square(5,4);
+		test_square.placePiece(new Pawn(true, new Square(5,4)));
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test black pawn making illegal move
+	Move too far vertically
+	*/
+	@Test
+	public void testPawnBadMove_4(){
+		Piece test = new Pawn (true, new Square(4,5));
+		Square test_square = new Square(4,2);
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test black pawn making illegal move
+	Move horizontally
+	*/
+	@Test
+	public void testPawnBadMove_5(){
+		Piece test = new Pawn (true, new Square(4,5));
+		Square test_square = new Square(3,5);
+		assertFalse(test.movePiece(test_square));
+	}
+	/**
+	Test black pawn making illegal move
+	Move backwards
+	*/
+	@Test
+	public void testPawnBadMove_6(){
+		Piece test = new Pawn (true, new Square(4,5));
+		Square test_square = new Square(4,6);
+		assertFalse(test.movePiece(test_square));
+	}
+
 
 }

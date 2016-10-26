@@ -111,5 +111,14 @@ public class KingTest{
           Square test_square = new Square(5,5);
           assertTrue(test.movePiece(test_square));
      }
+     /**
+     Test bad move
+     */
+     @Test
+     public void testKingBedMove_1(){
+          Piece test = new King (false, new Square(6,4));
+          Square test_square = new Square(7,2);
+          assertFalse(test.movePiece(test_square));
+     }
 
 }

@@ -111,5 +111,14 @@ public class KnightTest{
           Square test_square = new Square(2,4);
           assertTrue(test.movePiece(test_square));
      }
+     /**
+     test bad move
+     */
+     @Test
+     public void testKnightBadMove_1(){
+          Piece test = new Knight (false, new Square(3,3));
+          Square test_square = new Square(3,4);
+          assertFalse(test.movePiece(test_square));
+     }
 
 }

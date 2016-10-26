@@ -25,20 +25,24 @@ public class King extends Piece
 	}
 
 	/* METHODS */
+	/**
+	@param Square destiation is the location the piece will move to
+	@return returns true is the move is valid, false if otherwise
+	*/
 	public boolean movePiece(Square destination){
 		int p_file = position.getFile();
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
 		//USE FOR TESTING ONLY
-		// System.out.println("original file: " + p_file + " original rank: " + p_rank);
-		// System.out.println("desination file: " + d_file + " desination rank: " + d_rank);
+		//check bounds
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
 		else if(d_file < 0 || d_rank < 0){
 			return false;
 		}
+		//check all eight valid moves
 		else if(d_file == (p_file+1) && d_rank == (p_rank+1)){
 			position = destination;
 			return true;
@@ -117,7 +121,10 @@ public class King extends Piece
 		str = c + " " + name;
 		return str;
 	}
-
+	/**
+	This main method should never be called under normal cases
+	Main exists soley for testing purposes
+	*/
 	public static void main(String[] args){
 		//TESTING BLACK
 		System.out.println("TESTING BLACK KING MOVEMENT");
