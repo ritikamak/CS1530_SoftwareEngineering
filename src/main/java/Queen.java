@@ -30,16 +30,11 @@ public class Queen extends Piece
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
-		int slope = (d_rank/p_rank)/(d_file/p_file);
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
-		if(d_file < 0 || d_rank < 0){
+		else if(d_file < 0 || d_rank < 0){
 			return false;
-		}
-		if(slope == 1 || slope == -1){
-			position = destination;
-			return true;
 		}
 		else if(d_file == p_file){
 			position = destination;
@@ -48,6 +43,13 @@ public class Queen extends Piece
 		else if(d_rank == p_rank){
 			position = destination;
 			return true;
+		}
+		else{
+			int slope = (d_rank-p_rank)/(d_file-p_file);
+			if(slope == 1 || slope == -1){
+				position = destination;
+				return true;
+			}
 		}
 		return false;
 	}
@@ -79,8 +81,7 @@ public class Queen extends Piece
 	}
 
 	/* toString */
-	public String toString()
-	{
+	public String toString(){
 		String c;
 		String str;
 
@@ -95,5 +96,4 @@ public class Queen extends Piece
 		str = c + " " + name;
 		return str;
 	}
-
 }

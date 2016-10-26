@@ -30,13 +30,16 @@ public class King extends Piece
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
+		//USE FOR TESTING ONLY
+		// System.out.println("original file: " + p_file + " original rank: " + p_rank);
+		// System.out.println("desination file: " + d_file + " desination rank: " + d_rank);
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
-		if(d_file < 0 || d_rank < 0){
+		else if(d_file < 0 || d_rank < 0){
 			return false;
 		}
-		if(d_file == (p_file+1) && d_rank == (p_rank+1)){
+		else if(d_file == (p_file+1) && d_rank == (p_rank+1)){
 			position = destination;
 			return true;
 		}
@@ -115,4 +118,26 @@ public class King extends Piece
 		return str;
 	}
 
+	public static void main(String[] args){
+		//TESTING BLACK
+		System.out.println("TESTING BLACK KING MOVEMENT");
+		Piece k = new King(BLACK, new Square(3,2));
+		Square d = new Square(3,3);
+		if(k.movePiece(d)){
+			System.out.println("true - correct");
+		}
+		else{
+			System.out.println("false");
+		}
+		//TESTING WHITE
+		System.out.println("TESTING WHITE KING MOVEMENT");
+		k = new King(WHITE, new Square(3,2));
+		d = new Square(3,3);
+		if(k.movePiece(d)){
+			System.out.println("true - correct");
+		}
+		else{
+			System.out.println("false");
+		}
+	}
 }

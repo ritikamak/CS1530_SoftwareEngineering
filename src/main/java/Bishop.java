@@ -30,14 +30,14 @@ public class Bishop extends Piece
 		int p_rank = position.getRank();
 		int d_file = destination.getFile();
 		int d_rank = destination.getRank();
-		int slope = (d_rank/p_rank)/(d_file/p_file);
+		int slope = (d_rank-p_rank)/(d_file-p_file);
 		if(d_file > 7 || d_rank > 7){
 			return false;
 		}
-		if(d_file < 0 || d_rank < 0){
+		else if(d_file < 0 || d_rank < 0){
 			return false;
 		}
-		if(slope == 1 || slope == -1){
+		else if(slope == 1 || slope == -1){
 			position = destination;
 			return true;
 		}
