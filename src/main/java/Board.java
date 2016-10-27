@@ -1,34 +1,13 @@
 import java.util.*;
-/* The board is an object created within a Game object. The board has a 8x8 2dimensional array of Square objects */
+/* The board is an object created within a Game object. The board class is essentially just a 8x8 2-dimensional array of Square objects responsible for tracking board state*/
 public class Board
 {
-	/* CONSTANTS */
-	public static final boolean BLACK = true;
-	public static final boolean WHITE = false;
-	public static final boolean USER = true;
-	public static final boolean COMP = false;
-	public static final int A = 0;
-	public static final int B = 1;
-	public static final int C = 2;
-	public static final int D = 3;
-	public static final int E = 4;
-	public static final int F = 5;
-	public static final int G = 6;
-	public static final int H = 7;
-	public static final int ONE = 0;
-	public static final int TWO = 1;
-	public static final int THREE = 2;
-	public static final int FOUR = 3;
-	public static final int FIVE = 4;
-	public static final int SIX = 5;
-	public static final int SEVEN = 6;
-	public static final int EIGHT = 7;
 
 	/* VARIABLES */
+/* A board is a 8x8 grid of squares. The grid is traditionally labeled by columns called file (a-h)
+and rows called rank (1-8). Square 'a1' is the bottom left corner of the board, and is board[A][ONE]
+in our array representation of it. */
 	Square[][] board;
-	/* A board is a 8x8 grid of squares. The grid is traditionally labeled by columns called file (a-h)
-		and rows called rank (1-8). Square 'a1' is the bottom left corner of the board, and is board[A][ONE]
-		in our array representation of it. */
 
 	/* CONSTRUCTORS */
 	public Board()
@@ -52,10 +31,4 @@ public class Board
 			return board[file][rank];
 		}
 	}
-	public void setSquare(Square s){
-		int file = s.getFile();
-		int rank = s.getRank();
-		board[file][rank] = s;
-	}
-
 }

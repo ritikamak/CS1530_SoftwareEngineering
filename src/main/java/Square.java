@@ -1,29 +1,7 @@
 import java.util.*;
-/* Each Square object represents a square on the chessboard grid. A Square may contain a Piece object */
+/* Each Square object represents a square on the chessboard grid. This class forms the basis for communicating position in this application. */
 public class Square
 {
-	/* CONSTANTS */
-	public static final boolean BLACK = true;
-	public static final boolean WHITE = false;
-	public static final boolean USER = true;
-	public static final boolean COMP = false;
-	public static final int A = 0;
-	public static final int B = 1;
-	public static final int C = 2;
-	public static final int D = 3;
-	public static final int E = 4;
-	public static final int F = 5;
-	public static final int G = 6;
-	public static final int H = 7;
-	public static final int ONE = 0;
-	public static final int TWO = 1;
-	public static final int THREE = 2;
-	public static final int FOUR = 3;
-	public static final int FIVE = 4;
-	public static final int SIX = 5;
-	public static final int SEVEN = 6;
-	public static final int EIGHT = 7;
-
 	/* VARIABLES */
 	int file; //column, horizontal (a-h)
 	int rank; //row, vertical (1-8)
@@ -39,13 +17,13 @@ public class Square
 	}
 
 	/* METHODS */
-	public void placePiece(Piece p)
+	public void occupySquare(Piece p)
 	{
 		piece = p;
 		occupied = true;
 	}
 
-	public Piece removePiece()
+	public Piece evictSquare()
 	{
 		occupied = false;
 		return piece;
