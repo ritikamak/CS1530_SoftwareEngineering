@@ -239,10 +239,19 @@ DETAILS OF ARCHITECTURAL DECISIONS
 ______________________________________________________________________
 
 
+Under its current architecture, the board is split up into an 8 by 8 grid of squares.  This is implemented as a two dimensional array so that it would have quick and easy to the square at a particular set of coordinates.  The square class itself keeps track of its current location (which on the board will not change) and the piece that is currently at that location.  Individual pieces are extended from an abstract class.  This allows us to store each player’s pieces in a list of generic pieces, instead of simply as objects- which would be the case if each piece was instead just an entirely separate class.  
+Each piece type has a unique/uniformed move method.  Using abstract superclass for piece and having each piece type have the same methods, we are able to keep this relationship intact.  It allows us for there to be a relationship between all the pieces, while also allowing for a more specified relationship between pieces that are all of the same type.  For example, it allows for a rook to move like a rook, a bishop to move like a bishop, etc.  This proved to be a better choice than the alternative of having one large piece class that when clicked, would first have to check what type of piece it is and then figure out how to move it depending on its type.  
+This will also come in use later on once we implement pawn promotion.  When a pawn reaches the end of the board, it can turn into any piece that it wants to (any type except for king).  This, now allows us to easily reassign a pawn to a higher piece when it can be promoted, rather than us searching for and removing that pawn from the list and adding a new piece to the list in its place.  
 
----not completed yet
+	We decided to add 3 items to our backlog to potentially refactor some of our code.  All of the added user stories deal with making our code better/simplifying the piece class and making it modular- individual modules to follow object-oriented design patterns.  We completed these user stories by using abstract classes for piece. 
+-	As a player
+I want pieces to not make illegal moves
+So that neither player can cheat.
+-	As a player
+I want the game to prevent any pieces from moving outside of their range/path 
+So that the game follows standard chess rules.
+-	As a player
+I want synchronized steps for movement for all pieces 
+So that the game is smooth and no pieces require special clicks and such.
 
--	Board is split up into an 8x8 grid of squares. Each square can contain a piece. It keeps track of its location- where the square is in relation to the board. For pieces- they are split up into an abstract superclass for the piece. This was because when we want to move a piece, there is a uniform move method. So instead of having each piece such as each pawn have its own movement and such, we have it all abstracted away so it’s all uniform. Otherwise, would have to click a piece, then find what kind of piece it is, and then move it according to that. While here we can just say piece p = new …etc. and then can just do the movement like that because all of them have the same methods. This also comes in use later on once we implement pawn promotion because then we can just re-reference it as a different piece- when it reaches end of the board and it can turn into anything it wants- anything but a king, typically a queen. 
--	Then, we also worked on the algs for the movement such that each individual piece has to validate what piece its calling to to make sure it’s a valid move. This sets it up for future captures so that when we want to move to a square that’s occupied, then you can just delete the old/captured piece from there. 
--	We grouped it into 2 subsystems- piece and board. We want to implement a 3rd system that handles the actual user input- ex. controller. We technically also have a subsystem for the GUI which only represents the backend- the current state of the board so what it has. Its basically a visual representation of the board class. 
--	in the future, we can look into implementing capturing/castling/special cases as a subset of either the game class/controlled or the backend pieces. 
+	We grouped our classes/objects into 2 major subsystems- piece and board.  We technically also have a 3rd subsystem for the GUI which only represents the backend- the idle state/visual representation of the board.  We later want to implement another subsystem that handles the actual user input- could be “controller” for example.  This new subsystem would provide us communication between the backend and the GUI.    
