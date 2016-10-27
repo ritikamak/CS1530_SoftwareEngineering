@@ -14,9 +14,6 @@ public abstract class Piece
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
 	/* METHODS */
-	//might be able to be replaced with the setter, keep until tested
-	//public  abstract void placePiece(Square destination);
-
 	public abstract boolean movePiece(Square destination);
 
 	/* GETTERS */
@@ -25,23 +22,29 @@ public abstract class Piece
 		return color;
 	}
 
-	public Square getPosition(){
+	public Square getPosition()
+	{
 		return position;
 	}
 
-	public String getName(){
+	public String getName()
+	{
 		return name;
 	}
 
 	/* SETTERS */
-	public void setPosition(Square position ){
+	public void setPosition(Square position)
+	{
 		this.position = position;
 	}
-	public void setColor(boolean color){
+	
+	public void setColor(boolean color)
+	{
 		this.color = color;
 	}
 
-	public void setName(String name){
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
