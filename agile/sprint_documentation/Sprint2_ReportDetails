@@ -1,0 +1,170 @@
+COVER PAGE
+______________________________________________________________________
+
+
+CHESS APPLICATION
+
+Charlie Mietzner -- clm133
+Ritika Maknoor (Scrum Master) -- ritikamak
+Peter Stamos -- petestamos
+Rohan Patel --patelrohanv
+
+13 October 2016
+
+CS 1530 – SPRINT 2 DELIVERABLE
+
+
+
+
+
+DESCRIPTION OF SPRINT
+______________________________________________________________________
+
+
+We went into this sprint with a bit more of a solid grasp on what we, as a team, needed to and were capable of accomplishing.  During our previous sprint’s retrospective, we noted what our strengths and weaknesses were- both individual and as a group.  We noticed that during our previous sprint, we had very effective communication.  At no point during the sprint, did any of us feel as though we were stuck and could not voice our concerns to the other group members.  One aspect of our last sprint that we wanted to improve for this next one, however, was being a bit more decisive on what we wanted to accomplish by the end of the sprint.  
+This sprint went very smoothly for our group.  Our sprint planning session was very effective and efficient.  We met up and discussed what user stories we wanted to complete by the end of the sprint.  During our first sprint, we broke down our backlog of user stories into 3 categories (Chess GUI; Game Mechanics; Backend), and had a vague idea of how we felt would be most logical to go about completing all of them.  Therefore, we were able to choose our user stories rather quickly and divided them up amongst us by taking into consideration what domains and aspects of programming each of us felt we were strongest and most familiar with.
+Throughout the entirety of the two-week span, we communicated very well when we needed to.  This sprint consisted of user stories that were centered around setting up our Chess GUI, and therefore because of the nature of the tasks that the user stories called for, we did not need to be in constant communication.  We were able to complete our stories with minimal impact on one another.  We did not have many disagreements.  The only issue that arose was that a few of our user stories overlapped and therefore there were times when multiple team members (usually only 2 at a time) implemented aspects/code in slightly different manners on our interface.  For example, 2 members both had stories that involved the size of the chess board itself- in terms of how big each square would be/how it would impact the size of the pieces, and in terms of how big the board would be in total/where it would fit on the screen in relation to other buttons and such.  Whenever we ran into such issues and noticed that we had done so either when reviewing each other’s code on GitHub, or when discussing how we were planning to tackle our specific user story, we merely discussed our options and what would work best for the final chess application.  Having our only real issues be too many ideas, rather than having clashing code that had no way of being able to be merged, was a better set of issues to have.  In fact, it helped us think of many different ways we could go about implementing certain aspects of our application and what would work best.  
+	We did not interact with the customer during this sprint.  After the first/previous sprint, all we had developed was a general layout of how planned to complete the application in line with what the user said they wanted.  After this second/current sprint, we have finally completed some of the key user stories.  We now have a Chess GUI Interface set up and have most of our graphics determined.  Before our sprint retrospective, we plan to consult our customer and show them what our paper prototypes were and how we transformed those drawings into a functional graphical display.  We hope that their feedback will provide us with a sense of direction- whether our ideas seem to be in line with theirs, or if we need to take a step back and try to understand what they are envisioning in a different way.  
+	We faced many challenges when writing our code.  During this sprint, we were finally starting to create our graphical product and develop the components of it.  After doing some research on which domains would be most efficient and effective for our chess application, we found that the IDE NetBeans would be suitable.  However, becoming familiar with this IDE was a challenge.  We each had to do research and watch videos on how to actually design a GUI.  None of us had any prior experience in creating a GUI using NetBeans.  Once we began to mess around with it and try out different features, we became much more familiar with how it worked and what we could do on it.  We did not come across any challenges when writing our tests once we got started and figured out what exactly we needed to test for- both base cases (expected use cases) and edge cases (unexpected use cases). 
+
+
+
+
+
+LISTING OF COMPLETED USER STORIES & STORY POINTS
+______________________________________________________________________
+
+
+-	As a player
+  I want to play a graphical version of chess
+  So that I do not need to carry a board with me everywhere.
+	STORY POINTS: 16
+-	As a player
+  I want a chess interface that is intuitive
+  So that I can easily play without the need to learn additional unnecessary game mechanics.
+	STORY POINTS: 4
+-	As a player
+  I want a chessboard and chess pieces that accurately resemble that of their physical counterpart 
+  So that I can easily distinguish both the chessboard and each chess piece on the board.
+	STORY POINTS: 8
+-	As a player
+  I want this game to run on a computer; not on mobile
+  So that I can see the game on a larger screen.
+	STORY POINTS: 2
+-	As a player
+  I want black pieces to be at the top of the board and white pieces to be at the bottom
+  So that the game follows standard rules.
+	STORY POINTS: 2
+-	As a player
+  I want the rank and file to be displayed around the board
+  So that I can see what location a piece is at. 
+	STORY POINTS: 8
+-	As a player
+  I want a 2-dimensional board
+  So that I do not see the pieces at an angle.
+	STORY POINTS: 16
+-	As a player
+  I want for there to be a section for all pieces currently out of play, on the side panel next to the game board
+  So that I can easily assess the progress of each game.
+	STORY POINTS: 4
+-	As a player
+  I want the chess board to be at the top of the display window and any buttons to be at the bottom
+  So that I see the chess board clearly while playing a game.
+	STORY POINTS: 4 (not completed)
+TOTAL VELOCIY = 60
+
+
+
+
+
+LINK TO CODE ON GITHUB
+______________________________________________________________________
+
+
+On GitHub: https://github.com/clm133/CS1530groupproject
+
+
+
+
+
+DETAILS OF WHY USER STORIES WERE CHOSEN
+______________________________________________________________________
+
+
+	When we had our initial discussions with the customer, they had provided us with a list of requirements that they had in mind for the software.  After going back and forth with them- asking questions and providing feedback, we were able to iron out a cohesive list of details of what the final product was expected to be.  We then divided our backlog into 3 categories- Chess GUI, Game Mechanics, and Backend.  When we first created out backlog and began to develop these 3 categories/subsystems, we had discussed as a group that perhaps the best way to complete the final product would be to complete a handful of user stories from each of the 3 categories each sprint.  We believed that approaching it in this manner would ensure that we did not spend too much time/too many sprints on certain subsystems and neglect others.  
+However, in this sprint’s sprint planning session, we decided that our main goal at the end of this sprint would be to have working software that was a functional and more-or-less visually complete GUI.  We wanted to have used this sprint to turn our paper prototypes into a graphical model of the application.  In having this skeleton of the GUI set up, we thought we would then be in a good place to be able to go back to the customer and propose our model of what the final product would look like- in a bare-bones/non-embellished state.  Showing them an idea of what the display of the board, pieces, and layout would be, would give them an opportunity to see the direction our software product is going in and if that is on track with their expectations or not.  
+As a group, during our sprint planning session, we reviewed our entire backlog once again.  We then came up with an idea of what we wanted to have done by the end of the sprint.  We decided that having a Chess GUI set up with everything in the correct spatial orientation and buttons where they were needed to be was our goal.  We reviewed our Chess GUI category/subsystem section of our backlog and chose 9 user stories that we thought would be a good set to complete- they were all centered around the basics and setting up of the GUI, not so much on the user interaction with it (movement of pieces, pieces going out of play, executing jar file on command line).  
+Once we chose 9 user stories for this sprint, we assigned story points.  We then divided up who would complete each user story by adding up story points as well as based on each of our individual strengths/familiarity levels with how to accomplish each task.  
+
+
+
+
+
+LISTING OF DEFECTS
+______________________________________________________________________
+
+
+SUMMARY: 
+The program has no way of separating individual pieces.
+DESCRIPTION:
+When we observed the Piece class source code and its test, the test cases passed. However, upon further inspection of the source code, there is no method for setting or getting the piece name.
+REPRODUCTION STEPS:
+1. Refer to source code for the Piece class.
+2. Inspect the fields and their setters/getters.
+EXPECTED BEHAVIOR:
+There should be a method for setting and getting the piece name so that it can be identified as a king, queen, rook, etc.
+OBSERVED BEHAVIOR:
+All pieces are defaulted to “generic piece”.
+NOTES:
+This defect is not related to any of the user stories for this sprint so we decided that it would be a focus for the next sprint.
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The GUI does not show the board at the top.
+DESCRIPTION: 
+When the GUI is opened the chess board should be displayed at the top of the window but currently the buttons are displayed at the top of the window.
+REPRODUCTION STEPS:
+1.	Run the command “gradle run”.
+2.	Observe the window.
+EXPECTED BEHAVIOR:
+The chess board should be listed at the top of the window.
+OBSERVED BEHAVIOR:
+The buttons are placed at the top of the board with the board underneath.
+NOTES:
+This defect will be a relatively simple fix so it will be corrected in the next sprint.
+
+                                    _________________________________      
+
+
+SUMMARY:
+	The GUI pieces are not clickable.
+DESCRIPTION:
+When the program is run and the GUI opens, there is no visual indicator that a piece has been clicked. This detracts from the requirement that the program be intuitive. 
+REPRODUCTION STEPS:
+1.	Run the command “gradle run”
+2.	Click on individual pieces
+EXPECTED BEHAVIOR:
+There should be some form of feedback to the user that the piece has been clicked or selected.
+OBSERVED BEHAVIOR:
+When pieces are clicked no response is shown. This makes it unknown to the user if the click was registered. 
+NOTES:
+	This defect was corrected by editing the source code for ChessGUI.java.
+
+                                    _________________________________      
+
+
+SUMMARY: 
+The GUI and the board backend are not in synchronization. 
+DESCRIPTION:
+When observing the source code, it was observed that GUI and the backend were not synchronized. This mean that the program will generate and display the GUI to the user and have the board running in the backend but there is no connection between the two. 
+REPRODUCTION STEPS:
+1. Refer to source code for the Board and ChessGUI classes.
+2. Inspect previously mentioned classes.
+EXPECTED BEHAVIOR:
+The board and the GUI should be synchronized so a change in one is reflected in the other. 
+OBSERVED BEHAVIOR:
+There is no code implemented to connect the board backend with the GUI.
+NOTES:
+This defect was neither directly related to the any of the user stories nor a priority for this sprint. This is also a major defect which will require a long time to implement so it will be made a priority for the next sprint. 
