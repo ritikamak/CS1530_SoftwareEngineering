@@ -95,7 +95,51 @@ DETAILS OF WHY USER STORIES WERE CHOSEN
 ______________________________________________________________________
 
 
----not completed yet
+	When we had our initial discussions with the customer, they had provided us with a list of requirements that they had in mind for the software.  After going back and forth with them- asking questions and providing feedback, we were able to iron out a cohesive list of details of what the final product was expected to be.  We then divided our backlog into 3 categories- Chess GUI, Game Mechanics, and Backend.  When we first created our backlog and began to develop these 3 categories/subsystems, we had discussed as a group that perhaps the best way to complete the final product would be to complete a handful of user stories from each of the 3 categories, during each sprint.  We believed that approaching it in this manner would ensure that we did not spend too much time/too many sprints on certain subsystems and neglect others.   
+	During this sprint’s planning session, we decided that our main goal at the end of this sprint would be to have our backend of game mechanics be all set up- meaning completing all requirements that deal with the actual algorithmic implementation of the rules and restrictions of chess.  By setting up our backend, we will be able to focus on finally synchronizing the backend and the GUI during the next sprint.  We successfully completed implementing most of the backend for piece movements and game mechanics/policies/set-up.  
+	We decided on 10 user stories in the end- a list comprising of both original-backlog user stories, and modified/added user stories.  Chose original-backlog stories that were not too specific in relation to the backend; chose stories that would help us with initial set-up of the backend so that we could further develop it to meet more detailed and specific user stories later.  We added stories by first picking out user stories from our original backlog that seemed to be broad and overarching for the software- such as stories about how pieces should move and be able to be manipulated on the board.  We then divided these such stories into more specific and detailed user stories that could help us, as a team, better divide up the tasks at hand.  
+
+-----In original backlog; SUBSYSTEM 3-BACKEND-----
+-	As a player
+I want to play against a computer
+So that I can simulate playing against a person.
+(We simulated this when we set up the game; we placed every single piece on the computer side in the correct place. Therefore, if we pick white, computer will be aligned as black pieces.)
+-	As a player
+I want the game to run on the JVM
+So that it can be portable.
+ (Wrote it in java and built it using gradle.)
+-	As a player
+I want the application to run on a 512mb machine
+So that it can run on a variety of systems.
+ (Runs off the JVM which can run on this condition.)
+-----In original backlog; SUBSYSTEM 2-GAME MECHANICS-----
+-	As a player
+I want a chess game that follows FIDE regulations for Standard American Chess
+So that I have an accurate chess simulator that abides by national tournament standards.
+-----Added stories; SUBSYSTEM 2-GAME MECHANICS-----
+-	As a player
+I want the pieces for each player to be set-up in their correct position/squares on the board at the start of a game
+So that the game follows standard chess rules.
+(This is in backend- in player class; puts every piece appropriately in correct spot.)
+-	As a player
+I want the board to be organized so that no 2 pieces can ever occupy the same square
+So that the game follows standard chess rules.
+(In movePiece method.  NOT COMPLETED- Only done for certain pieces.  We are moving pieces via the controller but the work is done in backend; so sending info back and forth between them, which is why we haven't finished this.  Is high priority for next sprint.)
+-	As a player
+I want special movements to be legal- such as “en passant”, “promotion”, and “castling” 
+So that the game follows standard chess rules.
+(NOT COMPLETED- Wanted to first complete the basics in terms of backend- getting all piece classes done.  This requires knowledge between backend and the controller also.  Moved to next sprint.)
+-----Added stories; SUBSYSTEM 2-GAME MECHANICS; added for refactoring purpose-----
+These are all part of refactoring; all deal with making code better/simplifying the piece class and making it modular- individual modules to follow OOD.  Completed these user stories by using abstract classes for piece. 
+-	As a player
+I want pieces to not make illegal moves
+So that neither player can cheat.
+-	As a player
+I want the game to prevent any pieces from moving outside of their range/path 
+So that the game follows standard chess rules.
+-	As a player
+I want synchronized steps for movement for all pieces 
+So that the game is smooth and no pieces require special clicks and such.
 
 
 
