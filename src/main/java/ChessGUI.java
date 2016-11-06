@@ -4,18 +4,21 @@
  */
 public class ChessGUI extends javax.swing.JFrame {
 
-	/* Constants */ 
-	public static final boolean BLACK = true;
-	public static final boolean WHITE = false;
+    /* Constants */
+    public static final boolean BLACK = true;
+    public static final boolean WHITE = false;
 
-	/* Variables */
-	//the gui needs a game object to update its display as game state changes
-	private Game game;	
-	//the gui needs a userinput object to handle events it listens for 
-	private UserInput ui;
-	//square buttons are stored in a 8x8 grid modeled after chessboard
-	private javax.swing.JButton[][] guiBoard;
-	//labels, game interface buttons
+    /* Variables */
+    //the gui needs a game object to update its display as game state changes
+    private Game game;
+
+    //the gui needs a userinput object to handle events it listens for
+    private UserInput ui;
+
+    //square buttons are stored in a 8x8 grid modeled after chessboard
+    private javax.swing.JButton[][] guiBoard;
+
+    //labels, game interface buttons
     private javax.swing.JLabel blackLabel;
     private javax.swing.JPanel durationPanel;
     private javax.swing.JLabel durationText;
@@ -44,103 +47,117 @@ public class ChessGUI extends javax.swing.JFrame {
     private javax.swing.JPanel outOfPlayPanel;
     private javax.swing.JButton saveGameButton;
     private javax.swing.JLabel whiteLabel;
-	
+    private javax.swing.JPanel menuBarPanel1;
+    private javax.swing.JComboBox<String> colorSelector;
+    private javax.swing.ButtonGroup colorSelectorButtonGroup;
+    private javax.swing.JRadioButton computerColorButton;
+    private javax.swing.JButton endTurnButton;
+    private javax.swing.JButton flipBoardButton;
+    private javax.swing.JRadioButton playerColorButton;
+
     public ChessGUI() {
         initComponents();
     }
-	
 
-	public ChessGUI(Game g, UserInput i) {
-		game = g;
-		ui = i;
+
+    public ChessGUI(Game g, UserInput i) {
+            game = g;
+            ui = i;
         initComponents();
     }
-	
-	
-	/* Displays GUI depending on show parameter (true = show, false = hide) 
-	 * and returns boolean on success */
-	public boolean display(boolean show){
-		try{
-			this.setVisible(show);
-			return true;
-		}
-		catch(Exception e){
-			return false;
-		}
-	}
-	
-	/* Determines if a piece is on the square(file and rank). 
-	 * If true, sets a relevant piece icon on gui */
-	private void setPieceIcon(javax.swing.JButton button)
-	{
-		Square s;
-		Piece p;
-		String resourceFile;
-		
-		s = game.getSquareAt((Integer) button.getClientProperty("file"), (Integer) button.getClientProperty("rank"));
-		if(s.isOccupied() == false){
-			return;
-		}
-		p = s.getPiece();
-		resourceFile = "/images/";
-		if(p.getColor() == WHITE){
-			resourceFile = resourceFile + "white-";
-		}
-		else if(p.getColor() == BLACK){
-			resourceFile = resourceFile + "black-";
-		}
-		resourceFile = resourceFile + p.getName().toLowerCase() + ".png";
-		button.setIcon(new javax.swing.ImageIcon(getClass().getResource(resourceFile)));
-		return;
-	}
-	
+
+
+    /* Displays GUI depending on show parameter (true = show, false = hide)
+     * and returns boolean on success */
+    public boolean display(boolean show){
+            try{
+                    this.setVisible(show);
+                    return true;
+            }
+            catch(Exception e){
+                    return false;
+            }
+    }
+
+    /* Determines if a piece is on the square(file and rank).
+     * If true, sets a relevant piece icon on gui */
+    private void setPieceIcon(javax.swing.JButton button)
+    {
+            Square s;
+            Piece p;
+            String resourceFile;
+
+            s = game.getSquareAt((Integer) button.getClientProperty("file"), (Integer) button.getClientProperty("rank"));
+            if(s.isOccupied() == false){
+                    return;
+            }
+            p = s.getPiece();
+            resourceFile = "/images/";
+            if(p.getColor() == WHITE){
+                    resourceFile = resourceFile + "white-";
+            }
+            else if(p.getColor() == BLACK){
+                    resourceFile = resourceFile + "black-";
+            }
+            resourceFile = resourceFile + p.getName().toLowerCase() + ".png";
+            button.setIcon(new javax.swing.ImageIcon(getClass().getResource(resourceFile)));
+            return;
+    }
+
 	private void initComponents()
 	{
 		int file;
 		int rank;
+                colorSelectorButtonGroup = new javax.swing.ButtonGroup();
 		mainPanel = new javax.swing.JPanel();
 		label8 = new javax.swing.JLabel();
-        label7 = new javax.swing.JLabel();
-        label6 = new javax.swing.JLabel();
-        label5 = new javax.swing.JLabel();
-        label4 = new javax.swing.JLabel();
-        label3 = new javax.swing.JLabel();
-        label2 = new javax.swing.JLabel();
-        label1 = new javax.swing.JLabel();
-        labelA = new javax.swing.JLabel();
-        labelB = new javax.swing.JLabel();
-        labelC = new javax.swing.JLabel();
-        labelD = new javax.swing.JLabel();
-        labelE = new javax.swing.JLabel();
-        labelF = new javax.swing.JLabel();
-        labelG = new javax.swing.JLabel();
-        labelH = new javax.swing.JLabel();
-        outOfPlayPanel = new javax.swing.JPanel();
-        blackLabel = new javax.swing.JLabel();
-        whiteLabel = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        durationPanel = new javax.swing.JPanel();
-        durationText = new javax.swing.JLabel();
-        menuBarPanel = new javax.swing.JPanel();
-        newGameButton = new javax.swing.JButton();
-        saveGameButton = new javax.swing.JButton();
-        loadGameButton = new javax.swing.JButton();
-		guiBoard = new javax.swing.JButton[8][8];
+                label7 = new javax.swing.JLabel();
+                label6 = new javax.swing.JLabel();
+                label5 = new javax.swing.JLabel();
+                label4 = new javax.swing.JLabel();
+                label3 = new javax.swing.JLabel();
+                label2 = new javax.swing.JLabel();
+                label1 = new javax.swing.JLabel();
+                labelA = new javax.swing.JLabel();
+                labelB = new javax.swing.JLabel();
+                labelC = new javax.swing.JLabel();
+                labelD = new javax.swing.JLabel();
+                labelE = new javax.swing.JLabel();
+                labelF = new javax.swing.JLabel();
+                labelG = new javax.swing.JLabel();
+                labelH = new javax.swing.JLabel();
+                outOfPlayPanel = new javax.swing.JPanel();
+                blackLabel = new javax.swing.JLabel();
+                whiteLabel = new javax.swing.JLabel();
+                jSeparator1 = new javax.swing.JSeparator();
+                jSeparator2 = new javax.swing.JSeparator();
+                durationPanel = new javax.swing.JPanel();
+                durationText = new javax.swing.JLabel();
+                menuBarPanel = new javax.swing.JPanel();
+                newGameButton = new javax.swing.JButton();
+                saveGameButton = new javax.swing.JButton();
+                loadGameButton = new javax.swing.JButton();
+                menuBarPanel1 = new javax.swing.JPanel();
+                playerColorButton = new javax.swing.JRadioButton();
+                computerColorButton = new javax.swing.JRadioButton();
+                colorSelector = new javax.swing.JComboBox<>();
+                flipBoardButton = new javax.swing.JButton();
+                endTurnButton = new javax.swing.JButton();
+                guiBoard = new javax.swing.JButton[8][8];
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("LaboonChess");
-        setMaximumSize(new java.awt.Dimension(700, 515));
-        setMinimumSize(new java.awt.Dimension(700, 515));
-        setResizable(false);
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setTitle("LaboonChess");
+                setMaximumSize(new java.awt.Dimension(725, 532));
+                setMinimumSize(new java.awt.Dimension(725, 532));
+                setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
-        mainPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        mainPanel.setMaximumSize(new java.awt.Dimension(402, 402));
-        mainPanel.setMinimumSize(new java.awt.Dimension(402, 402));
-        mainPanel.setPreferredSize(new java.awt.Dimension(402, 402));
-        mainPanel.setSize(new java.awt.Dimension(402, 402));
-		
+                mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+                mainPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+                mainPanel.setMaximumSize(new java.awt.Dimension(402, 402));
+                mainPanel.setMinimumSize(new java.awt.Dimension(402, 402));
+                mainPanel.setPreferredSize(new java.awt.Dimension(402, 402));
+                mainPanel.setSize(new java.awt.Dimension(402, 402));
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank] = new javax.swing.JButton();
@@ -148,7 +165,7 @@ public class ChessGUI extends javax.swing.JFrame {
 				guiBoard[file][rank].putClientProperty("rank", rank);
 			}
 		}
-		
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank].setBackground(new java.awt.Color(153, 153, 153));
@@ -172,8 +189,8 @@ public class ChessGUI extends javax.swing.JFrame {
 				setPieceIcon(guiBoard[file][rank]);
 			}
 		}
-		
-		javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
 		//Square Buttons
 		 mainPanel.setLayout(mainPanelLayout);
@@ -399,7 +416,7 @@ public class ChessGUI extends javax.swing.JFrame {
                     .addComponent(guiBoard[6][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(guiBoard[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-		
+
 		label8.setText("8");
         label7.setText("7");
         label6.setText("6");
@@ -420,9 +437,9 @@ public class ChessGUI extends javax.swing.JFrame {
         outOfPlayPanel.setBackground(new java.awt.Color(204, 204, 204));
         outOfPlayPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        blackLabel.setText("Black");
+        blackLabel.setText("Computer");
 
-        whiteLabel.setText("White");
+        whiteLabel.setText("Player");
 
         javax.swing.GroupLayout outOfPlayPanelLayout = new javax.swing.GroupLayout(outOfPlayPanel);
         outOfPlayPanel.setLayout(outOfPlayPanelLayout);
@@ -433,11 +450,11 @@ public class ChessGUI extends javax.swing.JFrame {
             .addGroup(outOfPlayPanelLayout.createSequentialGroup()
                 .addGroup(outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(outOfPlayPanelLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(whiteLabel))
+                        .addGap(70, 70, 70)
+                        .addComponent(blackLabel))
                     .addGroup(outOfPlayPanelLayout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(blackLabel)))
+                        .addGap(81, 81, 81)
+                        .addComponent(whiteLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         outOfPlayPanelLayout.setVerticalGroup(
@@ -524,10 +541,67 @@ public class ChessGUI extends javax.swing.JFrame {
                     .addComponent(loadGameButton)))
         );
 
+        menuBarPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        menuBarPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        colorSelectorButtonGroup.add(playerColorButton);
+        playerColorButton.setSelected(true);
+        playerColorButton.setText("Player Color");
+
+        colorSelectorButtonGroup.add(computerColorButton);
+        computerColorButton.setText("Computer Color");
+
+        colorSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "White", "Black", "Red", "Orange", "Yellow", "Green", "Blue" }));
+
+        flipBoardButton.setText("Flip Board");
+        flipBoardButton.setBorderPainted(false);
+        flipBoardButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        flipBoardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flipBoardButtonActionPerformed(evt);
+            }
+        });
+
+        endTurnButton.setBorderPainted(false);
+        endTurnButton.setLabel("End Turn");
+        endTurnButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endTurnButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout menuBarPanel1Layout = new javax.swing.GroupLayout(menuBarPanel1);
+        menuBarPanel1.setLayout(menuBarPanel1Layout);
+        menuBarPanel1Layout.setHorizontalGroup(
+            menuBarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuBarPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(playerColorButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(computerColorButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(colorSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(flipBoardButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(endTurnButton)
+                .addGap(47, 47, 47))
+        );
+        menuBarPanel1Layout.setVerticalGroup(
+            menuBarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuBarPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(menuBarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flipBoardButton)
+                    .addComponent(endTurnButton)
+                    .addComponent(colorSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playerColorButton)
+                    .addComponent(computerColorButton)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-		
-		//Labels
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -566,10 +640,10 @@ public class ChessGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(outOfPlayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(durationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
             .addComponent(menuBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(menuBarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-		
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -592,9 +666,9 @@ public class ChessGUI extends javax.swing.JFrame {
                         .addComponent(label2)
                         .addGap(34, 34, 34)
                         .addComponent(label1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -611,21 +685,29 @@ public class ChessGUI extends javax.swing.JFrame {
                     .addComponent(labelF)
                     .addComponent(labelG)
                     .addComponent(labelH))
-                .addGap(12, 12, 12))
+                .addGap(18, 18, 18)
+                .addComponent(menuBarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
-	}
+    }// </editor-fold>
 
-	/*Event handlers*/
-    private void saveGameButtonActionPerformed(java.awt.event.ActionEvent evt)
-	{
+    private void saveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
     }
 
-    private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt)
-	{
+    private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
     }
-	
+
+    private void flipBoardButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        // TODO add your handling code here:
+    }
+
+    private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
 	private void squareSelect(java.awt.event.ActionEvent evt, int file, int rank)
 	{
 		ui.handleInput(file, rank);
