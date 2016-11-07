@@ -1,5 +1,3 @@
-package com.rahul.stockfish;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,9 +5,9 @@ import java.io.OutputStreamWriter;
 
 /**
  * A simple and efficient client to run Stockfish from Java
- * 
+ *
  * @author Rahul A R
- * 
+ *
  */
 public class Stockfish {
 
@@ -17,11 +15,11 @@ public class Stockfish {
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
 
-	private static final String PATH = "../engine/stockfish";
+	private static final String PATH = "src/engine/stockfish";
 
 	/**
 	 * Starts Stockfish engine as a process and initializes it
-	 * 
+	 *
 	 * @param None
 	 * @return True on success. False otherwise
 	 */
@@ -40,7 +38,7 @@ public class Stockfish {
 
 	/**
 	 * Takes in any valid UCI command and executes it
-	 * 
+	 *
 	 * @param command
 	 */
 	public void sendCommand(String command) {
@@ -55,7 +53,7 @@ public class Stockfish {
 	/**
 	 * This is generally called right after 'sendCommand' for getting the raw
 	 * output from Stockfish
-	 * 
+	 *
 	 * @param waitTime
 	 *            Time in milliseconds for which the function waits before
 	 *            reading the output. Useful when a long running command is
@@ -83,7 +81,7 @@ public class Stockfish {
 	/**
 	 * This function returns the best move for a given position after
 	 * calculating for 'waitTime' ms
-	 * 
+	 *
 	 * @param fen
 	 *            Position string
 	 * @param waitTime
@@ -110,7 +108,7 @@ public class Stockfish {
 
 	/**
 	 * Get a list of all legal moves from the given position
-	 * 
+	 *
 	 * @param fen
 	 *            Position string
 	 * @return String of moves
@@ -123,7 +121,7 @@ public class Stockfish {
 
 	/**
 	 * Draws the current state of the chess board
-	 * 
+	 *
 	 * @param fen
 	 *            Position string
 	 */
