@@ -115,10 +115,46 @@ public class KingTest{
      Test bad move
      */
      @Test
-     public void testKingBedMove_1(){
+     public void testKingBadMove_1(){
           Piece test = new King (false, new Square(6,4));
           Square test_square = new Square(7,2);
           assertFalse(test.movePiece(test_square));
+     }
+     /**
+     test  white queenside castle
+     */
+     @Test
+     public void testCastle_1(){
+          Piece test = new King (false, new Square(4,0));
+          Square test_square = new Square(2,0);
+          assertTrue(test.movePiece(test_square));
+     }
+     /**
+     test  white kingside castle
+     */
+     @Test
+     public void testCastle_2(){
+          Piece test = new King (false, new Square(4,0));
+          Square test_square = new Square(6,0);
+          assertTrue(test.movePiece(test_square));
+     }
+     /**
+     test  black queenside castle
+     */
+     @Test
+     public void testCastle_3(){
+          Piece test = new King (true, new Square(4,7));
+          Square test_square = new Square(2,7);
+          assertTrue(test.movePiece(test_square));
+     }
+     /**
+     test  black kingside castle
+     */
+     @Test
+     public void testCastle_4(){
+          Piece test = new King (true, new Square(4,7));
+          Square test_square = new Square(6,7);
+          assertTrue(test.movePiece(test_square));
      }
 
 }

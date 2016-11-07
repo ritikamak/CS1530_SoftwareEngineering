@@ -75,6 +75,27 @@ public class King extends Piece
 			position = destination;
 			return true;
 		}
+		//castling
+		if(color == WHITE && p_file == 4 && p_rank == 0){
+			if(d_file == 2 && d_rank == p_rank){
+			    position = destination;
+			    return true;
+			}
+			else if(d_file == 6 && d_rank == p_rank){
+				position = destination;
+				return true;
+			}
+		}
+		else if(color == BLACK && p_file == 4 && p_rank == 7){
+			if(d_file == 2 && d_rank == p_rank){
+			    position = destination;
+			    return true;
+			}
+			else if(d_file == 6 && d_rank == p_rank){
+				position = destination;
+				return true;
+			}
+		}
 		return false;
 	}
 

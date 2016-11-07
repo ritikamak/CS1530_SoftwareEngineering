@@ -29,18 +29,22 @@ public class Game
 	Player player2;
 	Board board; // a game of chess has a board
 	String name; // a game has a name, this variable will probably be used once we get a save/load game system in place
+	Stockfish engine;
 
 	/* CONSTRUCTORS */
 	/*Default constructor gives player the first move*/
 	public Game()
 	{
 		board = new Board();
+		engine =  new Stockfish();
 		player1 = new Player(USER, WHITE, board);
 		player2 = new Player(COMP, BLACK, board);
+
 	}
 	/*Providing a color to constructor will set the player's color to the parameter provided*/
 	public Game(boolean color)
 	{
+		engine =  new Stockfish();
 		Board board = new Board();
 		player1 = new Player(USER, color, board);
 		player2 = new Player(COMP, !color, board);
