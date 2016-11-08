@@ -105,22 +105,6 @@ public class ChessGUI extends javax.swing.JFrame {
             return;
     }
 
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "red-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "orange-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "yellow-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "green-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "blue-";
-    //         // }
-
 	private void initComponents()
 	{
 		int file;
@@ -565,11 +549,9 @@ public class ChessGUI extends javax.swing.JFrame {
         colorSelectorButtonGroup.add(playerColorButton);
         playerColorButton.setSelected(true);
         playerColorButton.setText("Player Color");
-        //playerColorButton.setEnabled(false);
 
         colorSelectorButtonGroup.add(computerColorButton);
         computerColorButton.setText("Computer Color");
-        //computerColorButton.setEnabled(false);
 
         colorSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "White", "Black", "Red", "Orange", "Yellow", "Green", "Blue" }));
 
@@ -734,7 +716,54 @@ public class ChessGUI extends javax.swing.JFrame {
     }
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
-        // TODO add your handling code here:
+        if (playerColorButton.isSelected()){
+            System.out.println("YOU SUBMITTED PLAYER!");
+            if (colorSelector.getSelectedItem() == "White"){
+                System.out.println("YOU SUBMITTED WHITE!");
+            }
+            else if (colorSelector.getSelectedItem() == "Black"){
+                System.out.println("YOU SUBMITTED BLACK!");
+            }
+            else if (colorSelector.getSelectedItem() == "Red"){
+                System.out.println("YOU SUBMITTED RED!");
+            }
+            else if (colorSelector.getSelectedItem() == "Orange"){
+                System.out.println("YOU SUBMITTED ORANGE!");
+            }            
+            else if (colorSelector.getSelectedItem() == "Yellow"){
+                System.out.println("YOU SUBMITTED YELLOW!");
+            }
+            else if (colorSelector.getSelectedItem() == "Green"){
+                System.out.println("YOU SUBMITTED GREEN!");
+            }            
+            else if (colorSelector.getSelectedItem() == "Blue"){
+                System.out.println("YOU SUBMITTED BLUE!");
+            }
+        }
+        else if (computerColorButton.isSelected()){
+            System.out.println("YOU SUBMITTED COMPUTER!");
+            if (colorSelector.getSelectedItem() == "White"){
+                System.out.println("YOU SUBMITTED WHITE!");
+            }
+            else if (colorSelector.getSelectedItem() == "Black"){
+                System.out.println("YOU SUBMITTED BLACK!");
+            }
+            else if (colorSelector.getSelectedItem() == "Red"){
+                System.out.println("YOU SUBMITTED RED!");
+            }
+            else if (colorSelector.getSelectedItem() == "Orange"){
+                System.out.println("YOU SUBMITTED ORANGE!");
+            }            
+            else if (colorSelector.getSelectedItem() == "Yellow"){
+                System.out.println("YOU SUBMITTED YELLOW!");
+            }
+            else if (colorSelector.getSelectedItem() == "Green"){
+                System.out.println("YOU SUBMITTED GREEN!");
+            }            
+            else if (colorSelector.getSelectedItem() == "Blue"){
+                System.out.println("YOU SUBMITTED BLUE!");
+            }
+        }
     }
 
     private void flipBoardButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
