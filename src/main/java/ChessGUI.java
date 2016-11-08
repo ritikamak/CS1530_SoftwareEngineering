@@ -54,6 +54,7 @@ public class ChessGUI extends javax.swing.JFrame {
     private javax.swing.JButton endTurnButton;
     private javax.swing.JButton flipBoardButton;
     private javax.swing.JRadioButton playerColorButton;
+    private javax.swing.JButton submitColorsButton;
 
     public ChessGUI() {
         initComponents();
@@ -104,6 +105,22 @@ public class ChessGUI extends javax.swing.JFrame {
             return;
     }
 
+    //         // else if(p.getColor() == ){
+    //         //         resourceFile = resourceFile + "red-";
+    //         // }
+    //         // else if(p.getColor() == ){
+    //         //         resourceFile = resourceFile + "orange-";
+    //         // }
+    //         // else if(p.getColor() == ){
+    //         //         resourceFile = resourceFile + "yellow-";
+    //         // }
+    //         // else if(p.getColor() == ){
+    //         //         resourceFile = resourceFile + "green-";
+    //         // }
+    //         // else if(p.getColor() == ){
+    //         //         resourceFile = resourceFile + "blue-";
+    //         // }
+
 	private void initComponents()
 	{
 		int file;
@@ -140,6 +157,7 @@ public class ChessGUI extends javax.swing.JFrame {
                 menuBarPanel1 = new javax.swing.JPanel();
                 playerColorButton = new javax.swing.JRadioButton();
                 computerColorButton = new javax.swing.JRadioButton();
+                submitColorsButton = new javax.swing.JButton();
                 colorSelector = new javax.swing.JComboBox<>();
                 flipBoardButton = new javax.swing.JButton();
                 endTurnButton = new javax.swing.JButton();
@@ -497,12 +515,12 @@ public class ChessGUI extends javax.swing.JFrame {
         menuBarPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         newGameButton.setText("New Game");
-        newGameButton.setBorderPainted(false);
+        newGameButton.setBorderPainted(true);
         newGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         newGameButton.setRequestFocusEnabled(false);
 
         saveGameButton.setText("Save Game");
-        saveGameButton.setBorderPainted(false);
+        saveGameButton.setBorderPainted(true);
         saveGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         saveGameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,7 +529,7 @@ public class ChessGUI extends javax.swing.JFrame {
         });
 
         loadGameButton.setText("Load Game");
-        loadGameButton.setBorderPainted(false);
+        loadGameButton.setBorderPainted(true);
         loadGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         loadGameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -547,14 +565,25 @@ public class ChessGUI extends javax.swing.JFrame {
         colorSelectorButtonGroup.add(playerColorButton);
         playerColorButton.setSelected(true);
         playerColorButton.setText("Player Color");
+        //playerColorButton.setEnabled(false);
 
         colorSelectorButtonGroup.add(computerColorButton);
         computerColorButton.setText("Computer Color");
+        //computerColorButton.setEnabled(false);
 
         colorSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "White", "Black", "Red", "Orange", "Yellow", "Green", "Blue" }));
 
+        submitColorsButton.setText("Submit Colors");
+        submitColorsButton.setBorderPainted(true);
+        submitColorsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        submitColorsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
+
         flipBoardButton.setText("Flip Board");
-        flipBoardButton.setBorderPainted(false);
+        flipBoardButton.setBorderPainted(true);
         flipBoardButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         flipBoardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -562,7 +591,7 @@ public class ChessGUI extends javax.swing.JFrame {
             }
         });
 
-        endTurnButton.setBorderPainted(false);
+        endTurnButton.setBorderPainted(true);
         endTurnButton.setLabel("End Turn");
         endTurnButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         endTurnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -583,16 +612,20 @@ public class ChessGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(submitColorsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(flipBoardButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(endTurnButton)
-                .addGap(47, 47, 47))
+                //.addGap(47, 47, 47))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
         );
         menuBarPanel1Layout.setVerticalGroup(
             menuBarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuBarPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(menuBarPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitColorsButton)
                     .addComponent(flipBoardButton)
                     .addComponent(endTurnButton)
                     .addComponent(colorSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -697,6 +730,10 @@ public class ChessGUI extends javax.swing.JFrame {
     }
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
     }
 
