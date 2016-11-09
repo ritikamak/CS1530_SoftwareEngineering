@@ -13,7 +13,8 @@ public class ChessGUI extends javax.swing.JFrame {
     /* Variables */
     //the gui needs a game object to update its display as game state changes
     private Game game;
-
+	// this is a boolean flag true if the board is flipped
+	private boolean flipped;
     //square buttons are stored in a 8x8 grid modeled after chessboard
     private javax.swing.JButton[][] guiBoard;
 
@@ -55,19 +56,24 @@ public class ChessGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton playerColorButton;
     private javax.swing.JButton submitColorsButton;
 
-    public ChessGUI() {
-        initComponents();
+    public ChessGUI()
+	{
+        initGui();
+		flipped = false;
     }
 
 
-    public ChessGUI(Game g) {
+    public ChessGUI(Game g)
+	{
 		game = g;
-		initComponents();
+		initGui();
+		flipped = false;
     }
 
     /* Displays GUI depending on show parameter (true = show, false = hide)
      * and returns boolean on success */
-    public boolean display(boolean show){
+    public boolean display(boolean show)
+	{
             try{
                     this.setVisible(show);
                     return true;
@@ -77,10 +83,44 @@ public class ChessGUI extends javax.swing.JFrame {
             }
     }
 
-	
 	public void boardRefresh()
 	{
 		setPieces();
+	}
+	
+	//this function inverts rank and file for when board is flipped
+	private int rankAndFileInverse(int original)
+	{
+		int ret;
+		
+		ret = -1;
+		switch(original){
+			case 0:
+				ret = 7;
+				break;
+			case 1:
+				ret = 6;
+				break;
+			case 2:
+				ret = 5;
+				break;
+			case 3:
+				ret = 4;
+				break;
+			case 4:
+				ret = 3;
+				break;
+			case 5:
+				ret = 2;
+				break;
+			case 6:
+				ret = 1;
+				break;
+			case 7:
+				ret = 0;
+				break;
+		}
+		return ret;
 	}
 	
     /* Determines if a piece is on the square(file and rank).
@@ -90,8 +130,16 @@ public class ChessGUI extends javax.swing.JFrame {
 		Square s;
 		Piece p;
 		String resourceFile;
+		int f;
+		int r;
 		
-		s = game.getSquareAt((Integer) button.getClientProperty("file"), (Integer) button.getClientProperty("rank"));
+		f = (Integer) button.getClientProperty("file");
+		r = (Integer) button.getClientProperty("rank");
+		if(flipped){
+			f = rankAndFileInverse(f);
+			r = rankAndFileInverse(r);
+		}
+		s = game.getSquareAt(f, r);
 		if(s.isOccupied() == false){
 			return;
 		}
@@ -147,9 +195,13 @@ public class ChessGUI extends javax.swing.JFrame {
 				//adds a listener to the square
 				guiBoard[file][rank].addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e){
-						squareSelect( e,
-									 (Integer)(((javax.swing.JButton)e.getSource()).getClientProperty( "file" )),
-									 (Integer)(((javax.swing.JButton)e.getSource()).getClientProperty( "rank" )) );
+						int f = (Integer)(((javax.swing.JButton)e.getSource()).getClientProperty( "file" ));
+						int r = (Integer)(((javax.swing.JButton)e.getSource()).getClientProperty( "rank" ));
+						if(flipped == true){
+							f = rankAndFileInverse(f);
+							r = rankAndFileInverse(r);
+						}
+						squareSelect(e,f,r);
 					}
 				});
 				//determines if we need to set a piece icon on this square
@@ -166,12 +218,15 @@ public class ChessGUI extends javax.swing.JFrame {
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank] = new javax.swing.JButton();
-				guiBoard[file][rank].putClientProperty("file", file);
-				guiBoard[file][rank].putClientProperty("rank", rank);
+				int f = file;
+				int r = rank;
+				guiBoard[file][rank].putClientProperty("file", f);
+				guiBoard[file][rank].putClientProperty("rank", r);
 			}
 		}
 	}
 	
+	//just sprouted an extra function to sweep some of the initGui() mess into
 	private void messyPanelLayouts()
 	{
 		javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -402,8 +457,58 @@ public class ChessGUI extends javax.swing.JFrame {
         );
 	}
 	
-	private void initComponents()
-	{	
+	//adds labels (inversed if gui is flipped)
+	private void applyLabels()
+	{
+		//flipped labels
+		if(flipped){
+			label8.setText("1");
+			label7.setText("2");
+			label6.setText("3");
+			label5.setText("4");
+			label4.setText("5");
+			label3.setText("6");
+			label2.setText("7");
+			label1.setText("8");
+			labelA.setText("H");
+			labelB.setText("G");
+			labelC.setText("F");
+			labelD.setText("E");
+			labelE.setText("D");
+			labelF.setText("C");
+			labelG.setText("B");
+			labelH.setText("A");
+		}
+		//normal labels
+		else{
+			label8.setText("8");
+			label7.setText("7");
+			label6.setText("6");
+			label5.setText("5");
+			label4.setText("4");
+			label3.setText("3");
+			label2.setText("2");
+			label1.setText("1");
+			labelA.setText("A");
+			labelB.setText("B");
+			labelC.setText("C");
+			labelD.setText("D");
+			labelE.setText("E");
+			labelF.setText("F");
+			labelG.setText("G");
+			labelH.setText("H");
+		}
+        outOfPlayPanel.setBackground(new java.awt.Color(204, 204, 204));
+        outOfPlayPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+
+        blackLabel.setText("Computer");
+
+        whiteLabel.setText("Player");
+	}
+	
+	//initializes gui components
+	private void createComponents()
+	{
 		colorSelectorButtonGroup = new javax.swing.ButtonGroup();
 		mainPanel = new javax.swing.JPanel();
 		label8 = new javax.swing.JLabel();
@@ -441,6 +546,13 @@ public class ChessGUI extends javax.swing.JFrame {
 		flipBoardButton = new javax.swing.JButton();
 		endTurnButton = new javax.swing.JButton();
 		guiBoard = new javax.swing.JButton[8][8];
+	}
+	
+	private void initGui()
+	{	
+		
+		
+		createComponents();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LaboonChess");
@@ -459,30 +571,7 @@ public class ChessGUI extends javax.swing.JFrame {
 		setBoard();
 		setPieces();
 		messyPanelLayouts();
-
-		label8.setText("8");
-        label7.setText("7");
-        label6.setText("6");
-        label5.setText("5");
-        label4.setText("4");
-        label3.setText("3");
-        label2.setText("2");
-        label1.setText("1");
-        labelA.setText("A");
-        labelB.setText("B");
-        labelC.setText("C");
-        labelD.setText("D");
-        labelE.setText("E");
-        labelF.setText("F");
-        labelG.setText("G");
-        labelH.setText("H");
-
-        outOfPlayPanel.setBackground(new java.awt.Color(204, 204, 204));
-        outOfPlayPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-
-        blackLabel.setText("Computer");
-
-        whiteLabel.setText("Player");
+		applyLabels();
 
         javax.swing.GroupLayout outOfPlayPanelLayout = new javax.swing.GroupLayout(outOfPlayPanel);
         outOfPlayPanel.setLayout(outOfPlayPanelLayout);
@@ -749,7 +838,7 @@ public class ChessGUI extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
     private void saveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -763,8 +852,10 @@ public class ChessGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void flipBoardButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
-        // TODO add your handling code here:
+    private void flipBoardButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        flipped = !flipped;
+		applyLabels();
+		setPieces();
     }
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -802,6 +893,13 @@ public class ChessGUI extends javax.swing.JFrame {
 	
 	private void squareSelect(java.awt.event.ActionEvent evt, int file, int rank)
 	{
+		Square sq;
+		GameInput gi;
 		
+		gi = new GameInput(USER, game); //game input from GUI will always come from user
+		
+		gi.mapSquare("selectedSquare", game.board.getSquareAt(file, rank));
+		
+		Chess.handleGameInput(gi);
 	}
 }
