@@ -5,15 +5,14 @@
 public class ChessGUI extends javax.swing.JFrame {
 
     /* Constants */
+	public static final boolean USER = true;
+	public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
 
     /* Variables */
     //the gui needs a game object to update its display as game state changes
     private Game game;
-
-    //the gui needs a userinput object to handle events it listens for
-    private UserInput ui;
 
     //square buttons are stored in a 8x8 grid modeled after chessboard
     private javax.swing.JButton[][] guiBoard;
@@ -61,12 +60,10 @@ public class ChessGUI extends javax.swing.JFrame {
     }
 
 
-    public ChessGUI(Game g, UserInput i) {
-            game = g;
-            ui = i;
-        initComponents();
+    public ChessGUI(Game g) {
+		game = g;
+		initComponents();
     }
-
 
     /* Displays GUI depending on show parameter (true = show, false = hide)
      * and returns boolean on success */
@@ -80,110 +77,62 @@ public class ChessGUI extends javax.swing.JFrame {
             }
     }
 
+	
+	public void boardRefresh()
+	{
+		setPieces();
+	}
+	
     /* Determines if a piece is on the square(file and rank).
      * If true, sets a relevant piece icon on gui */
     private void setPieceIcon(javax.swing.JButton button)
     {
-            Square s;
-            Piece p;
-            String resourceFile;
-
-            s = game.getSquareAt((Integer) button.getClientProperty("file"), (Integer) button.getClientProperty("rank"));
-            if(s.isOccupied() == false){
-                    return;
-            }
-            p = s.getPiece();
-            resourceFile = "/images/";
-            if(p.getColor() == WHITE){
-                    resourceFile = resourceFile + "white-";
-            }
-            else if(p.getColor() == BLACK){
-                    resourceFile = resourceFile + "black-";
-            }
-            resourceFile = resourceFile + p.getName().toLowerCase() + ".png";
-            button.setIcon(new javax.swing.ImageIcon(getClass().getResource(resourceFile)));
-            return;
+		Square s;
+		Piece p;
+		String resourceFile;
+		
+		s = game.getSquareAt((Integer) button.getClientProperty("file"), (Integer) button.getClientProperty("rank"));
+		if(s.isOccupied() == false){
+			return;
+		}
+		p = s.getPiece();
+		resourceFile = "/images/";
+		
+		switch(p.getDisplayColor()){
+			case BLUE:
+				resourceFile = resourceFile + "blue-";
+				break;
+			case GREEN:
+				resourceFile = resourceFile + "green-";
+				break;
+			case ORANGE:
+				resourceFile = resourceFile + "orange-";
+				break;
+			case RED:
+				resourceFile = resourceFile + "red-";
+				break;
+			case YELLOW:
+				resourceFile = resourceFile + "yellow-";
+				break;
+			default:
+				if(p.getColor() == WHITE){
+					resourceFile = resourceFile + "white-";
+				}
+				else if(p.getColor() == BLACK){
+					resourceFile = resourceFile + "black-";
+				}
+		}
+		
+		resourceFile = resourceFile + p.getName().toLowerCase() + ".png";
+		button.setIcon(new javax.swing.ImageIcon(getClass().getResource(resourceFile)));
+		return;
     }
 
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "red-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "orange-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "yellow-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "green-";
-    //         // }
-    //         // else if(p.getColor() == ){
-    //         //         resourceFile = resourceFile + "blue-";
-    //         // }
-
-	private void initComponents()
+	private void setPieces()
 	{
 		int file;
 		int rank;
-                colorSelectorButtonGroup = new javax.swing.ButtonGroup();
-		mainPanel = new javax.swing.JPanel();
-		label8 = new javax.swing.JLabel();
-                label7 = new javax.swing.JLabel();
-                label6 = new javax.swing.JLabel();
-                label5 = new javax.swing.JLabel();
-                label4 = new javax.swing.JLabel();
-                label3 = new javax.swing.JLabel();
-                label2 = new javax.swing.JLabel();
-                label1 = new javax.swing.JLabel();
-                labelA = new javax.swing.JLabel();
-                labelB = new javax.swing.JLabel();
-                labelC = new javax.swing.JLabel();
-                labelD = new javax.swing.JLabel();
-                labelE = new javax.swing.JLabel();
-                labelF = new javax.swing.JLabel();
-                labelG = new javax.swing.JLabel();
-                labelH = new javax.swing.JLabel();
-                outOfPlayPanel = new javax.swing.JPanel();
-                blackLabel = new javax.swing.JLabel();
-                whiteLabel = new javax.swing.JLabel();
-                jSeparator1 = new javax.swing.JSeparator();
-                jSeparator2 = new javax.swing.JSeparator();
-                durationPanel = new javax.swing.JPanel();
-                durationText = new javax.swing.JLabel();
-                menuBarPanel = new javax.swing.JPanel();
-                newGameButton = new javax.swing.JButton();
-                saveGameButton = new javax.swing.JButton();
-                loadGameButton = new javax.swing.JButton();
-                menuBarPanel1 = new javax.swing.JPanel();
-                playerColorButton = new javax.swing.JRadioButton();
-                computerColorButton = new javax.swing.JRadioButton();
-                submitColorsButton = new javax.swing.JButton();
-                colorSelector = new javax.swing.JComboBox<>();
-                flipBoardButton = new javax.swing.JButton();
-                endTurnButton = new javax.swing.JButton();
-                guiBoard = new javax.swing.JButton[8][8];
-
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-                setTitle("LaboonChess");
-                setMaximumSize(new java.awt.Dimension(725, 532));
-                setMinimumSize(new java.awt.Dimension(725, 532));
-                setResizable(false);
-
-                mainPanel.setBackground(new java.awt.Color(255, 255, 255));
-                mainPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-                mainPanel.setMaximumSize(new java.awt.Dimension(402, 402));
-                mainPanel.setMinimumSize(new java.awt.Dimension(402, 402));
-                mainPanel.setPreferredSize(new java.awt.Dimension(402, 402));
-                mainPanel.setSize(new java.awt.Dimension(402, 402));
-
-		for(file = 0; file < 8; file++){
-			for(rank = 0; rank < 8; rank++){
-				guiBoard[file][rank] = new javax.swing.JButton();
-				guiBoard[file][rank].putClientProperty("file", file);
-				guiBoard[file][rank].putClientProperty("rank", rank);
-			}
-		}
-
+		
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank].setBackground(new java.awt.Color(153, 153, 153));
@@ -207,8 +156,25 @@ public class ChessGUI extends javax.swing.JFrame {
 				setPieceIcon(guiBoard[file][rank]);
 			}
 		}
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+	}
+	
+	private void setBoard()
+	{
+		int file;
+		int rank;
+		
+		for(file = 0; file < 8; file++){
+			for(rank = 0; rank < 8; rank++){
+				guiBoard[file][rank] = new javax.swing.JButton();
+				guiBoard[file][rank].putClientProperty("file", file);
+				guiBoard[file][rank].putClientProperty("rank", rank);
+			}
+		}
+	}
+	
+	private void messyPanelLayouts()
+	{
+		javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
 		//Square Buttons
 		 mainPanel.setLayout(mainPanelLayout);
@@ -434,6 +400,65 @@ public class ChessGUI extends javax.swing.JFrame {
                     .addComponent(guiBoard[6][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(guiBoard[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
+	}
+	
+	private void initComponents()
+	{	
+		colorSelectorButtonGroup = new javax.swing.ButtonGroup();
+		mainPanel = new javax.swing.JPanel();
+		label8 = new javax.swing.JLabel();
+        label7 = new javax.swing.JLabel();
+        label6 = new javax.swing.JLabel();
+        label5 = new javax.swing.JLabel();
+        label4 = new javax.swing.JLabel();
+        label3 = new javax.swing.JLabel();
+        label2 = new javax.swing.JLabel();
+        label1 = new javax.swing.JLabel();
+        labelA = new javax.swing.JLabel();
+        labelB = new javax.swing.JLabel();
+        labelC = new javax.swing.JLabel();
+        labelD = new javax.swing.JLabel();
+        labelE = new javax.swing.JLabel();
+        labelF = new javax.swing.JLabel();
+        labelG = new javax.swing.JLabel();
+        labelH = new javax.swing.JLabel();
+        outOfPlayPanel = new javax.swing.JPanel();
+        blackLabel = new javax.swing.JLabel();
+        whiteLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        durationPanel = new javax.swing.JPanel();
+        durationText = new javax.swing.JLabel();
+        menuBarPanel = new javax.swing.JPanel();
+		newGameButton = new javax.swing.JButton();
+		saveGameButton = new javax.swing.JButton();
+		loadGameButton = new javax.swing.JButton();
+		menuBarPanel1 = new javax.swing.JPanel();
+		playerColorButton = new javax.swing.JRadioButton();
+		computerColorButton = new javax.swing.JRadioButton();
+		submitColorsButton = new javax.swing.JButton();
+		colorSelector = new javax.swing.JComboBox<>();
+		flipBoardButton = new javax.swing.JButton();
+		endTurnButton = new javax.swing.JButton();
+		guiBoard = new javax.swing.JButton[8][8];
+
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LaboonChess");
+        setMaximumSize(new java.awt.Dimension(725, 532));
+        setMinimumSize(new java.awt.Dimension(725, 532));
+        setResizable(false);
+
+		mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+		mainPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+		mainPanel.setMaximumSize(new java.awt.Dimension(402, 402));
+		mainPanel.setMinimumSize(new java.awt.Dimension(402, 402));
+		mainPanel.setPreferredSize(new java.awt.Dimension(402, 402));
+		mainPanel.setSize(new java.awt.Dimension(402, 402));
+
+		// these functions set our board according to the board state
+		setBoard();
+		setPieces();
+		messyPanelLayouts();
 
 		label8.setText("8");
         label7.setText("7");
@@ -571,14 +596,15 @@ public class ChessGUI extends javax.swing.JFrame {
         computerColorButton.setText("Computer Color");
         //computerColorButton.setEnabled(false);
 
-        colorSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "White", "Black", "Red", "Orange", "Yellow", "Green", "Blue" }));
+        colorSelector.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Standard", "Red", "Orange", "Yellow", "Green", "Blue" }));
 
         submitColorsButton.setText("Submit Colors");
         submitColorsButton.setBorderPainted(true);
         submitColorsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         submitColorsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
+				//we pass event, string value of color, and type selected
+                pieceDisplayColorChange(evt, colorSelector.getSelectedItem().toString(), playerColorButton.isSelected());
             }
         });
 
@@ -745,8 +771,37 @@ public class ChessGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
+	private void pieceDisplayColorChange(java.awt.event.ActionEvent evt, String color, boolean type)
+	{
+		DisplayColor dc;
+		
+		ApplicationInput ai = new ApplicationInput(type, AppOp.CHANGE_PIECE_DISPLAY_COLOR);
+		switch(color){
+			case "Red":
+				dc = DisplayColor.RED;
+				break;
+			case "Orange":
+				dc = DisplayColor.ORANGE;
+				break;
+			case "Yellow":
+				dc = DisplayColor.YELLOW;
+				break;
+			case "Blue":
+				dc = DisplayColor.BLUE;
+				break;
+			case "Green":
+				dc = DisplayColor.BLUE;
+				break;
+			default:
+				dc = DisplayColor.STANDARD;
+		}
+		ai.mapDisplayColor("displayColor", dc);
+		
+		Chess.handleApplicationInput(ai);
+	}
+	
 	private void squareSelect(java.awt.event.ActionEvent evt, int file, int rank)
 	{
-		ui.handleInput(file, rank);
+		
 	}
 }

@@ -3,13 +3,14 @@ import java.util.*;
 public abstract class Piece
 {
 	/* CONSTANTS */
-	public static final boolean BLACK = true;
-	public static final boolean WHITE = false;
-	public static final boolean USER = true;
-	public static final boolean COMP = false;
-
+	public final boolean BLACK = true;
+	public final boolean WHITE = false;
+	public final boolean USER = true;
+	public final boolean COMP = false;
+	
 	/* VARIABLES */
-	public boolean color; // a piece has a color
+	public boolean gameColor; // a piece has a game color (the traditional black or white)
+	public DisplayColor displayColor; // a piece has a display color (independent of their game color)
 	public Square position; // a piece has a position on the board represented by a square
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
@@ -19,9 +20,14 @@ public abstract class Piece
 	/* GETTERS */
 	public boolean getColor()
 	{
-		return color;
+		return gameColor;
 	}
-
+	
+	public DisplayColor getDisplayColor()
+	{
+		return displayColor;
+	}
+	
 	public Square getPosition()
 	{
 		return position;
@@ -38,11 +44,16 @@ public abstract class Piece
 		this.position = position;
 	}
 	
-	public void setColor(boolean color)
+	public void setColor(boolean gameColor)
 	{
-		this.color = color;
+		this.gameColor = gameColor;
 	}
 
+	public void setDisplayColor(DisplayColor displayColor)
+	{
+		this.displayColor = displayColor;
+	}
+	
 	public void setName(String name)
 	{
 		this.name = name;
@@ -54,14 +65,14 @@ public abstract class Piece
 		String c;
 		String str;
 
-		if(color == WHITE){
+		if(gameColor == WHITE){
 			c = "white";
 		}
 
 		else{
 			c = "black";
 		}
-
+		
 		str = c + " " + name;
 		return str;
 	}

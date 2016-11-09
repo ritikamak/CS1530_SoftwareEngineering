@@ -1,7 +1,7 @@
-public class UserInput
+public class GameInput extends ChessInput
 {
 	/* Variables */
-	Game game; //the user input needs a game to communicate with
+	Game game; //the game input needs a game to communicate with
 	boolean srcSelected; //this is a boolean to indicated if the user has a square currently selected
 	Square srcSquare; //this is the square that the user currently has selected
 	boolean srcPieceSelected;
@@ -9,10 +9,10 @@ public class UserInput
 	Square destSquare;
 	
 	/* Constructor */
-	public UserInput(Game g)
+	public GameInput(boolean type, Game game)
 	{
-		srcSelected = false;
-		game = g;
+		this.type = type;
+		this.game = game;
 	}
 	
 	/* handles input with square selection */
