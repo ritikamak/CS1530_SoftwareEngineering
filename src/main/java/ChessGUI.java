@@ -897,12 +897,9 @@ public class ChessGUI extends javax.swing.JFrame {
 		GameInput gi;
 		
 		gi = new GameInput(USER, game); //game input from GUI will always come from user
-		if(flipped){
-			gi.mapSquare("selectedSquare", game.board.getSquareAt(rankAndFileInverse(file),  rankAndFileInverse(rank)));
-		}
-		else{
-			gi.mapSquare("selectedSquare", game.board.getSquareAt(file, rank));
-		}
+		
+		gi.mapSquare("selectedSquare", game.board.getSquareAt(file, rank));
+		
 		Chess.handleGameInput(gi);
 	}
 }
