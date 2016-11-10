@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 /**
  * Chess Application GUI
  * @author Pete Stamos petestamos@gmail.com
@@ -855,6 +856,7 @@ public class ChessGUI extends javax.swing.JFrame {
     }
 
     private void flipBoardButtonActionPerformed(java.awt.event.ActionEvent evt) {
+         infoBox("May not work correctly if pieces have already been moved", "WARNING");
         flipped = !flipped;
 		applyLabels();
 		setPieces();
@@ -878,6 +880,7 @@ public class ChessGUI extends javax.swing.JFrame {
 
 	private void pieceDisplayColorChange(java.awt.event.ActionEvent evt, String color, boolean type)
 	{
+           infoBox("May not work correctly if pieces have already been moved", "WARNING");
 		DisplayColor dc;
 
 		ApplicationInput ai = new ApplicationInput(type, AppOp.CHANGE_PIECE_DISPLAY_COLOR);
@@ -916,4 +919,10 @@ public class ChessGUI extends javax.swing.JFrame {
 
 		Chess.handleGameInput(gi);
 	}
+
+     //method for popup window saying illegal move
+     private void infoBox(String infoMessage, String titleBar)
+      {
+          JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+      }
 }

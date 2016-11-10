@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 public class Chess
 {
@@ -51,7 +52,8 @@ public class Chess
 		//if a source is already selected, and there is a piece there, we are moving that piece
 		if(srcSelected && srcPieceSelected){
 			if(srcSquare.equals(gi.getSquare("selectedSquare"))){
-				System.out.println("Cannot move from " + srcPiece.toString() + " to itself");
+				String illegal_message = "Cannot move from " + srcPiece.toString() + " to itself";
+				infoBox(illegal_message, "ILLEGAL MOVE");
 				return;
 			}
 			destSquare = gi.getSquare("selectedSquare");
@@ -71,9 +73,8 @@ public class Chess
 				current_turn = !current_turn;
 			}
 			else{
-				System.out.println("When you clicked " + destSquare.toString() + " you" +
-								   " tried to moved the " + srcPiece.toString() + " on " + srcSquare.toString() +
-								   " to there, this is illegal so try again.");
+				String illegal_message = "When you clicked " + destSquare.toString() + " you tried to moved the " + srcPiece.toString() + " on " + srcSquare.toString() +  " to there, this is illegal so try again.";
+				infoBox(illegal_message, "ILLEGAL MOVE");
 			}
 			srcSelected = false;
 		}
@@ -85,11 +86,11 @@ public class Chess
 			}
 			if(current_turn != gi.getSquare("selectedSquare").getPiece().getColor()){
 				if(current_turn == WHITE){
-					System.out.println("You selected a BLACK piece when it is the WHITE turn");
+					infoBox("You selected a BLACK piece when it is the WHITE turn", "ILLEGAL MOVE");
 					return;
 				}
 				else{
-					System.out.println("You selected a WHITE piece when it is the BLACK turn");
+					infoBox("You selected a WHITEiece when it is the BLACK turn", "ILLEGAL MOVE");
 					return;
 				}
 			}
@@ -104,6 +105,12 @@ public class Chess
 			}
 		}
 	}
+	//method for popup window saying illegal move
+	public static void infoBox(String infoMessage, String titleBar)
+	 {
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+	 }
+
 
 	public static void main(String[] args)
 	{
