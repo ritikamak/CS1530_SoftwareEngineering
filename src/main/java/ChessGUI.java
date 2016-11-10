@@ -6,7 +6,7 @@ public class ChessGUI extends javax.swing.JFrame {
 
     /* Constants */
 	public static final boolean USER = true;
-	public static final boolean COMP = true;
+     public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
 
@@ -857,10 +857,21 @@ public class ChessGUI extends javax.swing.JFrame {
 		applyLabels();
 		setPieces();
     }
+    //solely meant as workaround to use flipboard in chess class
+    public void flipBoardButtonActionPerformed() {
+       flipped = !flipped;
+      applyLabels();
+      setPieces();
+    }
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {
          flipBoardButtonActionPerformed(evt);
         // TODO add your handling code here:
+    }
+    //solely meant as workaround to use flipboard in chess class
+    public void endTurnButtonActionPerformed() {
+         flipBoardButtonActionPerformed();
+       // TODO add your handling code here:
     }
 
 	private void pieceDisplayColorChange(java.awt.event.ActionEvent evt, String color, boolean type)

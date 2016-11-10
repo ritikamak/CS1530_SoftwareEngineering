@@ -30,6 +30,7 @@ public class Player
 	boolean type; // a player is either a user or a computer
 	boolean color; // a player controls either black or white
 	ArrayList<Piece> pieces; // a player starts with 16 pieces
+	ArrayList<Piece> captured_pieces; //a player's captured pieces
 
 	/* CONSTRUCTORS */
 	public Player(boolean t, boolean c)
@@ -37,13 +38,14 @@ public class Player
 		type = t;
 		color = c;
 	}
-	
+
 	public Player(boolean t, boolean c, Board b)
 	{
 		type = t;
 		color = c;
 		//Piece constructor goes
 		pieces = new ArrayList<Piece>();
+		captured_pieces = new ArrayList<Piece>();
 		if(c == WHITE){
 			//8 pawns
 			pieces.add(new Pawn(color, b.getSquareAt(A, TWO)));
@@ -107,6 +109,11 @@ public class Player
 	public ArrayList<Piece> getPieces()
 	{
 		return pieces;
+	}
+
+	public ArrayList<Piece> getCapturedPieces()
+	{
+		return captured_pieces;
 	}
 
 	public int piecesLeft()
