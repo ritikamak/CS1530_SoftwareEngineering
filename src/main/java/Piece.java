@@ -3,45 +3,59 @@ import java.util.*;
 public abstract class Piece
 {
 	/* CONSTANTS */
-	public static final boolean BLACK = true;
-	public static final boolean WHITE = false;
-	public static final boolean USER = true;
-	public static final boolean COMP = false;
-
+	public final boolean BLACK = true;
+	public final boolean WHITE = false;
+	public final boolean USER = true;
+	public final boolean COMP = false;
+	
 	/* VARIABLES */
-	public boolean color; // a piece has a color
+	public boolean gameColor; // a piece has a game color (the traditional black or white)
+	public DisplayColor displayColor; // a piece has a display color (independent of their game color)
 	public Square position; // a piece has a position on the board represented by a square
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
 	/* METHODS */
-	//might be able to be replaced with the setter, keep until tested
-	//public  abstract void placePiece(Square destination);
-
 	public abstract boolean movePiece(Square destination);
 
 	/* GETTERS */
 	public boolean getColor()
 	{
-		return color;
+		return gameColor;
 	}
-
-	public Square getPosition(){
+	
+	public DisplayColor getDisplayColor()
+	{
+		return displayColor;
+	}
+	
+	public Square getPosition()
+	{
 		return position;
 	}
 
-	public String getName(){
+	public String getName()
+	{
 		return name;
 	}
 
 	/* SETTERS */
-	public void setPosition(Square position ){
+	public void setPosition(Square position)
+	{
 		this.position = position;
 	}
-	public void setColor(boolean color){
-		this.color = color;
+	
+	public void setColor(boolean gameColor)
+	{
+		this.gameColor = gameColor;
 	}
 
-	public void setName(String name){
+	public void setDisplayColor(DisplayColor displayColor)
+	{
+		this.displayColor = displayColor;
+	}
+	
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
@@ -51,14 +65,14 @@ public abstract class Piece
 		String c;
 		String str;
 
-		if(color == WHITE){
+		if(gameColor == WHITE){
 			c = "white";
 		}
 
 		else{
 			c = "black";
 		}
-
+		
 		str = c + " " + name;
 		return str;
 	}

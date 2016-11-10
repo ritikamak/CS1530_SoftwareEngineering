@@ -8,20 +8,19 @@ public class Queen extends Piece
 	public static final boolean COMP = false;
 
 	/* VARIABLES */
-	public boolean color; // a piece has a color
-	public Square position; // a piece has a position on the board represented by a square
-	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
 	/*CONSTRUCTORS*/
 
 	public Queen (boolean color, Square position){
-		this.color = color;
+		this.gameColor = color;
 		this.position = position;
 		name = "Queen";
+		this.displayColor = DisplayColor.STANDARD;
 	}
 	public Queen (boolean color){
-		this.color = color;
+		this.gameColor = color;
 		name = "Queen";
+		this.displayColor = DisplayColor.STANDARD;
 	}
 
 	/* METHODS */
@@ -61,48 +60,5 @@ public class Queen extends Piece
 			}
 		}
 		return false;
-	}
-
-	/* GETTERS */
-	public boolean getColor()
-	{
-		return color;
-	}
-
-	public Square getPosition(){
-		return position;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	/* SETTERS */
-	public void setPosition(Square position ){
-		this.position = position;
-	}
-	public void setColor(boolean color){
-		this.color = color;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	/* toString */
-	public String toString(){
-		String c;
-		String str;
-
-		if(color == WHITE){
-			c = "white";
-		}
-
-		else{
-			c = "black";
-		}
-
-		str = c + " " + name;
-		return str;
 	}
 }

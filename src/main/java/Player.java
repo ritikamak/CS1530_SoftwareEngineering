@@ -30,66 +30,70 @@ public class Player
 	boolean type; // a player is either a user or a computer
 	boolean color; // a player controls either black or white
 	ArrayList<Piece> pieces; // a player starts with 16 pieces
+	ArrayList<Piece> captured_pieces; //a player's captured pieces
 
 	/* CONSTRUCTORS */
 	public Player(boolean t, boolean c)
 	{
 		type = t;
 		color = c;
+	}
+
+	public Player(boolean t, boolean c, Board b)
+	{
+		type = t;
+		color = c;
 		//Piece constructor goes
 		pieces = new ArrayList<Piece>();
+		captured_pieces = new ArrayList<Piece>();
 		if(c == WHITE){
-			pieces.add(new Pawn(color, new Square(A, TWO)));
-			pieces.add(new Pawn(color, new Square(B, TWO)));
-			pieces.add(new Pawn(color, new Square(C, TWO)));
-			pieces.add(new Pawn(color, new Square(D, TWO)));
-			pieces.add(new Pawn(color, new Square(E, TWO)));
-			pieces.add(new Pawn(color, new Square(F, TWO)));
-			pieces.add(new Pawn(color, new Square(G, TWO)));
-			pieces.add(new Pawn(color, new Square(H, TWO)));
+			//8 pawns
+			pieces.add(new Pawn(color, b.getSquareAt(A, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(B, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(C, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(D, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(E, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(F, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(G, TWO)));
+			pieces.add(new Pawn(color, b.getSquareAt(H, TWO)));
 			//2 rooks
-			pieces.add(new Rook(color, new Square(A, ONE)));
-			pieces.add(new Rook(color, new Square(H, ONE)));
+			pieces.add(new Rook(color, b.getSquareAt(A, ONE)));
+			pieces.add(new Rook(color, b.getSquareAt(H, ONE)));
 			//two knights
-			pieces.add(new Knight(color, new Square(B, ONE)));
-			pieces.add(new Knight(color, new Square(G, ONE)));
+			pieces.add(new Knight(color, b.getSquareAt(B, ONE)));
+			pieces.add(new Knight(color,b.getSquareAt(G, ONE)));
 			//2 bishops
-			pieces.add(new Bishop(color, new Square(C, ONE)));
-			pieces.add(new Bishop(color, new Square(F, ONE)));
+			pieces.add(new Bishop(color, b.getSquareAt(C, ONE)));
+			pieces.add(new Bishop(color, b.getSquareAt(F, ONE)));
 			//king and queen
-			pieces.add(new Queen(color, new Square(D, ONE)));
-			pieces.add(new King(color, new Square(E, ONE)));
+			pieces.add(new Queen(color, b.getSquareAt(D, ONE)));
+			pieces.add(new King(color, b.getSquareAt(E, ONE)));
 		}
 		else if (c == BLACK){
-			pieces.add(new Pawn(color, new Square(A, SEVEN)));
-			pieces.add(new Pawn(color, new Square(B, SEVEN)));
-			pieces.add(new Pawn(color, new Square(C, SEVEN)));
-			pieces.add(new Pawn(color, new Square(D, SEVEN)));
-			pieces.add(new Pawn(color, new Square(E, SEVEN)));
-			pieces.add(new Pawn(color, new Square(F, SEVEN)));
-			pieces.add(new Pawn(color, new Square(G, SEVEN)));
-			pieces.add(new Pawn(color, new Square(H, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(A, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(B, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(C, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(D, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(E, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(F, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(G, SEVEN)));
+			pieces.add(new Pawn(color, b.getSquareAt(H, SEVEN)));
 			//2 rooks
-			pieces.add(new Rook(color, new Square(A, EIGHT)));
-			pieces.add(new Rook(color, new Square(H, EIGHT)));
+			pieces.add(new Rook(color, b.getSquareAt(A, EIGHT)));
+			pieces.add(new Rook(color, b.getSquareAt(H, EIGHT)));
 			//two knights
-			pieces.add(new Knight(color, new Square(B, EIGHT)));
-			pieces.add(new Knight(color, new Square(G, EIGHT)));
+			pieces.add(new Knight(color, b.getSquareAt(B, EIGHT)));
+			pieces.add(new Knight(color, b.getSquareAt(G, EIGHT)));
 			//2 bishops
-			pieces.add(new Bishop(color, new Square(C, EIGHT)));
-			pieces.add(new Bishop(color, new Square(F, EIGHT)));
+			pieces.add(new Bishop(color, b.getSquareAt(C, EIGHT)));
+			pieces.add(new Bishop(color, b.getSquareAt(F, EIGHT)));
 			//king and queen
-			pieces.add(new Queen(color, new Square(D, EIGHT)));
-			pieces.add(new King(color, new Square(E, EIGHT)));
+			pieces.add(new Queen(color, b.getSquareAt(D, EIGHT)));
+			pieces.add(new King(color, b.getSquareAt(E, EIGHT)));
 		}
-		//8 pawns
-
-
-
 	}
 
 	/* METHODS */
-
 
 	// Getters
 	public boolean getType()
@@ -105,6 +109,11 @@ public class Player
 	public ArrayList<Piece> getPieces()
 	{
 		return pieces;
+	}
+
+	public ArrayList<Piece> getCapturedPieces()
+	{
+		return captured_pieces;
 	}
 
 	public int piecesLeft()

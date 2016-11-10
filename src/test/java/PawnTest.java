@@ -68,7 +68,7 @@ public class PawnTest{
 	public void testPawnMove_5(){
 		Piece test = new Pawn (false, new Square(3,2));
 		Square test_square = new Square(2,3);
-		test_square.placePiece(new Pawn(true, new Square(2,3)));
+		test_square.occupySquare(new Pawn(true, new Square(2,3)));
 		assertTrue(test.movePiece(test_square));
 	}
 	/**
@@ -78,7 +78,7 @@ public class PawnTest{
 	public void testPawnIllegalCapture_1(){
 		Piece test = new Pawn (false, new Square(3,2));
 		Square test_square = new Square(2,3);
-		test_square.placePiece(new Pawn(false, new Square(2,3)));
+		test_square.occupySquare(new Pawn(false, new Square(2,3)));
 		assertFalse(test.movePiece(test_square));
 	}
 	/**
@@ -136,7 +136,7 @@ public class PawnTest{
 	public void testPawnMove_8(){
 		Piece test = new Pawn (true, new Square(6,5));
 		Square test_square = new Square(5,4);
-		test_square.placePiece(new Pawn(false, new Square(5,4)));
+		test_square.occupySquare(new Pawn(false, new Square(5,4)));
 		assertTrue(test.movePiece(test_square));
 	}
 	/**
@@ -146,7 +146,7 @@ public class PawnTest{
 	public void testPawnIllegalCapture_2(){
 		Piece test = new Pawn (true, new Square(6,5));
 		Square test_square = new Square(5,4);
-		test_square.placePiece(new Pawn(true, new Square(5,4)));
+		test_square.occupySquare(new Pawn(true, new Square(5,4)));
 		assertFalse(test.movePiece(test_square));
 	}
 	/**

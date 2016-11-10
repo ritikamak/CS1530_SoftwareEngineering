@@ -1,0 +1,40 @@
+User Stories for Sprint 2:
+
+-----In original backlog; SUBSYSTEM 1-CHESS GUI:-----
+
+-	As a player
+  I want to play a graphical version of chess
+  So that I do not need to carry a board with me everywhere.
+	STORY POINTS: 16
+-	As a player
+  I want a chess interface that is intuitive
+  So that I can easily play without the need to learn additional unnecessary game mechanics.
+	STORY POINTS: 4
+-	As a player
+  I want a chessboard and chess pieces that accurately resemble that of their physical counterpart 
+  So that I can easily distinguish both the chessboard and each chess piece on the board.
+	STORY POINTS: 8
+-	As a player
+  I want this game to run on a computer; not on mobile
+  So that I can see the game on a larger screen.
+	STORY POINTS: 2
+-	As a player
+  I want black pieces to be at the top of the board and white pieces to be at the bottom
+  So that the game follows standard rules.
+	STORY POINTS: 2
+-	As a player
+  I want the rank and file to be displayed around the board
+  So that I can see what location a piece is at. 
+	STORY POINTS: 8
+-	As a player
+  I want a 2-dimensional board
+  So that I do not see the pieces at an angle.
+	STORY POINTS: 16
+-	As a player
+  I want for there to be a section for all pieces currently out of play, on the side panel next to the game board
+  So that I can easily assess the progress of each game.
+	STORY POINTS: 4
+-	As a player
+  I want the chess board to be at the top of the display window and any buttons to be at the bottom
+  So that I see the chess board clearly while playing a game.
+	STORY POINTS: 4 (not completed)
