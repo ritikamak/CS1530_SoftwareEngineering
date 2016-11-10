@@ -11,7 +11,7 @@ public class Chess
 	static boolean srcPieceSelected; //this is a boolean to indicate if a piece resides in the currently selected square
 	static Piece srcPiece;
 	static Square destSquare;
-	
+
 	/* Function for handling piece color change */
 	public static void changePieceDisplayColor(ApplicationInput ai)
 	{
@@ -50,6 +50,14 @@ public class Chess
 			System.out.println("When you clicked " + destSquare.toString() + " I was supposed to" +
 							   " move the " + srcPiece.toString() + " on " + srcSquare.toString() +
 							   " to there. I will by next sprint! I promise!");
+			if(srcSquare.getPiece().movePiece(destSquare)){
+				destSquare.setPiece(srcSquare.getPiece());
+				srcSquare.setPiece(null);
+				//gui.endTurnButtonActionPerformed(java.awt.event.ActionEvent evt);
+			}
+			else{
+				System.out.println("Illegal move, try again");
+			}
 			srcSelected = false;
 		}
 		//otherwise, select a source
@@ -63,7 +71,7 @@ public class Chess
 			}
 		}
 	}
-	
+
 	public static void main(String[] args)
 	{
 		game = new Game();
