@@ -156,5 +156,16 @@ public class KingTest{
           Square test_square = new Square(6,7);
           assertTrue(test.movePiece(test_square));
      }
+     /**
+     test  white impeded kingside castle
+     */
+     @Test
+     public void testCastle_5(){
+          Piece test = new King (false, new Square(4,0));
+          Square test_square = new Square(6,0);
+          test_square.setPiece(new Knight (false, new Square(6,0)));
+          //assertFalse(test.movePiece(test_square));
+          assertTrue(test.movePiece(test_square));
+     }
 
 }
