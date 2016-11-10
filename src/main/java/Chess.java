@@ -50,6 +50,10 @@ public class Chess
 	{
 		//if a source is already selected, and there is a piece there, we are moving that piece
 		if(srcSelected && srcPieceSelected){
+			if(srcSquare.equals(gi.getSquare("selectedSquare"))){
+				System.out.println("Cannot move from " + srcPiece.toString() + " to itself");
+				return;
+			}
 			destSquare = gi.getSquare("selectedSquare");
 			if(srcSquare.getPiece().movePiece(destSquare) && current_turn == srcSquare.getPiece().getColor()){
 			//if(srcSquare.getPiece().movePiece(destSquare)){
@@ -63,7 +67,7 @@ public class Chess
 				//gui.boardRefresh();
 				//ends turn and flips board
 				//gui.endTurnButtonActionPerformed();
-				System.out.println(current_turn);
+				//System.out.println(current_turn);
 				current_turn = !current_turn;
 			}
 			else{

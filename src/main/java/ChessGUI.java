@@ -141,6 +141,8 @@ public class ChessGUI extends javax.swing.JFrame {
 		}
 		s = game.getSquareAt(f, r);
 		if(s.isOccupied() == false){
+               //sets empty square
+
 			return;
 		}
 		p = s.getPiece();
@@ -865,7 +867,7 @@ public class ChessGUI extends javax.swing.JFrame {
     }
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {
-         flipBoardButtonActionPerformed(evt);
+         //flipBoardButtonActionPerformed(evt);
         // TODO add your handling code here:
     }
     //solely meant as workaround to use flipboard in chess class
