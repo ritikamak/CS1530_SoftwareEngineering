@@ -6,7 +6,7 @@ public class ChessGUI extends javax.swing.JFrame {
 
     /* Constants */
 	public static final boolean USER = true;
-	public static final boolean COMP = true;
+     public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
 
@@ -87,12 +87,12 @@ public class ChessGUI extends javax.swing.JFrame {
 	{
 		setPieces();
 	}
-	
+
 	//this function inverts rank and file for when board is flipped
 	private int rankAndFileInverse(int original)
 	{
 		int ret;
-		
+
 		ret = -1;
 		switch(original){
 			case 0:
@@ -122,7 +122,7 @@ public class ChessGUI extends javax.swing.JFrame {
 		}
 		return ret;
 	}
-	
+
     /* Determines if a piece is on the square(file and rank).
      * If true, sets a relevant piece icon on gui */
     private void setPieceIcon(javax.swing.JButton button)
@@ -132,7 +132,7 @@ public class ChessGUI extends javax.swing.JFrame {
 		String resourceFile;
 		int f;
 		int r;
-		
+
 		f = (Integer) button.getClientProperty("file");
 		r = (Integer) button.getClientProperty("rank");
 		if(flipped){
@@ -141,11 +141,13 @@ public class ChessGUI extends javax.swing.JFrame {
 		}
 		s = game.getSquareAt(f, r);
 		if(s.isOccupied() == false){
+               //sets empty square
+
 			return;
 		}
 		p = s.getPiece();
 		resourceFile = "/images/";
-		
+
 		switch(p.getDisplayColor()){
 			case BLUE:
 				resourceFile = resourceFile + "blue-";
@@ -170,7 +172,7 @@ public class ChessGUI extends javax.swing.JFrame {
 					resourceFile = resourceFile + "black-";
 				}
 		}
-		
+
 		resourceFile = resourceFile + p.getName().toLowerCase() + ".png";
 		button.setIcon(new javax.swing.ImageIcon(getClass().getResource(resourceFile)));
 		return;
@@ -180,7 +182,7 @@ public class ChessGUI extends javax.swing.JFrame {
 	{
 		int file;
 		int rank;
-		
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank].setBackground(new java.awt.Color(153, 153, 153));
@@ -209,12 +211,12 @@ public class ChessGUI extends javax.swing.JFrame {
 			}
 		}
 	}
-	
+
 	private void setBoard()
 	{
 		int file;
 		int rank;
-		
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank] = new javax.swing.JButton();
@@ -225,7 +227,7 @@ public class ChessGUI extends javax.swing.JFrame {
 			}
 		}
 	}
-	
+
 	//just sprouted an extra function to sweep some of the initGui() mess into
 	private void messyPanelLayouts()
 	{
@@ -456,7 +458,7 @@ public class ChessGUI extends javax.swing.JFrame {
                     .addComponent(guiBoard[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 	}
-	
+
 	//adds labels (inversed if gui is flipped)
 	private void applyLabels()
 	{
@@ -505,7 +507,7 @@ public class ChessGUI extends javax.swing.JFrame {
 
         whiteLabel.setText("Player");
 	}
-	
+
 	//initializes gui components
 	private void createComponents()
 	{
@@ -547,11 +549,11 @@ public class ChessGUI extends javax.swing.JFrame {
 		endTurnButton = new javax.swing.JButton();
 		guiBoard = new javax.swing.JButton[8][8];
 	}
-	
+
 	private void initGui()
-	{	
-		
-		
+	{
+
+
 		createComponents();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -848,7 +850,7 @@ public class ChessGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
@@ -857,15 +859,27 @@ public class ChessGUI extends javax.swing.JFrame {
 		applyLabels();
 		setPieces();
     }
+    //solely meant as workaround to use flipboard in chess class
+    public void flipBoardButtonActionPerformed() {
+       flipped = !flipped;
+      applyLabels();
+      setPieces();
+    }
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {
+         //flipBoardButtonActionPerformed(evt);
         // TODO add your handling code here:
+    }
+    //solely meant as workaround to use flipboard in chess class
+    public void endTurnButtonActionPerformed() {
+         flipBoardButtonActionPerformed();
+       // TODO add your handling code here:
     }
 
 	private void pieceDisplayColorChange(java.awt.event.ActionEvent evt, String color, boolean type)
 	{
 		DisplayColor dc;
-		
+
 		ApplicationInput ai = new ApplicationInput(type, AppOp.CHANGE_PIECE_DISPLAY_COLOR);
 		switch(color){
 			case "Red":
@@ -887,19 +901,19 @@ public class ChessGUI extends javax.swing.JFrame {
 				dc = DisplayColor.STANDARD;
 		}
 		ai.mapDisplayColor("displayColor", dc);
-		
+
 		Chess.handleApplicationInput(ai);
 	}
-	
+
 	private void squareSelect(java.awt.event.ActionEvent evt, int file, int rank)
 	{
 		Square sq;
 		GameInput gi;
-		
+
 		gi = new GameInput(USER, game); //game input from GUI will always come from user
-		
+
 		gi.mapSquare("selectedSquare", game.board.getSquareAt(file, rank));
-		
+
 		Chess.handleGameInput(gi);
 	}
 }
