@@ -10,16 +10,12 @@ public class Knight extends Piece
 	/* VARIABLES */
 	
 	/*CONSTRUCTORS*/
-	public Knight (boolean color, Square position){
-		this.gameColor = color;
-		this.position = position;
-		this.name = "Knight";
-		this.displayColor = displayColor.STANDARD;
+	public Knight (Player owner, boolean gameColor, Square position){
+		super(owner, "Knight", gameColor, position);
 	}
-	public Knight (boolean color){
-		this.gameColor = color;
-		this.name = "Knight";
-		this.displayColor = displayColor.STANDARD;
+	
+	public Knight (boolean gameColor, Square position){
+		super("Knight", gameColor, position);
 	}
 
 	/* METHODS */
@@ -41,34 +37,50 @@ public class Knight extends Piece
 		}
 		//check the eight possible destinations
 		if(d_file == (p_file-1) && d_rank == (p_rank+2)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+1) && d_rank == (p_rank+2)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+2) && d_rank == (p_rank+1)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+2) && d_rank == (p_rank-1)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file+1) && d_rank == (p_rank-2)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-1) && d_rank == (p_rank-2)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-2) && d_rank == (p_rank-1)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		else if(d_file == (p_file-2) && d_rank == (p_rank+1)){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}

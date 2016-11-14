@@ -11,16 +11,12 @@ public class Queen extends Piece
 
 	/*CONSTRUCTORS*/
 
-	public Queen (boolean color, Square position){
-		this.gameColor = color;
-		this.position = position;
-		name = "Queen";
-		this.displayColor = DisplayColor.STANDARD;
+	public Queen (Player owner, boolean gameColor, Square position){
+		super(owner, "Queen", gameColor, position);
 	}
-	public Queen (boolean color){
-		this.gameColor = color;
-		name = "Queen";
-		this.displayColor = DisplayColor.STANDARD;
+	
+	public Queen (boolean gameColor, Square position){
+		super("Queen", gameColor, position);
 	}
 
 	/* METHODS */
@@ -42,11 +38,15 @@ public class Queen extends Piece
 		}
 		//check if horizontal move
 		else if(d_file == p_file){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		//check if vertical move
 		else if(d_rank == p_rank){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
@@ -55,6 +55,8 @@ public class Queen extends Piece
 			//slope calculation must be in here otherwise horizontal move would result in division by zero
 			int slope = (d_rank-p_rank)/(d_file-p_file);
 			if(slope == 1 || slope == -1){
+				position.evictSquare();
+				destination.occupySquare(this);
 				position = destination;
 				return true;
 			}

@@ -8,16 +8,64 @@ public abstract class Piece
 	public final boolean USER = true;
 	public final boolean COMP = false;
 	
+	/*a public enum for display colors */
+	public enum DisplayColor {
+		STANDARD, 
+		BLUE, 
+		GREEN,
+		ORANGE, 
+		RED, 
+		YELLOW 
+	};
+	
 	/* VARIABLES */
 	public boolean gameColor; // a piece has a game color (the traditional black or white)
 	public DisplayColor displayColor; // a piece has a display color (independent of their game color)
 	public Square position; // a piece has a position on the board represented by a square
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
-
+	public Player owner; //what player owns this piece?
+	public boolean selected; //piece owned by human player is considered selected if its position is the same square that is currently selected
+	
+	/* Constructors */
+	public Piece(Player o, String n, boolean gc, Square pos)
+	{
+		owner = o;
+		name = n;
+		gameColor = gc;
+		position = pos;
+		displayColor = DisplayColor.STANDARD;
+		selected = false;
+	}
+	
+	public Piece(String n, boolean gc, Square pos)
+	{
+		name = n;
+		gameColor = gc;
+		position = pos;
+		displayColor = DisplayColor.STANDARD;
+		selected = false;
+	}
+	
 	/* METHODS */
 	public abstract boolean movePiece(Square destination);
 
+	public void toggleSelected()
+	{
+		selected = !selected;
+	}
+	
 	/* GETTERS */
+	
+	public Player belongsTo()
+	{
+		return owner;
+	}
+	
+	public boolean isSelected()
+	{
+		return selected;
+	}
+	
 	public boolean getColor()
 	{
 		return gameColor;
@@ -57,6 +105,12 @@ public abstract class Piece
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	
+	public void setOwner(Player p)
+	{
+		owner = p;
 	}
 
 	/* toString */

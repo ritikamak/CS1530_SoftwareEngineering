@@ -10,19 +10,16 @@ public class Bishop extends Piece
 	/* VARIABLES */
 
 	/*CONSTRUCTORS*/
-
-	public Bishop (boolean color, Square position){
-		this.gameColor = color;
-		this.position = position;
-		name = "Bishop";
-		this.displayColor = displayColor.STANDARD;
+	public Bishop (Player owner, boolean gameColor, Square position)
+	{
+		super(owner, "Bishop", gameColor, position);
 	}
-	public Bishop (boolean color){
-		this.gameColor = color;
-		name = "Bishop";
-		this.displayColor = displayColor.STANDARD;
+	
+	public Bishop (boolean gameColor, Square position)
+	{
+		super("Bishop", gameColor, position);
 	}
-
+	
 	/* METHODS */
 	/**
 	@param Square destiation is the location the piece will move to
@@ -43,6 +40,8 @@ public class Bishop extends Piece
 		}
 		//check if horizontal move is correct, slope must equal one
 		else if(slope == 1 || slope == -1){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}

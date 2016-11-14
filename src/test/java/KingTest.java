@@ -1,6 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-/**
+/*
 Start testing King
 need to test color
 need to test all direction movement
