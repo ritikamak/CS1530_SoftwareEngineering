@@ -8,20 +8,15 @@ public class Queen extends Piece
 	public static final boolean COMP = false;
 
 	/* VARIABLES */
-	public boolean color; // a piece has a color
-	public Square position; // a piece has a position on the board represented by a square
-	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
 	/*CONSTRUCTORS*/
 
-	public Queen (boolean color, Square position){
-		this.color = color;
-		this.position = position;
-		name = "Queen";
+	public Queen (Player owner, boolean gameColor, Square position){
+		super(owner, "Queen", gameColor, position);
 	}
-	public Queen (boolean color){
-		this.color = color;
-		name = "Queen";
+	
+	public Queen (boolean gameColor, Square position){
+		super("Queen", gameColor, position);
 	}
 
 	/* METHODS */
@@ -43,11 +38,15 @@ public class Queen extends Piece
 		}
 		//check if horizontal move
 		else if(d_file == p_file){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		//check if vertical move
 		else if(d_rank == p_rank){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
@@ -56,53 +55,12 @@ public class Queen extends Piece
 			//slope calculation must be in here otherwise horizontal move would result in division by zero
 			int slope = (d_rank-p_rank)/(d_file-p_file);
 			if(slope == 1 || slope == -1){
+				position.evictSquare();
+				destination.occupySquare(this);
 				position = destination;
 				return true;
 			}
 		}
 		return false;
-	}
-
-	/* GETTERS */
-	public boolean getColor()
-	{
-		return color;
-	}
-
-	public Square getPosition(){
-		return position;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	/* SETTERS */
-	public void setPosition(Square position ){
-		this.position = position;
-	}
-	public void setColor(boolean color){
-		this.color = color;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	/* toString */
-	public String toString(){
-		String c;
-		String str;
-
-		if(color == WHITE){
-			c = "white";
-		}
-
-		else{
-			c = "black";
-		}
-
-		str = c + " " + name;
-		return str;
 	}
 }

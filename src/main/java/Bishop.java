@@ -8,22 +8,18 @@ public class Bishop extends Piece
 	public static final boolean COMP = false;
 
 	/* VARIABLES */
-	public boolean color; // a piece has a color
-	public Square position; // a piece has a position on the board represented by a square
-	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 
 	/*CONSTRUCTORS*/
-
-	public Bishop (boolean color, Square position){
-		this.color = color;
-		this.position = position;
-		name = "Bishop";
+	public Bishop (Player owner, boolean gameColor, Square position)
+	{
+		super(owner, "Bishop", gameColor, position);
 	}
-	public Bishop (boolean color){
-		this.color = color;
-		name = "Bishop";
+	
+	public Bishop (boolean gameColor, Square position)
+	{
+		super("Bishop", gameColor, position);
 	}
-
+	
 	/* METHODS */
 	/**
 	@param Square destiation is the location the piece will move to
@@ -44,54 +40,11 @@ public class Bishop extends Piece
 		}
 		//check if horizontal move is correct, slope must equal one
 		else if(slope == 1 || slope == -1){
+			position.evictSquare();
+			destination.occupySquare(this);
 			position = destination;
 			return true;
 		}
 		return false;
 	}
-
-	/* GETTERS */
-	public boolean getColor()
-	{
-		return color;
-	}
-
-	public Square getPosition(){
-		return position;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	/* SETTERS */
-	public void setPosition(Square position ){
-		this.position = position;
-	}
-	public void setColor(boolean color){
-		this.color = color;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	/* toString */
-	public String toString()
-	{
-		String c;
-		String str;
-
-		if(color == WHITE){
-			c = "white";
-		}
-
-		else{
-			c = "black";
-		}
-
-		str = c + " " + name;
-		return str;
-	}
-
 }

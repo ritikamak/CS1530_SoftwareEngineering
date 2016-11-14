@@ -1,6 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-/**
+/*
 Start testing King
 need to test color
 need to test all direction movement
@@ -154,6 +154,17 @@ public class KingTest{
      public void testCastle_4(){
           Piece test = new King (true, new Square(4,7));
           Square test_square = new Square(6,7);
+          assertTrue(test.movePiece(test_square));
+     }
+     /**
+     test  white impeded kingside castle
+     */
+     @Test
+     public void testCastle_5(){
+          Piece test = new King (false, new Square(4,0));
+          Square test_square = new Square(6,0);
+          test_square.setPiece(new Knight (false, new Square(6,0)));
+          //assertFalse(test.movePiece(test_square));
           assertTrue(test.movePiece(test_square));
      }
 

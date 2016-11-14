@@ -29,65 +29,75 @@ public class Player
 	/* VARIABLES */
 	boolean type; // a player is either a user or a computer
 	boolean color; // a player controls either black or white
+	boolean hasSelectedSquare; //a human player can have a square selected (COMP this is always false)
+	Square selectedSquare; //we store that square here
+	boolean hasSelectedPiece; //if the human player owns a piece on the selected square, hasSelectedPiece == true
+	Piece selectedPiece;
 	ArrayList<Piece> pieces; // a player starts with 16 pieces
+	ArrayList<Piece> captured_pieces; //a player's captured pieces
 
 	/* CONSTRUCTORS */
 	public Player(boolean t, boolean c)
 	{
 		type = t;
 		color = c;
+		hasSelectedSquare = false;
+		hasSelectedPiece = false;
 	}
-	
+
 	public Player(boolean t, boolean c, Board b)
 	{
 		type = t;
 		color = c;
+		hasSelectedSquare = false;
+		hasSelectedPiece = false;
 		//Piece constructor goes
 		pieces = new ArrayList<Piece>();
+		captured_pieces = new ArrayList<Piece>();
 		if(c == WHITE){
 			//8 pawns
-			pieces.add(new Pawn(color, b.getSquareAt(A, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(B, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(C, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(D, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(E, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(F, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(G, TWO)));
-			pieces.add(new Pawn(color, b.getSquareAt(H, TWO)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(A, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(B, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(C, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(D, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(E, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(F, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(G, TWO)));
+			pieces.add(new Pawn(this,color, b.getSquareAt(H, TWO)));
 			//2 rooks
-			pieces.add(new Rook(color, b.getSquareAt(A, ONE)));
-			pieces.add(new Rook(color, b.getSquareAt(H, ONE)));
+			pieces.add(new Rook(this, color, b.getSquareAt(A, ONE)));
+			pieces.add(new Rook(this, color, b.getSquareAt(H, ONE)));
 			//two knights
-			pieces.add(new Knight(color, b.getSquareAt(B, ONE)));
-			pieces.add(new Knight(color,b.getSquareAt(G, ONE)));
+			pieces.add(new Knight(this, color, b.getSquareAt(B, ONE)));
+			pieces.add(new Knight(this, color, b.getSquareAt(G, ONE)));
 			//2 bishops
-			pieces.add(new Bishop(color, b.getSquareAt(C, ONE)));
-			pieces.add(new Bishop(color, b.getSquareAt(F, ONE)));
+			pieces.add(new Bishop(this, color, b.getSquareAt(C, ONE)));
+			pieces.add(new Bishop(this, color, b.getSquareAt(F, ONE)));
 			//king and queen
-			pieces.add(new Queen(color, b.getSquareAt(D, ONE)));
-			pieces.add(new King(color, b.getSquareAt(E, ONE)));
+			pieces.add(new Queen(this, color, b.getSquareAt(D, ONE)));
+			pieces.add(new King(this, color, b.getSquareAt(E, ONE)));
 		}
 		else if (c == BLACK){
-			pieces.add(new Pawn(color, b.getSquareAt(A, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(B, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(C, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(D, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(E, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(F, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(G, SEVEN)));
-			pieces.add(new Pawn(color, b.getSquareAt(H, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(A, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(B, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(C, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(D, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(E, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(F, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(G, SEVEN)));
+			pieces.add(new Pawn(this, color, b.getSquareAt(H, SEVEN)));
 			//2 rooks
-			pieces.add(new Rook(color, b.getSquareAt(A, EIGHT)));
-			pieces.add(new Rook(color, b.getSquareAt(H, EIGHT)));
+			pieces.add(new Rook(this, color, b.getSquareAt(A, EIGHT)));
+			pieces.add(new Rook(this, color, b.getSquareAt(H, EIGHT)));
 			//two knights
-			pieces.add(new Knight(color, b.getSquareAt(B, EIGHT)));
-			pieces.add(new Knight(color, b.getSquareAt(G, EIGHT)));
+			pieces.add(new Knight(this, color, b.getSquareAt(B, EIGHT)));
+			pieces.add(new Knight(this, color, b.getSquareAt(G, EIGHT)));
 			//2 bishops
-			pieces.add(new Bishop(color, b.getSquareAt(C, EIGHT)));
-			pieces.add(new Bishop(color, b.getSquareAt(F, EIGHT)));
+			pieces.add(new Bishop(this, color, b.getSquareAt(C, EIGHT)));
+			pieces.add(new Bishop(this, color, b.getSquareAt(F, EIGHT)));
 			//king and queen
-			pieces.add(new Queen(color, b.getSquareAt(D, EIGHT)));
-			pieces.add(new King(color, b.getSquareAt(E, EIGHT)));
+			pieces.add(new Queen(this, color, b.getSquareAt(D, EIGHT)));
+			pieces.add(new King(this, color, b.getSquareAt(E, EIGHT)));
 		}
 	}
 
@@ -103,14 +113,65 @@ public class Player
 	{
 		return color;
 	}
-
+	
+	public boolean hasSelectedSquare()
+	{
+		return hasSelectedSquare;
+	}
+	
+	public boolean hasSelectedPiece()
+	{
+		return hasSelectedPiece;
+	}
+	
+	public Square getSelected()
+	{
+		return selectedSquare;
+	}
+	
 	public ArrayList<Piece> getPieces()
 	{
 		return pieces;
 	}
 
+	public ArrayList<Piece> getCapturedPieces()
+	{
+		return captured_pieces;
+	}
+
 	public int piecesLeft()
 	{
 		return pieces.size();
+	}
+	
+	/* setters */
+	public void setSelected(Square s)
+	{
+		if(hasSelectedSquare){
+			unsetSelected();
+		}
+		selectedSquare = s;
+		selectedSquare.toggleSelected();
+		hasSelectedSquare = true;
+		if(selectedSquare.isOccupied() && selectedSquare.getPiece().belongsTo() == this){
+			hasSelectedPiece = true;
+			selectedPiece = selectedSquare.getPiece();
+			selectedPiece.toggleSelected();
+		}
+		else{
+			hasSelectedPiece = false;
+		}
+	}
+	
+	public void unsetSelected()
+	{
+		if(hasSelectedSquare){
+			selectedSquare.toggleSelected();
+			if(hasSelectedPiece){
+				selectedPiece.toggleSelected();
+			}
+		}
+		hasSelectedSquare = false;
+		hasSelectedPiece = false;
 	}
 }
