@@ -7,6 +7,7 @@ public class Square
 	int rank; //row, vertical (1-8)
 	boolean occupied;
 	Piece piece;
+	boolean selected; //this is a variable for the GUI and input handler to determine a user's src square for movement and square highlighting
 
 	/* CONSTRUCTORS */
 	public Square(int f, int r) //file rank
@@ -14,6 +15,7 @@ public class Square
 		file = f;
 		rank = r;
 		occupied = false;
+		selected = false;
 	}
 
 	/* METHODS */
@@ -29,6 +31,11 @@ public class Square
 		return piece;
 	}
 
+	public void toggleSelected()
+	{
+		selected = !selected;
+	}
+	
 	//Getters
 	public int getFile()
 	{
@@ -44,7 +51,12 @@ public class Square
 	{
 		return occupied;
 	}
-
+	
+	public boolean isSelected()
+	{
+		return selected;
+	}
+	
 	public Piece getPiece()
 	{
 		return piece;

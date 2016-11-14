@@ -25,8 +25,8 @@ public class Game
 	public static final int EIGHT = 7;
 
 	/* VARIABLES */
-	Player player1; // a game of chess has two players
-	Player player2;
+	Player player_user; // a game of chess has two players
+	Player player_comp;
 	Board board; // a game of chess has a board
 	String name; // a game has a name, this variable will probably be used once we get a save/load game system in place
 	/* CONSTRUCTORS */
@@ -34,15 +34,15 @@ public class Game
 	public Game()
 	{
 		board = new Board();
-		player1 = new Player(USER, WHITE, board);
-		player2 = new Player(COMP, BLACK, board);
+		player_user = new Player(USER, WHITE, board);
+		player_comp = new Player(COMP, BLACK, board);
 
 	}
 	/*Providing a color to constructor will set the player's color to the parameter provided*/
 	public Game(boolean color)
 	{
-		player1 = new Player(USER, color, board);
-		player2 = new Player(COMP, !color, board);
+		player_user = new Player(USER, color, board);
+		player_comp = new Player(COMP, !color, board);
 	}
 
 	/* METHODS */
@@ -54,13 +54,13 @@ public class Game
 		int i;
 
 		//Get each players list of pieces
-		if(player1.getColor() == WHITE){
-			wpcs = player1.getPieces();
-			bpcs = player2.getPieces();
+		if(player_user.getColor() == WHITE){
+			wpcs = player_user.getPieces();
+			bpcs = player_comp.getPieces();
 		}
 		else{
-			wpcs = player2.getPieces();
-			bpcs = player1.getPieces();
+			wpcs = player_user.getPieces();
+			bpcs = player_comp.getPieces();
 		}
 		/**
 		two for loops
