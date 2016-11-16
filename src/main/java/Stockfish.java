@@ -15,7 +15,7 @@ public class Stockfish {
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
 
-	private static final String PATH = "../engine/stockfish";
+	private static String PATH = "../engine/stockfish";
 
 	/**
 	 * Starts Stockfish engine as a process and initializes it
@@ -24,13 +24,28 @@ public class Stockfish {
 	 * @return True on success. False otherwise
 	 */
 	public boolean startEngine() {
+		String os = System.getProperty("os.name");
+		System.out.println(os);
+		if(os.contains("Windows")){
+			PATH = "../engine/stockfish_8_x64_bmi2.exe";
+		}
+		else if(os.equals("Mac OS X")){
+			System.out.println("assuming mac!");
+			PATH = "../engine/stockfish-7-64-bmi2";
+		}
+		else{
+
+			PATH = "../engine/stockfish_8_x64_bmi2";
+		}
 		try {
 			engineProcess = Runtime.getRuntime().exec(PATH);
 			processReader = new BufferedReader(new InputStreamReader(
 					engineProcess.getInputStream()));
 			processWriter = new OutputStreamWriter(
 					engineProcess.getOutputStream());
+			System.out.println("pr = " + processReader + " / pw = " + processWriter);
 		} catch (Exception e) {
+			System.out.println("Caught exception! " + e.toString());
 			return false;
 		}
 		return true;
@@ -116,7 +131,8 @@ public class Stockfish {
 	public String getLegalMoves(String fen) {
 		sendCommand("position fen " + fen);
 		sendCommand("d");
-		return getOutput(0).split("Legal moves: ")[1];
+		//return getOutput(0).split("Legal moves: ")[1];
+		return getOutput(0);
 	}
 
 	/**
