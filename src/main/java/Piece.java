@@ -18,11 +18,23 @@ public abstract class Piece implements Move
 		YELLOW 
 	};
 	
+	/*a public enum for piece type (valuable for gamescribe)*/
+	public enum PieceType {
+		PAWN,
+		ROOK,
+		KNIGHT,
+		BISHOP,
+		QUEEN,
+		KING,
+		GENERIC
+	};
+	
 	/* VARIABLES */
 	public boolean gameColor; // a piece has a game color (the traditional black or white)
 	public DisplayColor displayColor; // a piece has a display color (independent of their game color)
 	public Square position; // a piece has a position on the board represented by a square
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
+	public PieceType type; //a piece has a piece type (used to quickly determine type of piece)
 	public Player owner; //what player owns this piece?
 	public boolean selected; //piece owned by human player is considered selected if its position is the same square that is currently selected
 	public boolean hasMoved;// this variable tracks whether or not a piece has moved this game. primarily used by pawns and castling
@@ -35,6 +47,7 @@ public abstract class Piece implements Move
 		gameColor = gc;
 		position = pos;
 		displayColor = DisplayColor.STANDARD;
+		type = PieceType.GENERIC;
 		selected = false;
 		hasMoved = false;
 	}
@@ -45,13 +58,14 @@ public abstract class Piece implements Move
 		gameColor = gc;
 		position = pos;
 		displayColor = DisplayColor.STANDARD;
+		type = PieceType.GENERIC;
 		selected = false;
 		hasMoved = false;
 	}
 	
 	/* METHODS */
 
-	public abstract boolean movePiece(Square destination);
+	public abstract boolean move(Board board, Square dest) throws MoveException;
 	
 	//this "captures" the piece, erasing it from the board and from its owner's array list
 	public void capture()
@@ -147,7 +161,12 @@ public abstract class Piece implements Move
 	{
 		return owner;
 	}
-
+	
+	public PieceType getPieceType()
+	{
+		return type;
+	}
+	
 	/* SETTERS */
 	public void setPosition(Square position)
 	{

@@ -14,16 +14,13 @@ public class Pawn extends Piece
 	public Pawn (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Pawn", gameColor, position);
+		type = PieceType.PAWN;
 	}
 	
 	public Pawn (boolean gameColor, Square position)
 	{
 		super("Pawn", gameColor, position);
-	}
-	
-	public boolean movePiece(Square destination)
-	{
-		return true;
+		type = PieceType.PAWN;
 	}
 	
 	public boolean move(Board board, Square dest) throws MoveException

@@ -15,7 +15,7 @@ public class Stockfish {
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
 
-	private static String PATH = "../engine/stockfish";
+	private static String PATH = "build/resources/main/engine/stockfish";
 
 	/**
 	 * Starts Stockfish engine as a process and initializes it
@@ -27,15 +27,15 @@ public class Stockfish {
 		String os = System.getProperty("os.name");
 		System.out.println(os);
 		if(os.contains("Windows")){
-			PATH = "../engine/stockfish_8_x64_bmi2.exe";
+			PATH = "build/resources/engine/main/stockfish_8_x64_bmi2.exe";
 		}
 		else if(os.equals("Mac OS X")){
 			System.out.println("assuming mac!");
-			PATH = "../engine/stockfish-7-64-bmi2";
+			PATH = "build/resources/main/engine/stockfish-7-64-bmi2";
 		}
 		else{
 
-			PATH = "../engine/stockfish_8_x64_bmi2";
+			PATH = "build/resources/main/engine/stockfish_8_x64_bmi2";
 		}
 		try {
 			engineProcess = Runtime.getRuntime().exec(PATH);

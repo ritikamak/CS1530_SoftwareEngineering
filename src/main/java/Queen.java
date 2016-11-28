@@ -13,57 +13,15 @@ public class Queen extends Piece
 
 	public Queen (Player owner, boolean gameColor, Square position){
 		super(owner, "Queen", gameColor, position);
+		type = PieceType.QUEEN;
 	}
 	
 	public Queen (boolean gameColor, Square position){
 		super("Queen", gameColor, position);
+		type = PieceType.QUEEN;
 	}
 
 	/* METHODS */
-	/**
-	@param Square destiation is the location the piece will move to
-	@return returns true is the move is valid, false if otherwise
-	*/
-	public boolean movePiece(Square destination){
-		int p_file = position.getFile();
-		int p_rank = position.getRank();
-		int d_file = destination.getFile();
-		int d_rank = destination.getRank();
-		//check bounds
-		if(d_file > 7 || d_rank > 7){
-			return false;
-		}
-		else if(d_file < 0 || d_rank < 0){
-			return false;
-		}
-		//check if horizontal move
-		else if(d_file == p_file){
-			position.evictSquare();
-			destination.occupySquare(this);
-			position = destination;
-			return true;
-		}
-		//check if vertical move
-		else if(d_rank == p_rank){
-			position.evictSquare();
-			destination.occupySquare(this);
-			position = destination;
-			return true;
-		}
-		//check if diagonal move
-		else{
-			//slope calculation must be in here otherwise horizontal move would result in division by zero
-			int slope = (d_rank-p_rank)/(d_file-p_file);
-			if(slope == 1 || slope == -1){
-				position.evictSquare();
-				destination.occupySquare(this);
-				position = destination;
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public boolean move(Board board,Square dest) throws MoveException
 	{
 		Square src;
