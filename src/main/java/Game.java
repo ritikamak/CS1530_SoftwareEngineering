@@ -27,22 +27,30 @@ public class Game
 	/* VARIABLES */
 	Player player_user; // a game of chess has two players
 	Player player_comp;
+	boolean check;// a boolean letting the game know there is a player in check
+	Player inCheck; //game takes note if a player is in check
 	Board board; // a game of chess has a board
 	String name; // a game has a name, this variable will probably be used once we get a save/load game system in place
+	Piece lastMoved;
+	Piece lastCaptured;
+	boolean lastWasACapture;
+	Square lastSrc;
+	Square lastDest;
+	
 	/* CONSTRUCTORS */
 	/*Default constructor gives player the first move*/
 	public Game()
 	{
 		board = new Board();
-		player_user = new Player(USER, WHITE, board);
-		player_comp = new Player(COMP, BLACK, board);
+		player_user = new Player(USER, WHITE, this);
+		player_comp = new Player(COMP, BLACK, this);
 
 	}
 	/*Providing a color to constructor will set the player's color to the parameter provided*/
 	public Game(boolean color)
 	{
-		player_user = new Player(USER, color, board);
-		player_comp = new Player(COMP, !color, board);
+		player_user = new Player(USER, color, this);
+		player_comp = new Player(COMP, !color, this);
 	}
 
 	/* METHODS */
@@ -76,9 +84,89 @@ public class Game
 			position.occupySquare(s);
 		}
 	}
-
+	
 	public Square getSquareAt(int file, int rank)
 	{
 		return board.getSquareAt(file, rank);
+	}
+	
+	public Board getBoard()
+	{
+		return board;
+	}
+	
+	public void playerInCheck(Player checkedPlayer)
+	{
+		inCheck = checkedPlayer;
+		check = true;
+	}
+	
+	public void playerOutOfCheck()
+	{
+		check = false;
+	}
+	
+	public Player getOpponent(boolean player_type)
+	{
+		if(player_type == USER){
+			return player_comp;
+		}
+		else{
+			return player_user;
+		}
+	}
+	
+	public Player getPlayer(boolean player_type)
+	{
+		if(player_type == USER){
+			return player_user;
+		}
+		else{
+			return player_comp;
+		}
+	}
+	
+	public void movePiece(Piece p, Square src, Square dest, boolean capture)
+	{
+		Piece capturedPiece;
+		//update our lastMoved variables (for undoMovePiece() below)
+		lastMoved = p;
+		lastSrc = src;
+		lastDest = dest;
+		//update the piece
+		p.setPosition(dest);
+		p.moved(); //this is for pieces that need to know if this is their first move of the game
+		//update the src square
+		src.evictSquare();
+		//update the dest square
+		if(capture){
+			//if we are capturing a piece...
+			capturedPiece = dest.evictSquare();
+			lastCaptured = capturedPiece;
+			lastWasACapture = true;
+			capturedPiece.capture();
+		}
+		else{
+			lastWasACapture = false;
+		}
+		dest.occupySquare(p);
+	}
+	
+	/* undo's the most recent call of movePiece(). */
+	public void undoMovePiece()
+	{
+		//set the moved piece to original src
+		lastMoved.setPosition(lastSrc);
+		lastSrc.occupySquare(lastMoved);
+		//evict the dest
+		lastDest.evictSquare();
+		//then restore captured piece (if applicable)
+		if(lastWasACapture){
+			//return piece from captured_pieces list to pieces list
+			lastCaptured.getOwner().returnPiece(lastCaptured);
+			//set piece where it originally resided on dest
+			lastCaptured.setPosition(lastDest);
+			lastDest.occupySquare(lastCaptured);
+		}
 	}
 }

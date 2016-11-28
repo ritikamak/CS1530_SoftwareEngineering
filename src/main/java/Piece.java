@@ -1,6 +1,6 @@
 import java.util.*;
 /* This is a generic Piece object. As we develop further, it will be a superclass to more specific piece types: kings, queens, knights, bishops, rooks, pawns. */
-public abstract class Piece
+public abstract class Piece implements Move
 {
 	/* CONSTANTS */
 	public final boolean BLACK = true;
@@ -25,6 +25,7 @@ public abstract class Piece
 	public String name; // a piece has a name, e.g. pawn, rook, bishop, knight, queen, king
 	public Player owner; //what player owns this piece?
 	public boolean selected; //piece owned by human player is considered selected if its position is the same square that is currently selected
+	public boolean hasMoved;// this variable tracks whether or not a piece has moved this game. primarily used by pawns and castling
 	
 	/* Constructors */
 	public Piece(Player o, String n, boolean gc, Square pos)
@@ -35,6 +36,7 @@ public abstract class Piece
 		position = pos;
 		displayColor = DisplayColor.STANDARD;
 		selected = false;
+		hasMoved = false;
 	}
 	
 	public Piece(String n, boolean gc, Square pos)
@@ -44,17 +46,72 @@ public abstract class Piece
 		position = pos;
 		displayColor = DisplayColor.STANDARD;
 		selected = false;
+		hasMoved = false;
 	}
 	
 	/* METHODS */
-	public abstract boolean movePiece(Square destination);
 
+	public abstract boolean movePiece(Square destination);
+	
+	//this "captures" the piece, erasing it from the board and from its owner's array list
+	public void capture()
+	{
+		owner.takePiece(this.getPosition().evictSquare());
+	}
+	
 	public void toggleSelected()
 	{
 		selected = !selected;
 	}
 	
+	public void moved()
+	{
+		hasMoved = true;
+	}
+	
 	/* GETTERS */
+	
+	//this is a default function for a pathObstructed function. 
+	public boolean pathObstructed(Board board, MoveTemplate mt)
+	{
+		Square path[];
+		boolean friendlyColor;
+		Piece captureTarget;
+		Square dest;
+		int i;
+		
+		friendlyColor = this.getColor();
+		path = mt.getPath(board, this.getPosition());
+		dest = path[path.length - 1];
+		if(path.length > 1){
+		//scan through path to see if all squares before the destination square are clear of obstructions
+			i = 0;
+			while(i < (path.length - 1)){
+				if(path[i].isOccupied()){
+					return true;
+				}
+				i++;
+			}
+		}
+		//check destination to see if it has a friendly piece or a capture target
+		if(dest.isOccupied()){
+		//if a piece is in the destination square, we need to check if it is enemy or friendly
+			captureTarget = dest.getPiece();
+			//if it is not the same color, path is considered unobstructed (it results in a capture)
+			if(captureTarget.getColor() != friendlyColor){
+				return false;
+			}
+			//if we found the same color, thats a friendly and we can't capture it! 
+			else{
+			//so the path is considered obstructed
+				return true;
+			}
+		}
+		//if nothing is in the destination square, then it is considered obstructed
+		else{
+			return false;
+		}
+	}
 	
 	public Player belongsTo()
 	{
@@ -84,6 +141,11 @@ public abstract class Piece
 	public String getName()
 	{
 		return name;
+	}
+	
+	public Player getOwner()
+	{
+		return owner;
 	}
 
 	/* SETTERS */

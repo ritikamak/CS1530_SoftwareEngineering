@@ -8,126 +8,104 @@ public class Pawn extends Piece
 	public static final boolean COMP = false;
 	
 	/* VARIABLES */
-	boolean hasMoved; //a flag to determine if pawn can move two squares forward
 	
 	/*CONSTRUCTORS*/
 
 	public Pawn (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Pawn", gameColor, position);
-		hasMoved = false;
 	}
 	
 	public Pawn (boolean gameColor, Square position)
 	{
 		super("Pawn", gameColor, position);
-		hasMoved = false;
 	}
-
-	/* METHODS */
-	/**
-	@param Square destiation is the location the piece will move to
-	@return returns true is the move is valid, false if otherwise
-	*/
-	public boolean movePiece(Square destination){
-		int p_file = position.getFile();
-		int p_rank = position.getRank();
-		int d_file = destination.getFile();
-		int d_rank = destination.getRank();
-		Piece captured;
-		//USE ONLY FOR TESTING
-		//check if in bounds
-		if(d_file > 7 || d_rank > 7){
-			return false;
+	
+	public boolean movePiece(Square destination)
+	{
+		return true;
+	}
+	
+	public boolean move(Board board, Square dest) throws MoveException
+	{
+		Square src;
+		int sf, sr, df, dr, rise, run;
+		MoveTemplate mt;
+		MoveTemplate.MovePattern pattern;
+		
+		src = this.getPosition(); //source square
+		sf = src.getFile(); //source file
+		sr = src.getRank(); //source rank
+		df = dest.getFile(); //destination file
+		dr = dest.getRank(); //destination rank
+		
+		//first, briefly check that pawn is not moving backward
+		if(this.getColor() == BLACK){
+			if(dr > sr){
+				throw new MoveException("Illegal pawn Move");
+			}
 		}
-		else if(d_file < 0 || d_rank < 0){
-			return false;
+		else{
+			if(dr < sr){
+				throw new MoveException("Illegal pawn Move");
+			}
 		}
-		//check three cases for white: single move, double move, capture
-		else if(gameColor == WHITE){
-			//movment for first row
-			if(d_file == p_file && d_rank <= p_rank+2 && d_rank > p_rank &&!this.hasMoved){
-				position.evictSquare();
-				destination.occupySquare(this);
-				position = destination;
-				hasMoved = true;
-				return true;
-			}
-			//any row
-			else if(d_file == p_file && d_rank == p_rank+1){
-				position.evictSquare();
-				destination.occupySquare(this);
-				position = destination;
-				return true;
-			}
-			//capture
-			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
-			else if(destination.isOccupied()){
-				Piece p = destination.getPiece();
-				if(p.getColor() != gameColor){
-					if(d_file == p_file+1 && d_rank == p_rank+1){
-						position.evictSquare();
-						destination.occupySquare(this);
-						position = destination;
-						return true;
-					}
-					else if(d_file == p_file-1 && d_rank == p_rank+1){
-						position.evictSquare();
-						destination.occupySquare(this);
-						position = destination;
-						return true;
-					}
-				}
-				//return false if capture piece is of the same color
-				else{
-					return false;
-				}
-			}
-			//TODO: EN PASSENT
+		
+		//then get rise-over-run to determine if move is diagonal or vertical (if horizontal, we will throw an exception)
+		rise = dr-sr;
+		run = df-sf;
+		
+		//if move is horizontal...
+		if(run != 0 && rise == 0){
+			throw new MoveException("Pawn's can't move horizontally");
 		}
-		//check three cases for black: single move, double move, capture
-		else if (gameColor == BLACK){
-			//movment for first row
-			if(d_file == p_file && (p_rank-d_rank) <= 2 && (p_rank-d_rank) >= 1 && !this.hasMoved){
-				position.evictSquare();
-				destination.occupySquare(this);
-				position = destination;
-				hasMoved = true;
-				return true;
+		
+		//if move is diagonal
+		else if(run != 0 && rise != 0){
+			pattern = MoveTemplate.MovePattern.DIAGONAL;
+		}
+		
+		//if move is orthogonally vertical
+		else{
+			pattern = MoveTemplate.MovePattern.ORTHOGONAL;
+		}
+		
+		//now we will try to make the movetemplate
+		try{
+			mt = new MoveTemplate(pattern, src, dest);
+			//next we will make sure movelen is no more than two
+			if(mt.getMoveLen() > 2){
+				throw new MoveException("Pawn cannot move that many squares.");
 			}
-			//any row
-			else if(d_file == p_file && d_rank == p_rank-1){
-				position.evictSquare();
-				destination.occupySquare(this);
-				position = destination;
-				return true;
-			}
-			//capture
-			//TODO: CONSIDER MAKING CAPTURE A SEPARATE METHOD
-			else if(destination.isOccupied()){
-				Piece p = destination.getPiece();
-				if(p.getColor() != gameColor){
-					if(d_file == p_file+1 && d_rank == p_rank-1){
-						position.evictSquare();
-						destination.occupySquare(this);
-						position = destination;
-						return true;
-					}
-					else if(d_file == p_file-1 && d_rank == p_rank-1){
-						position.evictSquare();
-						destination.occupySquare(this);
-						position = destination;
-						return true;
-					}
-				}
-				//return false if capture piece is of the same color
-				else{
-					return false;
+			//if the pawn moved two squares, it must not have moved previously
+			else if(mt.getMoveLen() == 2 && pattern != MoveTemplate.MovePattern.DIAGONAL){
+				if(this.hasMoved){
+					throw new MoveException("Pawn cannot move that many squares.");
 				}
 			}
-			//TODO: EN PASSENT
+			//the pawn cannot move more than one square diagonally
+			else if(mt.getMoveLen() == 2 && pattern == MoveTemplate.MovePattern.DIAGONAL){
+				throw new MoveException("Pawn cannot move that many squares.");
+			}
+			//if moving diagonnally, pawn must have a legal capture target
+			else if(pattern == MoveTemplate.MovePattern.DIAGONAL && dest.isOccupied() == false){
+				throw new MoveException("Pawn cannot move diagonally without capture target.");
+			}
+			//finally, we need to check if pawn's path is obstructed and if it is capturing something
+			if(pathObstructed(board, mt)){
+				throw new MoveException("Pawn's movement is obstructed.");
+			}
+			//pawns require an additional check to make sure they can't capture or move into anything directly in front of them
+			else if(pattern == MoveTemplate.MovePattern.ORTHOGONAL && dest.isOccupied()){
+				throw new MoveException("Pawn's movement is obstructed.");
+			}
+			else{
+				return dest.isOccupied();
+			}
 		}
-		//TODO PROMOTION
-		return false;
+		//if the movetemplate constructor has issues, move is illegal
+		catch(MoveTemplateException e){
+			throw new MoveException("Illegal pawn Move");
+		}
 	}
 }
