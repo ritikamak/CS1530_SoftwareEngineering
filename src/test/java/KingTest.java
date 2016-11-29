@@ -1,171 +1,167 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-/*
-Start testing King
-need to test color
-need to test all direction movement
-need to test for black and white
-*/
-public class KingTest{
-     /**
-     Test for correct color
-     */
-     @Test
-     public void testKingColor_1(){
-          Piece test = new King (true, new Square(1,1));
-          assertEquals(test.getColor(), true);
-     }
-     /**
-     Test for correct color
-     */
-     @Test
-     public void testKingColor_2(){
-          Piece test = new King (false, new Square(2,2));
-          assertEquals(test.getColor(), false);
-     }
-     /**
-     Test going out of bounds
-     */
-     @Test
-     public void testKingMove_1(){
-          Piece test = new King (false, new Square(2,2));
-          assertEquals(test.movePiece(new Square(8,8)), false);
-     }
-     /**
-     Test going out of bounds
-     */
-     @Test
-     public void testKingMove_2(){
-          Piece test = new King (false, new Square(2,2));
-          assertEquals(test.movePiece(new Square(-1,-3)), false);
-     }
-     /**
-     test movment +0 +1
-     */
-     @Test
-     public void testKingMove_3(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(6,5);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment +1 +1
-     */
-     @Test
-     public void testKingMove_4(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(7,5);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment +1 +0
-     */
-     @Test
-     public void testKingMove_5(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(7,4);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment +1 -1
-     */
-     @Test
-     public void testKingMove_6(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(7,3);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment +0 -1
-     */
-     @Test
-     public void testKingMove_7(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(6,3);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment -1 -1
-     */
-     @Test
-     public void testKingMove_8(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(5,3);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment -1 +0
-     */
-     @Test
-     public void testKingMove_9(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(5,4);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test movment -1 +1
-     */
-     @Test
-     public void testKingMove_10(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(5,5);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     Test bad move
-     */
-     @Test
-     public void testKingBadMove_1(){
-          Piece test = new King (false, new Square(6,4));
-          Square test_square = new Square(7,2);
-          assertFalse(test.movePiece(test_square));
-     }
-     /**
-     test  white queenside castle
-     */
-     @Test
-     public void testCastle_1(){
-          Piece test = new King (false, new Square(4,0));
-          Square test_square = new Square(2,0);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test  white kingside castle
-     */
-     @Test
-     public void testCastle_2(){
-          Piece test = new King (false, new Square(4,0));
-          Square test_square = new Square(6,0);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test  black queenside castle
-     */
-     @Test
-     public void testCastle_3(){
-          Piece test = new King (true, new Square(4,7));
-          Square test_square = new Square(2,7);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test  black kingside castle
-     */
-     @Test
-     public void testCastle_4(){
-          Piece test = new King (true, new Square(4,7));
-          Square test_square = new Square(6,7);
-          assertTrue(test.movePiece(test_square));
-     }
-     /**
-     test  white impeded kingside castle
-     */
-     @Test
-     public void testCastle_5(){
-          Piece test = new King (false, new Square(4,0));
-          Square test_square = new Square(6,0);
-          test_square.setPiece(new Knight (false, new Square(6,0)));
-          //assertFalse(test.movePiece(test_square));
-          assertTrue(test.movePiece(test_square));
-     }
 
+public class KingTest{
+	
+	public static final boolean BLACK = true;
+	public static final boolean WHITE = false;
+	//Files
+	public static final int A = 0;
+	public static final int B = 1;
+	public static final int C = 2;
+	public static final int D = 3;
+	public static final int E = 4;
+	public static final int F = 5;
+	public static final int G = 6;
+	public static final int H = 7;
+	//Ranks
+	public static final int ONE = 0;
+	public static final int TWO = 1;
+	public static final int THREE = 2;
+	public static final int FOUR = 3;
+	public static final int FIVE = 4;
+	public static final int SIX = 5;
+	public static final int SEVEN = 6;
+	public static final int EIGHT = 7;
+
+	King king;
+	Piece obstruction;
+	Piece captureTarget;
+	Board board = new Board();
+	Square src;
+	Square dest;
+	
+	//test if moving a white king forward and backward causes no exceptions to be thrown
+	@Test
+	public void verticalMoveTest1(){
+		boolean forward = true;
+		board = new Board();
+		//we will place this king at C4 with the intention to move it forward to C5
+		src = board.getSquareAt(C,FOUR);
+		dest = board.getSquareAt(C,FIVE);
+		//set king at src
+		king = new King(WHITE, src);
+		src.occupySquare(king);
+		//now we will try to move it forward...
+		try{
+			king.move(board, dest);
+			//if we got this far we succeeded in moving it forward
+			king.setPosition(dest);
+			src.evictSquare();
+			dest.occupySquare(king);
+			forward = false;
+			//now lets move it backward!
+			king.move(board, src);
+			//if we succeeded on this move we were totally successful!
+			king.setPosition(dest);
+			dest.evictSquare();
+			src.occupySquare(king);
+		}
+		catch(MoveException e){
+			if(forward == true){
+				System.out.println("Caught this error moving forward: " + e.toString());
+			}
+			else{
+				System.out.println("Caught this error moving backward: " + e.toString());
+			}
+			fail();
+		}
+	}
+	
+	//test if moving a white king left and right causes no exceptions to be thrown
+	@Test
+	public void horizontallMoveTest2(){
+		boolean left = true;
+		board = new Board();
+		//we will place this king at C4 with the intention to move it left to B4
+		src = board.getSquareAt(C,FOUR);
+		dest = board.getSquareAt(B,FOUR);
+		//set king at src
+		king = new King(WHITE, src);
+		src.occupySquare(king);
+		//now we will try to move it left...
+		try{
+			king.move(board, dest);
+			//if we got this far we succeeded in moving it left
+			king.setPosition(dest);
+			src.evictSquare();
+			dest.occupySquare(king);
+			left = false;
+			//now lets move it right!
+			king.move(board, src);
+			//if we succeeded on this move we were totally successful!
+			king.setPosition(dest);
+			dest.evictSquare();
+			src.occupySquare(king);
+		}
+		catch(MoveException e){
+			if(left == true){
+				System.out.println("Caught this error moving left: " + e.toString());
+			}
+			else{
+				System.out.println("Caught this error moving right: " + e.toString());
+			}
+			fail();
+		}
+	}
+	
+	//test if moving a white king diagonally up/down positive slope causes no exceptions to be thrown
+	@Test
+	public void diagonalMoveTest1(){
+		board = new Board();
+		//we will place this king at C4 with the intention to move it diagonally to d5
+		src = board.getSquareAt(C,FOUR);
+		dest = board.getSquareAt(D,FIVE);
+		//set king at src
+		king = new King(WHITE, src);
+		src.occupySquare(king);
+		//now we will try to move it...
+		try{
+			king.move(board, dest);
+			//if we got this far we succeeded in moving it up
+			king.setPosition(dest);
+			src.evictSquare();
+			dest.occupySquare(king);
+			//now lets move it down!
+			king.move(board, src);
+			//if we succeeded on this move we were totally successful!
+			king.setPosition(dest);
+			dest.evictSquare();
+			src.occupySquare(king);
+		}
+		catch(MoveException e){
+			System.out.println(e);
+			fail();
+		}
+	}
+	
+	//test if moving a white king diagonally up/down negative slope causes no exceptions to be thrown
+	@Test
+	public void diagonalMoveTest2(){
+		board = new Board();
+		//we will place this king at C4 with the intention to move it diagonally to b5
+		src = board.getSquareAt(C,FOUR);
+		dest = board.getSquareAt(B,FIVE);
+		//set king at src
+		king = new King(WHITE, src);
+		src.occupySquare(king);
+		//now we will try to move it...
+		try{
+			king.move(board, dest);
+			//if we got this far we succeeded in moving it up
+			king.setPosition(dest);
+			src.evictSquare();
+			dest.occupySquare(king);
+			//now lets move it down!
+			king.move(board, src);
+			//if we succeeded on this move we were totally successful!
+			king.setPosition(dest);
+			dest.evictSquare();
+			src.occupySquare(king);
+		}
+		catch(MoveException e){
+			System.out.println(e);
+			fail();
+		}
+	}
 }

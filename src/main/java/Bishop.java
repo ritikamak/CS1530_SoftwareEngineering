@@ -13,38 +13,32 @@ public class Bishop extends Piece
 	public Bishop (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Bishop", gameColor, position);
+		type = PieceType.BISHOP;
 	}
 	
 	public Bishop (boolean gameColor, Square position)
 	{
 		super("Bishop", gameColor, position);
+		type = PieceType.BISHOP;
 	}
 	
 	/* METHODS */
-	/**
-	@param Square destiation is the location the piece will move to
-	@return returns true is the move is valid, false if otherwise
-	*/
-	public boolean movePiece(Square destination){
-		int p_file = position.getFile();
-		int p_rank = position.getRank();
-		int d_file = destination.getFile();
-		int d_rank = destination.getRank();
-		int slope = (d_rank-p_rank)/(d_file-p_file);
-		//check if in bounds
-		if(d_file > 7 || d_rank > 7){
-			return false;
+
+	public boolean move(Board board, Square dest) throws MoveException
+	{
+		MoveTemplate mt;
+		
+		try{
+			//bishop is pretty easy in terms of error checking, MoveTemplate with bishop pattern will do all the work for us. 
+			mt = new MoveTemplate(MoveTemplate.MovePattern.DIAGONAL, this.getPosition(), dest);
+			if(pathObstructed(board, mt)){
+				throw new MoveException("Path obstructed");
+			}
+			//if there are no obstructions the move is legal, so we finally return if this move results in a capture or not
+			return dest.isOccupied();
 		}
-		else if(d_file < 0 || d_rank < 0){
-			return false;
+		catch(MoveTemplateException e){
+			throw new MoveException();
 		}
-		//check if horizontal move is correct, slope must equal one
-		else if(slope == 1 || slope == -1){
-			position.evictSquare();
-			destination.occupySquare(this);
-			position = destination;
-			return true;
-		}
-		return false;
 	}
 }

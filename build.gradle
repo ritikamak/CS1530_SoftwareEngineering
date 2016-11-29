@@ -17,3 +17,11 @@ run {
 	standardInput = System.in //added for running testDriver.java
  }
 }
+test {
+    testLogging {
+        // Make sure output from
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+    }
+}

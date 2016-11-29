@@ -13,43 +13,31 @@ public class Rook extends Piece
 
 	public Rook (Player owner, boolean gameColor, Square position){
 		super(owner, "Rook", gameColor, position);
+		type = PieceType.ROOK;
 	}
 	
 	public Rook (boolean gameColor, Square position){
 		super("Rook", gameColor, position);
+		type = PieceType.ROOK;
 	}
 
 	/* METHODS */
-	/**
-	@param Square destiation is the location the piece will move to
-	@return returns true is the move is valid, false if otherwise
-	*/
-	public boolean movePiece(Square destination){
-		int p_file = position.getFile();
-		int p_rank = position.getRank();
-		int d_file = destination.getFile();
-		int d_rank = destination.getRank();
-		//check bounds
-		if(d_file > 7 || d_rank > 7){
-			return false;
+	public boolean move(Board board, Square dest) throws MoveException
+	{
+		MoveTemplate mt;
+		
+		try{
+			//rook is pretty easy in terms of error checking, MoveTemplate with orthoganal pattern will do all the work for us. 
+			mt = new MoveTemplate(MoveTemplate.MovePattern.ORTHOGONAL, this.getPosition(), dest);
+			if(pathObstructed(board, mt)){
+				throw new MoveException("Path obstructed");
+			}
+			//if there are no obstructions the move is legal
+			return dest.isOccupied();
+			//will build support for castling later
 		}
-		else if(d_file < 0 || d_rank < 0){
-			return false;
+		catch(MoveTemplateException e){
+			throw new MoveException(e.toString());
 		}
-		//check if horizontal move
-		else if(d_file == p_file){
-			position.evictSquare();
-			destination.occupySquare(this);
-			position = destination;
-			return true;
-		}
-		//check if vertical move
-		else if(d_rank == p_rank){
-			position.evictSquare();
-			destination.occupySquare(this);
-			position = destination;
-			return true;
-		}
-		return false;
 	}
 }
