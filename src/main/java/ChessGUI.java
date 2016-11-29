@@ -19,7 +19,7 @@ public class ChessGUI extends javax.swing.JFrame
 	private boolean flipped;
     //square buttons are stored in a 8x8 grid modeled after chessboard
     private javax.swing.JButton[][] guiBoard;
-	
+
     //labels, game interface buttons
     private javax.swing.JLabel blackLabel;
     private javax.swing.JPanel durationPanel;
@@ -64,28 +64,28 @@ public class ChessGUI extends javax.swing.JFrame
     }
 
 	/* Public Methods */
-	
+
 	/* display() */
 	//makes the GUI visible
     public void display(boolean show)
 	{
 		setVisible(show);
     }
-	
+
 	/* infoBox() */
     // method for GUI to communicate with user
 	public void infoBox(String infoMessage, String titleBar)
     {
           JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
-	
+
 	/*refreshPieces()*/
 	//tells GUI to reset the pieces
 	public void refreshPieces()
 	{
 		setPieces();
 	}
-	
+
 	/*refreshBoard()*/
 	//tells GUI to reset the board and pieces
 	public void refreshBoard()
@@ -93,7 +93,7 @@ public class ChessGUI extends javax.swing.JFrame
 		setBoard();
 		setPieces();
 	}
-	
+
 	/* flipBoard() */
 	//after flip board button is pressed, this function sets the GUI variable flip to its opposite, reapplies labels, resets board buttons and resets pieces accordingly
 	public void flipBoard()
@@ -103,7 +103,7 @@ public class ChessGUI extends javax.swing.JFrame
 		setBoard();
 		setPieces();
     }
-	
+
 	/* Private Methods */
 
 	/* initGUI() */
@@ -121,8 +121,8 @@ public class ChessGUI extends javax.swing.JFrame
 		setBoard();
 		setPieces();
     }
-	
-	
+
+
 	/* flipInt() */
 	//this function returns an int representing the "flipped" rank or file position of original int passed
 	private int flipInt(int original)
@@ -166,7 +166,7 @@ public class ChessGUI extends javax.swing.JFrame
 		Square s;
 		Piece p;
 		String resourceFile;
-		
+
 		s = (Square)button.getClientProperty( "square" );
 		//initially clear any existing icons
 		button.setIcon(null);
@@ -209,12 +209,12 @@ public class ChessGUI extends javax.swing.JFrame
     }
 
 	/* setPieces()*/
-	// Runs through each square on the board and sets the piece residing there 
+	// Runs through each square on the board and sets the piece residing there
 	private void setPieces()
 	{
 		int file;
 		int rank;
-		
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				setPieceIcon(guiBoard[file][rank]);
@@ -228,13 +228,13 @@ public class ChessGUI extends javax.swing.JFrame
 	{
 		java.awt.event.ActionListener[] toRemove;
 		int i;
-		
+
 		toRemove = button.getActionListeners();
 		for(i = 0; i < toRemove.length; i++){
 			button.removeActionListener(toRemove[i]);
 		}
 	}
-	
+
 	/* setBoard() */
 	//this function links the GUI board squares to their backend counterpart, inverting the back end squares linked if the board is flipped
 	private void setBoard()
@@ -244,8 +244,8 @@ public class ChessGUI extends javax.swing.JFrame
 		int f;
 		int r;
 		Square s;
-		
-		for(file = 0; file < 8; file++){	
+
+		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				if(flipped){
 					f = flipInt(file);
@@ -333,7 +333,7 @@ public class ChessGUI extends javax.swing.JFrame
 
         whiteLabel.setText("Player");
 	}
-	
+
 	/* createCompenents() */
 	//initializes most of the gui components
 	private void createComponents()
@@ -375,15 +375,15 @@ public class ChessGUI extends javax.swing.JFrame
 		flipBoardButton = new javax.swing.JButton();
 		guiBoard = new javax.swing.JButton[8][8];
 	}
-	
+
 	/* initMainPanel() */
 	//sets up our main panel
 	private void initMainPanel()
 	{
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LaboonChess");
-        setMaximumSize(new java.awt.Dimension(725, 532));
-        setMinimumSize(new java.awt.Dimension(725, 532));
+        setMaximumSize(new java.awt.Dimension(725, 553));
+        setMinimumSize(new java.awt.Dimension(725, 553));
         setResizable(false);
 
 		mainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -392,16 +392,16 @@ public class ChessGUI extends javax.swing.JFrame
 		mainPanel.setMinimumSize(new java.awt.Dimension(402, 402));
 		mainPanel.setPreferredSize(new java.awt.Dimension(402, 402));
 		mainPanel.setSize(new java.awt.Dimension(402, 402));
-		
+
 	}
-	
+
 	/* initBoard() */
 	//sets up our board buttons
 	private void initBoard()
 	{
 		int file;
 		int rank;
-		
+
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank] = new javax.swing.JButton();
@@ -417,7 +417,7 @@ public class ChessGUI extends javax.swing.JFrame
 			}
 		}
 	}
-	
+
 	/* initApplicationButtons() */
 	//sets up our application buttons (these are any buttons not directly related to the game of chess. )
 	private void initApplicationButtons()
@@ -436,14 +436,14 @@ public class ChessGUI extends javax.swing.JFrame
         saveGameButton.setText("Save Game");
         saveGameButton.setBorderPainted(true);
         saveGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        
+
 
         loadGameButton.setText("Load Game");
         loadGameButton.setBorderPainted(true);
         loadGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		
+
 		durationText.setText("Duration: 00:00");
-		
+
 		colorSelectorButtonGroup.add(playerColorButton);
         playerColorButton.setSelected(true);
         playerColorButton.setText("Player Color");
@@ -478,7 +478,7 @@ public class ChessGUI extends javax.swing.JFrame
             }
         });
 	}
-	
+
 	/* initPanelLayouts */
 	//this function is pretty messy, expand at your own peril!
 	private void initPanelLayouts()
@@ -709,7 +709,7 @@ public class ChessGUI extends javax.swing.JFrame
                     .addComponent(guiBoard[6][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(guiBoard[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-		
+
 		javax.swing.GroupLayout outOfPlayPanelLayout = new javax.swing.GroupLayout(outOfPlayPanel);
         outOfPlayPanel.setLayout(outOfPlayPanelLayout);
         outOfPlayPanelLayout.setHorizontalGroup(
@@ -760,10 +760,10 @@ public class ChessGUI extends javax.swing.JFrame
                 .addComponent(durationText)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-		
+
 		menuBarPanel.setBackground(new java.awt.Color(204, 204, 204));
         menuBarPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		
+
 		 javax.swing.GroupLayout menuBarPanel1Layout = new javax.swing.GroupLayout(menuBarPanel1);
         menuBarPanel1.setLayout(menuBarPanel1Layout);
         menuBarPanel1Layout.setHorizontalGroup(
@@ -844,7 +844,7 @@ public class ChessGUI extends javax.swing.JFrame
                 .addComponent(menuBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(38, 38, 38)
                         .addComponent(label8)
                         .addGap(35, 35, 35)
                         .addComponent(label7)
@@ -907,7 +907,7 @@ public class ChessGUI extends javax.swing.JFrame
 
         menuBarPanel1.setBackground(new java.awt.Color(204, 204, 204));
         menuBarPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		
+
         pack();
 	}
 }
