@@ -1,0 +1,53 @@
+User Stories for Sprint 4:
+    
+-----SUBSYSTEM 1-CHESS GUI:-----
+-	As a player
+  I want the ability to flip the board,
+  So that I can view the game from the perspective of the other player.
+	STORY POINTS:  8
+-	As a player
+  I want the ability to change the colors of my pieces,
+  So that I can play the game with a pleasing color scheme.
+	STORY POINTS:  4
+-	As a player
+  I want the chess board to be at the top of the display window and any buttons to be at the bottom
+  So that I see the chess board clearly while playing a game.
+	STORY POINTS:  2
+-	As a player
+  I want to click anywhere in a square to execute a move to/from that square
+  So that I am not restricted as to where I have to click.
+	STORY POINTS:  2
+-	As a player
+  I want to first click a piece, then click its destination square, and then see the piece move to the indicated destination
+  So that I can visually see that a move has been made.
+	STORY POINTS:  8  (not completed)
+-	As a player
+  I want for there to be a list of all prior moves, on the side panel next to the game board
+  So that moves can be kept track of during the game.
+	STORY POINTS:  4  (not completed)
+
+-----SUBSYSTEM 2-GAME MECHANICS:-----
+-	As a player
+  I want white, and only white, to go first
+  So that the program adheres to chess rules.
+	STORY POINTS:  2
+-	As a player
+  I want turns to be taken (white/black/white/etc.),
+  So that the game follows standard chess rules.
+	STORY POINTS:  4
+-	As a player
+  I want pieces to not make illegal moves
+  So that neither player can cheat.
+	STORY POINTS:  16
+-	As a player
+  I want an error message to appear if I try to make an illegal move
+  So that illegal moves are blocked from occurring.
+	STORY POINTS:  8 
+-	As a player
+  I want the board to be organized so that no 2 pieces can ever occupy the same square
+  So that the game follows standard chess rules.
+	STORY POINTS:  4
+-	As a player
+  I want special movements to be legal- such as “en passant”, “promotion”, and “castling” 
+  So that the game follows standard chess rules.
+	STORY POINTS:  2  (not completed)
