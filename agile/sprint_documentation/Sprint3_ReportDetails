@@ -255,3 +255,4 @@ I want synchronized steps for movement for all pieces
 So that the game is smooth and no pieces require special clicks and such.
 
 	We grouped our classes/objects into 2 major subsystems- piece and board.  We technically also have a 3rd subsystem for the GUI which only represents the backend- the idle state/visual representation of the board.  We later want to implement another subsystem that handles the actual user input- could be “controller” for example.  This new subsystem would provide us communication between the backend and the GUI.    
+ 
