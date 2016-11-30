@@ -1,6 +1,7 @@
 import java.util.Random;
+import java.lang.InterruptedException;
 
-public class Kibitzer{
+public class Kibitzer extends Thread{
      private int wait_time;
      private int message_number;
      private static boolean stop_Kibitzer;
@@ -9,10 +10,22 @@ public class Kibitzer{
      public Kibitzer(){
           legendary = false;
      }
-     public void generate_messages(){
+     public void run(){
+          //random.nextInt(max - min + 1) + min
+          Random r = new Random();
+
           stop_Kibitzer = false;
           while(!stop_Kibitzer){
+               message_number = r.nextInt(30-1+1) + 1;
+               //anywhere from 1 to 5 seconds
+               wait_time = r.nextInt(5-1+1) + 1;
+               System.out.println(message(message_number));
+               try{
+                    Thread.sleep(wait_time*1000);
+               }
+               catch(InterruptedException ex){
 
+               }
           }
      }
 
@@ -95,5 +108,6 @@ public class Kibitzer{
      //test
      public static void main(String[] args){
           Kibitzer kib = new Kibitzer();
+          kib.run();
      }
 }
