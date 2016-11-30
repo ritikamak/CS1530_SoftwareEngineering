@@ -107,7 +107,7 @@ public class Player
 			pieces.add(myKing);
 		}
 	}
-	
+
 	public Player(boolean t, boolean c, Game g)
 	{
 		type = t;
@@ -140,7 +140,7 @@ public class Player
 			pieces.add(new Bishop(this, color, board.getSquareAt(F, ONE)));
 			//king and queen
 			pieces.add(new Queen(this, color, board.getSquareAt(D, ONE)));
-			pieces.add(new King(this, color, board.getSquareAt(E, ONE)));
+			//pieces.add(new King(this, color, board.getSquareAt(E, ONE)));
 			myKing = new King(this, color, board.getSquareAt(E, ONE));
 			pieces.add(myKing);
 		}
@@ -164,7 +164,7 @@ public class Player
 			pieces.add(new Bishop(this, color, board.getSquareAt(F, EIGHT)));
 			//king and queen
 			pieces.add(new Queen(this, color, board.getSquareAt(D, EIGHT)));
-			pieces.add(new King(this, color, board.getSquareAt(E, EIGHT)));
+			//pieces.add(new King(this, color, board.getSquareAt(E, EIGHT)));
 			myKing = new King(this, color, board.getSquareAt(E, EIGHT));
 			pieces.add(myKing);
 		}
@@ -172,33 +172,33 @@ public class Player
 
 	/* METHODS */
 
-	
+
 	public boolean hasSelectedSquare()
 	{
 		return hasSelectedSquare;
 	}
-	
+
 	public boolean hasSelectedPiece()
 	{
 		return hasSelectedPiece;
 	}
-	
+
 	public Square getSelected()
 	{
 		return selectedSquare;
 	}
-	
+
 	public ArrayList<Piece> getPieces()
 	{
 		return pieces;
 	}
-	
+
 	public void takePiece(Piece captured)
 	{
 		pieces.remove(captured);
 		captured_pieces.add(captured);
 	}
-	
+
 	public void returnPiece(Piece returned)
 	{
 		captured_pieces.remove(returned);
@@ -214,7 +214,7 @@ public class Player
 	{
 		return pieces.size();
 	}
-	
+
 	public boolean isInCheck()
 	{
 		Player opponent;
@@ -223,7 +223,7 @@ public class Player
 		int i;
 		boolean captured;
 		Square myKingSquare;
-		
+
 		myKingSquare = myKing.getPosition();
 		opponent = game.getOpponent(type);
 		enemyPieces = opponent.getPieces();
@@ -244,7 +244,7 @@ public class Player
 		inCheck = false;
 		return inCheck;
 	}
-	
+
 	// Getters
 	public boolean getType()
 	{
@@ -255,17 +255,17 @@ public class Player
 	{
 		return color;
 	}
-	
+
 	public Board getBoard()
 	{
 		return board;
 	}
-	
+
 	public King getKing()
 	{
 		return myKing;
 	}
-	
+
 	/* setters */
 	public void setSelected(Square s)
 	{
@@ -284,7 +284,7 @@ public class Player
 			hasSelectedPiece = false;
 		}
 	}
-	
+
 	public void unsetSelected()
 	{
 		if(hasSelectedSquare){

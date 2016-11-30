@@ -41,7 +41,7 @@ public class Game
 	boolean activeColor; //which color moves NEXT? (effectively a turn tracker)
 	int fullmoveClock; //a number which increments after every black move (two turns)
 	int halfmoveClock; //the number of halfmoves (one turn) since the last capture or pawn advance -- starts at 0
-	
+
 	/* CONSTRUCTORS */
 	/*Default constructor gives player the first move*/
 	public Game()
@@ -96,20 +96,20 @@ public class Game
 			position.occupySquare(s);
 		}
 	}
-	
+
 	/*tells the game someone is in check and provides the player*/
 	public void playerInCheck(Player checkedPlayer)
 	{
 		inCheck = checkedPlayer;
 		check = true;
 	}
-	
+
 	/*tells the game no one is in check anymore*/
 	public void playerOutOfCheck()
 	{
 		check = false;
 	}
-	
+
 	/*updates the board and pieces according to parameters (does not check legality of move!)*/
 	public void movePiece(Piece p, Square src, Square dest, boolean capture)
 	{
@@ -136,7 +136,7 @@ public class Game
 		}
 		dest.occupySquare(p);
 	}
-	
+
 	/* undo's the most recent call of movePiece() - use this if move was found to be illegal after it was made (most common case is check) */
 	public void undoMovePiece()
 	{
@@ -154,47 +154,47 @@ public class Game
 			lastDest.occupySquare(lastCaptured);
 		}
 	}
-	
+
 	/*if a pawn moves double forward , it must set the enPassant square*/
 	public void setEnPassant(Square ep)
 	{
 		enPassant = ep;
 		isEnPassant = true;
 	}
-	
+
 	/*if any other kind of move occurs we unset the enPassant square*/
 	public void unsetEnPassant()
 	{
 		isEnPassant = false;
 	}
-	
+
 	public boolean isEnPassant()
 	{
 		return isEnPassant;
 	}
-	
+
 	public Square getEnPassant()
 	{
 		return enPassant;
 	}
-	
-	
+
+
 	public String canCastle(boolean player_type)
 	{
 		boolean gameColor;
 		Player player;
-		
+
 		if(player_type == USER){
-			player = player_user;	
+			player = player_user;
 		}
 		else{
 			player = player_comp;
 		}
-		
+
 		gameColor = player.getColor();
 		return "KQkq";
 	}
-	
+
 	public void nextTurn(boolean didCaptureOrPawnMove)
 	{
 		if(activeColor == BLACK){
@@ -206,33 +206,33 @@ public class Game
 		}
 		activeColor = !activeColor;
 	}
-	
+
 	/* some getters */
 	public Square getSquareAt(int file, int rank)
 	{
 		return board.getSquareAt(file, rank);
 	}
-	
+
 	public Board getBoard()
 	{
 		return board;
 	}
-	
+
 	public boolean getActiveColor()
 	{
 		return activeColor;
 	}
-	
+
 	public int getFullmoveClock()
 	{
 		return fullmoveClock;
 	}
-	
+
 	public int getHalfmoveClock()
 	{
 		return halfmoveClock;
 	}
-	
+
 	public Player getOpponent(boolean player_type)
 	{
 		if(player_type == USER){
@@ -242,7 +242,7 @@ public class Game
 			return player_user;
 		}
 	}
-	
+
 	public Player getPlayer(boolean player_type)
 	{
 		if(player_type == USER){
