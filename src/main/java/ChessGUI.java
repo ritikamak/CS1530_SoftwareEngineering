@@ -405,7 +405,12 @@ public class ChessGUI extends javax.swing.JFrame
 		for(file = 0; file < 8; file++){
 			for(rank = 0; rank < 8; rank++){
 				guiBoard[file][rank] = new javax.swing.JButton();
-				guiBoard[file][rank].setBackground(new java.awt.Color(153, 153, 153));
+        if((file % 2 == 0 && rank % 2 != 0) || (file % 2 != 0 && rank % 2 == 0)) {
+          guiBoard[file][rank].setBackground(new java.awt.Color(255, 255, 255));
+        }
+        else {
+          guiBoard[file][rank].setBackground(new java.awt.Color(153, 153, 153));
+        }
 				guiBoard[file][rank].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 				guiBoard[file][rank].setContentAreaFilled(false);
 				guiBoard[file][rank].setMargin(new java.awt.Insets(0, 0, 0, 0));
