@@ -24,8 +24,10 @@ public class ChessGUI extends javax.swing.JFrame
     private javax.swing.JLabel blackLabel;
     private javax.swing.JPanel durationPanel;
     private javax.swing.JLabel durationText;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
@@ -332,6 +334,15 @@ public class ChessGUI extends javax.swing.JFrame
         blackLabel.setText("Computer");
 
         whiteLabel.setText("Player");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
+
 	}
 
 	/* createCompenents() */
@@ -359,8 +370,10 @@ public class ChessGUI extends javax.swing.JFrame
         outOfPlayPanel = new javax.swing.JPanel();
         blackLabel = new javax.swing.JLabel();
         whiteLabel = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         durationPanel = new javax.swing.JPanel();
         durationText = new javax.swing.JLabel();
         menuBarPanel = new javax.swing.JPanel();
@@ -715,34 +728,40 @@ public class ChessGUI extends javax.swing.JFrame
                     .addComponent(guiBoard[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-		javax.swing.GroupLayout outOfPlayPanelLayout = new javax.swing.GroupLayout(outOfPlayPanel);
+        javax.swing.GroupLayout outOfPlayPanelLayout = new javax.swing.GroupLayout(outOfPlayPanel);
         outOfPlayPanel.setLayout(outOfPlayPanelLayout);
         outOfPlayPanelLayout.setHorizontalGroup(
             outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addComponent(jSeparator2)
             .addGroup(outOfPlayPanelLayout.createSequentialGroup()
                 .addGroup(outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(outOfPlayPanelLayout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(blackLabel))
+                        .addGroup(outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(outOfPlayPanelLayout.createSequentialGroup()
+                                .addGap(110, 110, 110)
+                                .addComponent(whiteLabel))
+                            .addGroup(outOfPlayPanelLayout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(blackLabel)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(outOfPlayPanelLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(whiteLabel)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
         );
         outOfPlayPanelLayout.setVerticalGroup(
             outOfPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(outOfPlayPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(18, 18, 18)
                 .addComponent(blackLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(whiteLabel)
-                .addGap(12, 12, 12))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         durationPanel.setBackground(new java.awt.Color(204, 204, 204));
@@ -754,7 +773,7 @@ public class ChessGUI extends javax.swing.JFrame
         durationPanelLayout.setHorizontalGroup(
             durationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(durationPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(77, 77, 77)
                 .addComponent(durationText)
                 .addContainerGap(55, Short.MAX_VALUE))
         );
