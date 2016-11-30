@@ -1,14 +1,25 @@
 import java.util.Random;
 import java.lang.InterruptedException;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.GroupLayout.*;
 
 public class Kibitzer extends Thread{
      private int wait_time;
      private int message_number;
      private static boolean stop_Kibitzer;
      private boolean legendary;
+     private Kibitzer_gui kib_gui;
 
      public Kibitzer(){
+          kib_gui = new Kibitzer_gui();
           legendary = false;
+
      }
      public void run(){
           //random.nextInt(max - min + 1) + min
@@ -19,7 +30,8 @@ public class Kibitzer extends Thread{
                message_number = r.nextInt(30-1+1) + 1;
                //anywhere from 1 to 5 seconds
                wait_time = r.nextInt(5-1+1) + 1;
-               System.out.println(message(message_number));
+               //System.out.println(message(message_number));
+               kib_gui.setLabel(message(message_number));
                try{
                     Thread.sleep(wait_time*1000);
                }
@@ -52,7 +64,7 @@ public class Kibitzer extends Thread{
                case 10:
                     return "When you don't know the answer, stack overflow";
                case 11:
-                    return "git blamesomeoneelse";
+                    return "git ignore";
                case 12:
                     return "Is your elevator running? Because you better go catch it";
                case 13:
@@ -92,11 +104,11 @@ public class Kibitzer extends Thread{
                case 30:
                     if(legendary){
                          legendary = true;
-                         return "This Kibitzer is legen... wait for it";
+                         return "This Kibitzer is legen...";
                     }
                     else{
                          legendary = false;
-                         return "dary!";
+                         return "..wait for it dary!";
                     }
           }
           return "At least we aren't using C";
@@ -109,5 +121,30 @@ public class Kibitzer extends Thread{
      public static void main(String[] args){
           Kibitzer kib = new Kibitzer();
           kib.run();
+     }
+}
+class Kibitzer_gui {
+     private JTextArea textArea;
+     private JScrollPane areaScrollPane;
+     private JFrame frame;
+     private JLabel label;
+     public Kibitzer_gui(){
+          //Create and set up the window.
+          frame = new JFrame("Kibitizer");
+          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          frame.getContentPane().setPreferredSize(new Dimension(725, 100));
+
+          label = new JLabel("Kibitizer");
+          label.setPreferredSize(new Dimension(175, 100));
+          frame.getContentPane().add(label, BorderLayout.CENTER);
+
+          //Display the window.
+          frame.pack();
+          frame.setVisible(true);
+     }
+     public void setLabel(String s){
+          // System.out.println("s = " + s);
+          label.setText(s);
+          //textArea.append("\n" + s);
      }
 }
