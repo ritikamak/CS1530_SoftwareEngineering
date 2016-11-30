@@ -187,3 +187,4 @@ OBSERVED BEHAVIOR:
 These tests result in failed tests.
 NOTES:
 This problem looks like it be fixed by refactoring the implementation of movePiece for the King class and having the Chess class validate the path for castling is not impeded, the destination is not occupied, and that the king never passes through a check while castling. This can most likely be fixed once StockFish is properly linked with our program.
+ 
