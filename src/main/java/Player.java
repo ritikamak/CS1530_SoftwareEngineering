@@ -140,7 +140,7 @@ public class Player
 			pieces.add(new Bishop(this, color, board.getSquareAt(F, ONE)));
 			//king and queen
 			pieces.add(new Queen(this, color, board.getSquareAt(D, ONE)));
-			pieces.add(new King(this, color, board.getSquareAt(E, ONE)));
+			//pieces.add(new King(this, color, board.getSquareAt(E, ONE)));
 			myKing = new King(this, color, board.getSquareAt(E, ONE));
 			pieces.add(myKing);
 		}
@@ -164,7 +164,7 @@ public class Player
 			pieces.add(new Bishop(this, color, board.getSquareAt(F, EIGHT)));
 			//king and queen
 			pieces.add(new Queen(this, color, board.getSquareAt(D, EIGHT)));
-			pieces.add(new King(this, color, board.getSquareAt(E, EIGHT)));
+			//pieces.add(new King(this, color, board.getSquareAt(E, EIGHT)));
 			myKing = new King(this, color, board.getSquareAt(E, EIGHT));
 			pieces.add(myKing);
 		}
