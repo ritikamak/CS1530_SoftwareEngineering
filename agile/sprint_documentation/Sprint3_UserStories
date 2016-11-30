@@ -57,3 +57,4 @@ These are all part of refactoring; all deal with making code better/simplifying 
   So that the game is smooth and no pieces require special clicks and such.
 	STORY POINTS: 8
 (Set this up using abstract classes for piece movements.)
+ 
