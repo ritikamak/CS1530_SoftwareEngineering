@@ -168,3 +168,4 @@ OBSERVED BEHAVIOR:
 There is no code implemented to connect the board backend with the GUI.
 NOTES:
 This defect was neither directly related to the any of the user stories nor a priority for this sprint. This is also a major defect which will require a long time to implement so it will be made a priority for the next sprint. 
+ 
