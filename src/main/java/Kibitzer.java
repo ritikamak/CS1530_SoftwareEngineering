@@ -19,13 +19,13 @@ public class Kibitzer extends Thread{
      public Kibitzer(){
           kib_gui = new Kibitzer_gui();
           legendary = false;
+          stop_Kibitzer = false;
 
      }
      public void run(){
           //random.nextInt(max - min + 1) + min
           Random r = new Random();
 
-          stop_Kibitzer = false;
           while(!stop_Kibitzer){
                message_number = r.nextInt(30-1+1) + 1;
                //anywhere from 1 to 5 seconds
@@ -108,7 +108,7 @@ public class Kibitzer extends Thread{
                     }
                     else{
                          legendary = false;
-                         return "..wait for it dary!";
+                         return "...wait for it ... dary!";
                     }
           }
           return "At least we aren't using C";
@@ -116,6 +116,9 @@ public class Kibitzer extends Thread{
 
      public static void break_Kibitzer(){
           stop_Kibitzer = true;
+     }
+     public boolean getStopKibitzer(){
+          return stop_Kibitzer;
      }
      //test
      public static void main(String[] args){
