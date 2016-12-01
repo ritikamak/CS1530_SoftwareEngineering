@@ -26,8 +26,8 @@ public class ChessGUI extends javax.swing.JFrame
     private javax.swing.JLabel durationText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private static javax.swing.JTextArea jTextArea1;
+    private static javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
@@ -339,17 +339,27 @@ public class ChessGUI extends javax.swing.JFrame
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
-        String playerPanelMsg = ("Player's taken pieces:\n");
+        String playerPanelMsg = ("Player has taken these pieces:\n");
         jTextArea1.setText(playerPanelMsg);
 
         //Displays msg of taken pieces in "Computer" side panel text box
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
-        String compPanelMsg = ("Computer's taken pieces:\n");
+        String compPanelMsg = ("Computer has taken these pieces:\n");
         jTextArea2.setText(compPanelMsg);
 
 	}
+
+	/* updateSidePanel() */
+	//updates messages on side panel of player & computer's taken pieces
+	public static void updateSidePanel(Player theHuman, Player theRobot)
+	{
+		String updatedHumanPanel = ("Player has taken these pieces:\n" + theRobot.printTakenPieces());
+		jTextArea1.setText(updatedHumanPanel);
+		String updatedCompPanel = ("Computer has taken these pieces:\n" + theHuman.printTakenPieces());
+		jTextArea2.setText(updatedCompPanel);
+  	}
 
 	/* createCompenents() */
 	//initializes most of the gui components

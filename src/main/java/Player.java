@@ -200,6 +200,12 @@ public class Player
 	{
 		pieces.remove(captured);
 		captured_pieces.add(captured);
+		printTakenPieces();
+	}
+
+	public String printTakenPieces()
+	{		
+		return captured_pieces.toString();
 	}
 
 	public void returnPiece(Piece returned)
