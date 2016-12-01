@@ -117,6 +117,7 @@ public class InputHandler
 		
 		success = game.movePiece(p, src, dest);
 		if(!success){
+			ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
 			System.out.println("That move was determined to be illegal. Try another move.");
 		}
 		
