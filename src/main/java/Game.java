@@ -480,7 +480,7 @@ public class Game
 			return player_user;
 		}
 	}
-
+	
 	public Player getPlayer(boolean player_type)
 	{
 		if(player_type == USER){

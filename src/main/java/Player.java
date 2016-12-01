@@ -108,6 +108,7 @@ public class Player
 			pieces.add(myKing);
 		}
 		inCheck = false;
+		
 	}
 
 	public Player(boolean t, boolean c, Game g)
@@ -195,11 +196,41 @@ public class Player
 	{
 		return pieces;
 	}
-
+/*
+	//starts stockfish, returns true/false if engine started
+	public boolean startStockfish()
+	{
+		boolean robotOverlordConfirmed;
+		
+		compootaBrain = new Stockfish();
+		robotOverlordConfirmed = compootaBrain.startEngine();
+		return robotOverlordConfirmed;
+	}
+	
+	//stops stockfish
+	public void stopStockfish()
+	{
+		compootaBrain.stopEngine();
+	}
+	*/
+	public void getStockfishMove(String FEN)
+	{
+		CompootaBrain cb; //threaded object
+		
+		cb = new CompootaBrain(FEN);
+		cb.start();
+	}
+	
 	public void takePiece(Piece captured)
 	{
 		pieces.remove(captured);
 		captured_pieces.add(captured);
+		printTakenPieces();
+	}
+
+	public String printTakenPieces()
+	{		
+		return captured_pieces.toString();
 	}
 
 	public void returnPiece(Piece returned)
@@ -310,5 +341,76 @@ public class Player
 		}
 		hasSelectedSquare = false;
 		hasSelectedPiece = false;
+	}
+	
+	//this is a 
+	private class CompootaBrain extends Thread
+	{
+		Stockfish engine;
+		String FEN;
+		
+		private GameInput translateCompootaMove(String move)
+		{
+			Square src;
+			Square dest;
+			GameInput gi;
+			int r;
+			int f;
+
+			gi = new GameInput(false); //AI input
+			//get source square
+			f = ((int)move.charAt(0)) - 97;
+			r = ((int)move.charAt(1)) - 49;
+			src = board.getSquareAt(f,r);
+			//get dest square
+			f = ((int)move.charAt(2)) - 97;
+			r = ((int)move.charAt(3)) - 49;
+			dest = board.getSquareAt(f,r);
+			gi.mapSquare("src", src);
+			gi.mapSquare("dest", dest);
+
+			return gi;
+		}
+		
+		CompootaBrain(String fen){
+			FEN = fen;
+			engine = new Stockfish();
+		}
+		
+		public void run(){
+			GameInput gi;
+			String VoightKampff;
+			
+			VoightKampff = "";
+			engine.startEngine();
+			try{
+				VoightKampff = engine.getBestMove(FEN, 5000); //five seconds feels like a good amount of time.
+			}
+			catch(Exception firstStrike){
+				System.out.println("I'm sorry, human. I seem to be experiencing what you might call a 'brainfart'." +
+								   " Please give me a bit more time...");
+				try{
+					VoightKampff = engine.getBestMove(FEN, 10000); //five seconds felt like a good amount of time, but this computer needs more
+				}
+				catch(Exception secondStrike){
+					//give it even more time...
+					System.out.println("You impress me, human! I will require 15 more seconds to ponder this");
+					try{
+						VoightKampff = engine.getBestMove(FEN, 15000); //10 seconds felt like a good amount of time, but this computer needs more
+					}
+					catch(Exception yourOut){
+						System.out.println("Well I'm stumped... You win I guess... until Charlie figures out a better way to handle this error");
+						engine.stopEngine();
+						ApplicationInput ai = new ApplicationInput(ApplicationInput.AppOp.NEW_GAME);
+						InputHandler.handleApplicationInput(ai);
+						this.stop();
+					}
+				}
+			}
+			gi = translateCompootaMove(VoightKampff);
+			InputHandler.handleGameInput(gi);
+			engine.stopEngine();
+			this.stop();
+		}
 	}
 }
