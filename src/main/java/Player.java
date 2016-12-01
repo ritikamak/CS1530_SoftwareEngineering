@@ -202,23 +202,7 @@ public class Player
 	{
 		return pieces;
 	}
-	/*
-	//starts stockfish, returns true/false if engine started
-	public boolean startStockfish()
-	{
-		boolean robotOverlordConfirmed;
-		
-		compootaBrain = new Stockfish();
-		robotOverlordConfirmed = compootaBrain.startEngine();
-		return robotOverlordConfirmed;
-	}
 	
-	//stops stockfish
-	public void stopStockfish()
-	{
-		compootaBrain.stopEngine();
-	}
-	*/
 	public void getStockfishMove(String FEN)
 	{
 		CompootaBrain cb; //threaded object

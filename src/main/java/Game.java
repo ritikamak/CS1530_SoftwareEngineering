@@ -465,13 +465,20 @@ public class Game
 			advanceTurn(false, p, dest, false);
 		}
 		else{
-			if(pawnMoved){
-				((Pawn)p).unsetEnPassantTarget();
-			}
 			p.moved();
 			advanceTurn(capture || pawnMoved, p, dest, enPassanted);
 		}
-		
+		//take care of some Pawn business
+		if(pawnMoved){
+				((Pawn)p).unsetEnPassantTarget();
+				//check for promotion
+				if(((Pawn)p).shouldIBePromoted()){
+					src = p.getPosition();
+					boolean pcolor = p.getColor();
+					//default promote to queen
+					p = new Queen(activePlayer, pcolor, src);			
+				}
+		}
 		//return true, indicating move success
 		return true;
 	}
