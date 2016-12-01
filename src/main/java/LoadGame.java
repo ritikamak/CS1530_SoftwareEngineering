@@ -22,6 +22,7 @@ public class LoadGame{
                k.close();
                Stockfish fish = new Stockfish();
                fish.startEngine();
+               System.out.println(last_fen);
                fish.drawBoard(last_fen);
           }
           catch (Exception e){

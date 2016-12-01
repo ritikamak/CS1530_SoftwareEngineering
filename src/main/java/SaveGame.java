@@ -16,6 +16,7 @@ public class SaveGame{
                BufferedWriter writer = new BufferedWriter(new FileWriter(f));
                for(String s: Chess.fenList){
                     writer.write(s);
+                    writer.newLine();
                }
                writer.close ();
                k.close();
