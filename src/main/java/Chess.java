@@ -13,6 +13,7 @@ public class Chess
 	{
 		game = new Game();
 		game.setup();
+		gamescribe = new GameScribe(game);
 		gui.display(false);
 		gui.dispose();
 		gui = new ChessGUI(game);

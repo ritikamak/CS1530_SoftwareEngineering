@@ -25,12 +25,12 @@ public class Stockfish {
 	 */
 	public boolean startEngine() {
 		String os = System.getProperty("os.name");
-		System.out.println(os);
+		//System.out.println(os);
 		if(os.contains("Windows")){
 			PATH = "build/resources/engine/main/stockfish_8_x64_bmi2.exe";
 		}
 		else if(os.equals("Mac OS X")){
-			System.out.println("assuming mac!");
+			//System.out.println("assuming mac!");
 			PATH = "build/resources/main/engine/stockfish-7-64-bmi2";
 		}
 		else{
@@ -43,7 +43,7 @@ public class Stockfish {
 					engineProcess.getInputStream()));
 			processWriter = new OutputStreamWriter(
 					engineProcess.getOutputStream());
-			System.out.println("pr = " + processReader + " / pw = " + processWriter);
+			//System.out.println("pr = " + processReader + " / pw = " + processWriter);
 		} catch (Exception e) {
 			System.out.println("Caught exception! " + e.toString());
 			return false;
