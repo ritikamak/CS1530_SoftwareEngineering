@@ -82,7 +82,7 @@ public class Game
 			wpcs = player_user.getPieces();
 			bpcs = player_comp.getPieces();
 		}
-		/**
+		/*
 		two for loops
 		Using the circular relationship between to place and Square
 		set each square on the board the piece's square
@@ -297,7 +297,7 @@ public class Game
 			//we need to let the player and their king know also
 			passivePlayer.toggleCheck();
 			//we will also announce check
-			System.out.println(passivePlayer.getKing().toString() + " is in check!");
+			ErrorMsg.infoBox(passivePlayer.getKing().toString() + " is in check!", "King In Check Position");
 		}
 		
 		//then finally, update some other game stuff
