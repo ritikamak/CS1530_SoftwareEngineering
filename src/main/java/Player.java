@@ -108,6 +108,7 @@ public class Player
 			pieces.add(myKing);
 		}
 		inCheck = false;
+		
 	}
 
 	public Player(boolean t, boolean c, Game g)
@@ -195,7 +196,31 @@ public class Player
 	{
 		return pieces;
 	}
-
+/*
+	//starts stockfish, returns true/false if engine started
+	public boolean startStockfish()
+	{
+		boolean robotOverlordConfirmed;
+		
+		compootaBrain = new Stockfish();
+		robotOverlordConfirmed = compootaBrain.startEngine();
+		return robotOverlordConfirmed;
+	}
+	
+	//stops stockfish
+	public void stopStockfish()
+	{
+		compootaBrain.stopEngine();
+	}
+	*/
+	public void getStockfishMove(String FEN)
+	{
+		CompootaBrain cb; //threaded object
+		
+		cb = new CompootaBrain(FEN);
+		cb.start();
+	}
+	
 	public void takePiece(Piece captured)
 	{
 		pieces.remove(captured);
@@ -316,5 +341,52 @@ public class Player
 		}
 		hasSelectedSquare = false;
 		hasSelectedPiece = false;
+	}
+	
+	//this is a 
+	private class CompootaBrain extends Thread
+	{
+		Stockfish engine;
+		String FEN;
+		
+		private GameInput translateCompootaMove(String move)
+		{
+			Square src;
+			Square dest;
+			GameInput gi;
+			int r;
+			int f;
+
+			gi = new GameInput(false); //AI input
+			//get source square
+			f = ((int)move.charAt(0)) - 97;
+			r = ((int)move.charAt(1)) - 49;
+			src = board.getSquareAt(f,r);
+			//get dest square
+			f = ((int)move.charAt(2)) - 97;
+			r = ((int)move.charAt(3)) - 49;
+			dest = board.getSquareAt(f,r);
+			gi.mapSquare("src", src);
+			gi.mapSquare("dest", dest);
+
+			return gi;
+		}
+		
+		CompootaBrain(String fen){
+			FEN = fen;
+			engine = new Stockfish();
+		}
+		
+		public void run(){
+			GameInput gi;
+			String VoightKampff;
+			
+			engine.startEngine();
+			VoightKampff = engine.getBestMove(FEN, 5000); //five seconds feels like a good amount of time.
+			gi = translateCompootaMove(VoightKampff);
+			InputHandler.handleGameInput(gi);
+			engine.stopEngine();
+			this.stop();
+		}
 	}
 }
