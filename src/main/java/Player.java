@@ -381,8 +381,32 @@ public class Player
 			GameInput gi;
 			String VoightKampff;
 			
+			VoightKampff = "";
 			engine.startEngine();
-			VoightKampff = engine.getBestMove(FEN, 5000); //five seconds feels like a good amount of time.
+			try{
+				VoightKampff = engine.getBestMove(FEN, 5000); //five seconds feels like a good amount of time.
+			}
+			catch(Exception firstStrike){
+				System.out.println("I'm sorry, human. I seem to be experiencing what you might call a 'brainfart'." +
+								   " Please give me a bit more time...");
+				try{
+					VoightKampff = engine.getBestMove(FEN, 10000); //five seconds felt like a good amount of time, but this computer needs more
+				}
+				catch(Exception secondStrike){
+					//give it even more time...
+					System.out.println("You impress me, human! I will require 15 more seconds to ponder this");
+					try{
+						VoightKampff = engine.getBestMove(FEN, 15000); //10 seconds felt like a good amount of time, but this computer needs more
+					}
+					catch(Exception yourOut){
+						System.out.println("Well I'm stumped... You win I guess... until Charlie figures out a better way to handle this error");
+						engine.stopEngine();
+						ApplicationInput ai = new ApplicationInput(ApplicationInput.AppOp.NEW_GAME);
+						InputHandler.handleApplicationInput(ai);
+						this.stop();
+					}
+				}
+			}
 			gi = translateCompootaMove(VoightKampff);
 			InputHandler.handleGameInput(gi);
 			engine.stopEngine();
