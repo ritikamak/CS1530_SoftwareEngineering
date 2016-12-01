@@ -1,10 +1,17 @@
 import java.util.*;
-/* Each Square object represents a square on the chessboard grid. This class forms the basis for communicating position in this application. */
+
+/** 
+* Each Square object represents a square on the chessboard grid. 
+* This class forms the basis for communicating position in this application.
+*
+*/
 public class Square
 {
 	/* VARIABLES */
-	int file; //column, horizontal (a-h)
-	int rank; //row, vertical (1-8)
+	//column, horizontal (a-h)
+	int file; 
+	//row, vertical (1-8)
+	int rank; 
 	boolean occupied;
 	Piece piece;
 	boolean selected; //this is a variable for the GUI and input handler to determine a user's src square for movement and square highlighting
@@ -36,7 +43,7 @@ public class Square
 		selected = !selected;
 	}
 	
-	//Getters
+	/* GETTERS */
 	public int getFile()
 	{
 		return file;
@@ -62,7 +69,7 @@ public class Square
 		return piece;
 	}
 
-	//Setters
+	/* SETTERS */
 	public void setOccupied(boolean o)
 	{
 		occupied = o;

@@ -177,4 +177,5 @@ public class Stockfish {
 		}
 		return evalScore/100;
 	}
+	
 }

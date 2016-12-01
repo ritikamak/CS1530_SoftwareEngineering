@@ -1,5 +1,11 @@
 import java.util.*;
-/* A player is an object created within a Game object. Each player object holds an ArrayList of Piece objects representing their pieces*/
+
+/** 
+* A player is an object created within a Game object. 
+* Each player object holds an ArrayList of Piece objects 
+* representing their pieces
+*
+*/
 public class Player
 {
 	/* CONSTANTS */
@@ -29,7 +35,8 @@ public class Player
 	/* VARIABLES */
 	boolean type; // a player is either a user or a computer
 	boolean color; // a player controls either black or white
-	boolean hasSelectedSquare; //a human player can have a square selected (COMP this is always false)
+	//a human player can have a square selected (COMP this is always false)
+	boolean hasSelectedSquare; 
 	Square selectedSquare; //we store that square here
 	boolean hasSelectedPiece; //if the human player owns a piece on the selected square, hasSelectedPiece == true
 	Piece selectedPiece;
@@ -38,7 +45,8 @@ public class Player
 	ArrayList<Piece> captured_pieces; //a player's captured pieces
 	boolean inCheck; //a player can be in check
 	Game game; //a player is involved in a current game
-	King myKing; // the player's king(for check functions)
+	// the player's king(for check functions)
+	King myKing; 
 
 	/* CONSTRUCTORS */
 	public Player(boolean t, boolean c)
@@ -175,8 +183,6 @@ public class Player
 	}
 
 	/* METHODS */
-
-
 	public boolean hasSelectedSquare()
 	{
 		return hasSelectedSquare;
@@ -196,7 +202,7 @@ public class Player
 	{
 		return pieces;
 	}
-/*
+	/*
 	//starts stockfish, returns true/false if engine started
 	public boolean startStockfish()
 	{
@@ -295,7 +301,7 @@ public class Player
 		}
 	}
 
-	// Getters
+	/* GETTERS */
 	public boolean getType()
 	{
 		return type;
@@ -316,7 +322,7 @@ public class Player
 		return myKing;
 	}
 
-	/* setters */
+	/* SETTERS */
 	public void setSelected(Square s)
 	{
 		if(hasSelectedSquare){
@@ -347,7 +353,6 @@ public class Player
 		hasSelectedPiece = false;
 	}
 	
-	//this is a 
 	private class CompootaBrain extends Thread
 	{
 		Stockfish engine;
@@ -417,4 +422,5 @@ public class Player
 			this.stop();
 		}
 	}
+
 }

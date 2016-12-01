@@ -1,3 +1,7 @@
+/**
+ * Piece movement implementation - an exception for illegal moves.
+ *
+ */
 class MoveException extends Exception
 {
      //custom exception for illegal moves

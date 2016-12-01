@@ -1,3 +1,7 @@
+/**
+ * Piece movement implementation - an interface for Move.
+ *
+ */
 public interface Move
 {
 	//movement interface

@@ -1,5 +1,11 @@
+/**
+ * Piece movement implementation - template for board's setup; 
+ * checks legality of different movements and special cases.
+ *
+ */
 public class MoveTemplate
 {
+	/* CONSTANTS */
 	public static final int X = 0;
 	public static final int Y = 1;
 	
@@ -9,13 +15,14 @@ public class MoveTemplate
 		KNIGHT,
 		SPECIAL_CASE
 	};
-	
+
+	/* VARIABLES */
 	MovePattern type; //is a movement orthoganal? diagonal? Knight? a King's castle?
 	int moveLen; //number of total squares moved
 	int moveVector[]; //a 2-dimensional vector
 	int slope; //this helps us construct paths later
 	
-	/* Constructor */
+	/* CONSTRUCTORS */
 	/* NOTE: this constructor throws exceptions in the event of a MoveTemplate object failing to satisfy the conditions of its MovementPattern.
 	It only concerns itself with the basic move pattern. It will NOT check for a move that goes off the board, a move that is obstructed, a move that leaves a King in check, etc...
 	
@@ -118,8 +125,7 @@ public class MoveTemplate
 		}
 	}
 	
-	/* Methods */
-	
+	/* METHODS */
 	/* returns the pattern used by this template */
 	public MovePattern getPattern()
 	{
@@ -247,4 +253,5 @@ public class MoveTemplate
 		
 		return path;
 	}
+
 }
