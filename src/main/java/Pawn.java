@@ -132,6 +132,21 @@ public class Pawn extends Piece
 		enPassantTarget = epTar;
 	}
 	
+	public boolean shouldIBePromoted()
+	{
+		if(this.gameColor == WHITE){
+			if(this.position.getRank() == 7){
+				return true;
+			}
+		}
+		else{
+			if(this.position.getRank() == 0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void unsetEnPassantTarget()
 	{
 		hasEnPassantTarget = false;
