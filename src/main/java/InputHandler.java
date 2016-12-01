@@ -123,6 +123,7 @@ public class InputHandler
 		
 		theHuman.unsetSelected();
 		gui.refreshBoard();
+		gui.updateSidePanel(theHuman, theRobot);
 	}
 	
 	/* changePieceDisplayColor() */
