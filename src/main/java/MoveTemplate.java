@@ -106,7 +106,7 @@ public class MoveTemplate
 					throw new MoveTemplateException("this MoveTemplate violates the rules of a KNIGHT movement pattern.");
 				}
 				break;
-				
+	
 			case SPECIAL_CASE:
 				/* you might have noticed we have not there's not much in this special_case section
 				For now, no exceptions are thrown when a special_case movement type is provided */

@@ -73,6 +73,13 @@ public abstract class Piece implements Move
 		owner.takePiece(this.getPosition().evictSquare());
 	}
 	
+	//undoes a capture
+	public void uncapture()
+	{
+		owner.returnPiece(this); 
+		this.getPosition().occupySquare(this);//captured piece still remember's its old position
+	}
+	
 	public void toggleSelected()
 	{
 		selected = !selected;
@@ -140,6 +147,11 @@ public abstract class Piece implements Move
 	public boolean getColor()
 	{
 		return gameColor;
+	}
+	
+	public boolean hasMoved()
+	{
+		return hasMoved;
 	}
 	
 	public DisplayColor getDisplayColor()

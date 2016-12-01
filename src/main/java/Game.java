@@ -31,13 +31,13 @@ public class Game
 	Player inCheck; //game takes note if a player is in check
 	Board board; // a game of chess has a board
 	String name; // a game has a name, this variable will probably be used once we get a save/load game system in place
-	Square enPassant; //square behind the pawn that just double moved
-	boolean isEnPassant; //boolean that indicates there if an enPassant is set or not
-	Piece lastMoved;
-	Piece lastCaptured;
-	boolean lastWasACapture;
-	Square lastSrc;
-	Square lastDest;
+	
+	//enpassant variables
+	Square enPassantSquare;
+	Piece enPassantPiece;
+	boolean enPassantAvailible;
+	
+	//game turn variables
 	boolean activeColor; //which color moves NEXT? (effectively a turn tracker)
 	int fullmoveClock; //a number which increments after every black move (two turns)
 	int halfmoveClock; //the number of halfmoves (one turn) since the last capture or pawn advance -- starts at 0
@@ -52,7 +52,7 @@ public class Game
 		activeColor = WHITE;
 		fullmoveClock = 1;
 		halfmoveClock = 0;
-
+		enPassantAvailible = false;
 	}
 	/*Providing a color to constructor will set the player's color to the parameter provided*/
 	public Game(boolean color)
@@ -62,7 +62,7 @@ public class Game
 		activeColor = WHITE;
 		fullmoveClock = 1;
 		halfmoveClock = 0;
-		isEnPassant = false;
+		enPassantAvailible = false;
 	}
 
 	/* METHODS */
@@ -96,113 +96,341 @@ public class Game
 			position.occupySquare(s);
 		}
 	}
-
-	/*tells the game someone is in check and provides the player*/
-	public void playerInCheck(Player checkedPlayer)
-	{
-		inCheck = checkedPlayer;
-		check = true;
+	
+	//this is a helper function for movePiece it updates a piece and the relevant squares in the event of a move or capture
+	private void updatePieceAndSquare(Piece p, Square dest, boolean captured){
+		//if a piece is getting captured
+		if(captured){
+			p.capture();
+		}
+		//if piece is moving
+		else{
+			//piece will no longer be on its original square
+			p.getPosition().evictSquare();
+			//it now occupies the dest square
+			dest.occupySquare(p);
+			//its position is set to reflect that
+			p.setPosition(dest);
+		}
 	}
 
-	/*tells the game no one is in check anymore*/
-	public void playerOutOfCheck()
+	//this function helps movePiece() 
+	//the move function in King.java actually checks if a castle is valid, performCastle just enacts it
+	private void performCastle(King k, Rook r)
 	{
-		check = false;
+		Square src;
+		Square newKingLocation;
+		Square newRookLocation;
+		int kf;
+		int kr;
+		
+		src = k.getPosition();
+		kf = src.getFile();
+		kr = src.getRank();
+		
+		//determine new positions
+		//kingside castle
+		if(r.isKingSide()){
+			newKingLocation = getSquareAt(kf , kr + 2); //king always moves two squares over
+			newRookLocation = getSquareAt(kf, kr + 1); //rook moves to the outside square flanking king
+		}
+		//queenside castle
+		else{
+			newKingLocation = getSquareAt(kf , kr - 2); //king always moves two squares over
+			newRookLocation = getSquareAt(kf, kr - 1); //rook moves to the outside square flanking king
+		}
+		
+		//actually update the board and pieces
+		updatePieceAndSquare(r, newRookLocation, false);
+		updatePieceAndSquare(k, newKingLocation, false);
 	}
 
-	/*updates the board and pieces according to parameters (does not check legality of move!)*/
-	public void movePiece(Piece p, Square src, Square dest, boolean capture)
+	//this function helps movePiece() 
+	//unperformCastle is meant to rewind a castle on the rare occasions it placed the king in check
+	private void unperformCastle(King k, Rook r, Square src, Square dest)
 	{
-		Piece capturedPiece;
-		//update our lastMoved variables (for undoMovePiece() below)
-		lastMoved = p;
-		lastSrc = src;
-		lastDest = dest;
-		//update the piece
-		p.setPosition(dest);
-		p.moved(); //this is for pieces that need to know if this is their first move of the game
-		//update the src square
-		src.evictSquare();
-		//update the dest square
-		if(capture){
-			//if we are capturing a piece...
-			capturedPiece = dest.evictSquare();
-			lastCaptured = capturedPiece;
-			lastWasACapture = true;
-			capturedPiece.capture();
+		//using the src and dest squares provided to the move, we can reset the pieces to those positions
+		updatePieceAndSquare(r, dest, false);
+		updatePieceAndSquare(k, src, false);
+	}
+	
+	/*this is a big function that coordinates several of the moving parts which both check for the legality of and resolove a move*/
+	public boolean movePiece(Piece p, Square src, Square dest)
+	{
+		boolean capture;
+		boolean pawnMoved; //for halfturns
+		boolean castled;
+		boolean enPassanted; //if we need to set enPassant
+		Piece destPiece; //piece, if any, on the dest square
+		Player activePlayer; //player who is moving
+		Player passivePlayer; //player who is not moving
+		
+		pawnMoved = false;
+		castled = false;
+		enPassanted = false;
+		destPiece = null;
+		//make initial move
+		switch(p.getPieceType()){
+			//when moving a king, there's a couple factors to consider (mainly w/r/t castling)
+			case KING:
+				try{
+					capture = p.move(board, dest);
+					if(capture){
+						destPiece = dest.getPiece();
+						//this is a castle (and King.move() considered it valid)
+						if(destPiece.getPieceType() == Piece.PieceType.ROOK && destPiece.getColor() == p.getColor()){
+							performCastle((King)p, (Rook)destPiece);
+							castled = true;
+						}
+						else{
+							//capture piece
+							updatePieceAndSquare(destPiece, dest, true);
+							//move king
+							updatePieceAndSquare(p, dest, false);
+						}
+					}
+					else{
+						//justmove king
+						updatePieceAndSquare(p, dest, false);
+					}
+				}
+				catch(MoveException e){
+					//total move failure, return false
+					return false;
+				}
+				break;
+				
+			case PAWN:
+				try{
+					//inform pawn of its option to capture enPassant
+					if(enPassantAvailible){
+						((Pawn)p).setEnPassantTarget(enPassantSquare, enPassantPiece);
+					}
+					capture = p.move(board, dest);
+					pawnMoved = true;
+					//capture and move pawn
+					if(capture){
+						if(dest.isOccupied() == false){
+							destPiece = enPassantPiece;
+						}
+						else{
+							destPiece = dest.getPiece();
+						}
+						//capture piece
+						updatePieceAndSquare(destPiece, destPiece.getPosition(), true);
+						//move pawn
+						updatePieceAndSquare(p, dest, false);
+					}
+					// or just move pawn
+					else{
+						updatePieceAndSquare(p, dest, false);
+						//determine if we need to set enPassant
+						if(p.hasMoved() == false && Math.abs(dest.getRank() - src.getRank()) == 2){
+							enPassanted = true;
+						}
+					}
+				}
+				catch(MoveException e){
+					if(enPassantAvailible){
+						((Pawn)p).unsetEnPassantTarget();
+					}
+					return false;
+				}
+				break;
+				
+			default:
+				try{
+					capture = p.move(board, dest);
+					if(capture){
+						destPiece = dest.getPiece();
+						//capture piece
+						updatePieceAndSquare(destPiece, dest, true);
+						//move piece
+						updatePieceAndSquare(p, dest, false);
+					}
+					else{
+						//just move piece
+						updatePieceAndSquare(p, dest, false);
+					}
+				}
+				catch(MoveException e){
+					//total move failure, return false
+					return false;
+				}
+		}
+		
+		//after making initial move, verify active player is not in check
+		activePlayer = p.getOwner();
+		if(activePlayer.isInCheck()){
+			//active player cannot put themselves in check, so we need to undo move and return false
+			//rewind move
+			updatePieceAndSquare(p, src, false);
+			//undo capture (if able)
+			if(capture){
+				//if move was a castle (not quite a capture)
+				if(castled){
+					unperformCastle((King)p, (Rook)destPiece, src, dest);
+				}
+				//otherwise, just call uncapture to reset the piece to its original position
+				else{
+					destPiece.uncapture(); 
+				}
+			}
+			//since we had to rewind move, move is a failure, return false
+			return false;
+		}
+		
+		//check if we need to unset check (active player moved OUT of check)
+		else{
+			if(check == true && inCheck == activePlayer){
+				check = false;
+				activePlayer.toggleCheck();
+			}
+		}
+		
+		//if active player is not in check, we then need to check if passive player IS 
+		passivePlayer = getOpponent(activePlayer.getType());
+		if(passivePlayer.isInCheck()){
+			//we need to update the game state to let it know
+			check = true;
+			inCheck = passivePlayer;
+			//we need to let the player and their king know also
+			passivePlayer.toggleCheck();
+			//we will also announce check
+			System.out.println(passivePlayer.getKing().toString() + " is in check!");
+		}
+		
+		//then finally, update some other game stuff
+		if(castled){
+			p.moved();
+			destPiece.moved();
+			advanceTurn(false, p, dest, false);
 		}
 		else{
-			lastWasACapture = false;
+			if(pawnMoved){
+				((Pawn)p).unsetEnPassantTarget();
+			}
+			p.moved();
+			advanceTurn(capture || pawnMoved, p, dest, enPassanted);
 		}
-		dest.occupySquare(p);
-	}
-
-	/* undo's the most recent call of movePiece() - use this if move was found to be illegal after it was made (most common case is check) */
-	public void undoMovePiece()
-	{
-		//set the moved piece to original src
-		lastMoved.setPosition(lastSrc);
-		lastSrc.occupySquare(lastMoved);
-		//evict the dest
-		lastDest.evictSquare();
-		//then restore captured piece (if applicable)
-		if(lastWasACapture){
-			//return piece from captured_pieces list to pieces list
-			lastCaptured.getOwner().returnPiece(lastCaptured);
-			//set piece where it originally resided on dest
-			lastCaptured.setPosition(lastDest);
-			lastDest.occupySquare(lastCaptured);
-		}
-	}
-
-	/*if a pawn moves double forward , it must set the enPassant square*/
-	public void setEnPassant(Square ep)
-	{
-		enPassant = ep;
-		isEnPassant = true;
-	}
-
-	/*if any other kind of move occurs we unset the enPassant square*/
-	public void unsetEnPassant()
-	{
-		isEnPassant = false;
+		
+		//return true, indicating move success
+		return true;
 	}
 
 	public boolean isEnPassant()
 	{
-		return isEnPassant;
+		return enPassantAvailible;
 	}
 
 	public Square getEnPassant()
 	{
-		return enPassant;
+		return enPassantSquare;
 	}
 
-
-	public String canCastle(boolean player_type)
+	//returns a fen castle string
+	public String fenCastleString()
 	{
-		boolean gameColor;
-		Player player;
-
-		if(player_type == USER){
-			player = player_user;
+		Player pl;
+		Piece r;
+		Piece k;
+		Square rookStart;
+		String str;
+		
+		str = "";
+		pl = getPlayer(USER);
+		if(pl.getColor() != WHITE){
+			pl = getPlayer(COMP);
+		}
+		//check white first
+		k = pl.getKing();
+		//if king has moved, this color has no castle opportunity
+		if(!k.hasMoved()){
+			//for white, we will check Kingside first (H1)
+			rookStart = board.getSquareAt(H, ONE);
+			if(rookStart.isOccupied()){
+				r = rookStart.getPiece();
+				if(!r.hasMoved() && r.getPieceType() == Piece.PieceType.ROOK && r.getColor() == WHITE){
+					//we can castle kingside
+					str = str + "K";
+				}
+			}
+			//for white, we will check  queenside second (A1)
+			rookStart = board.getSquareAt(A, ONE);
+			if(rookStart.isOccupied()){
+				r = rookStart.getPiece();
+				if(!r.hasMoved() && r.getPieceType() == Piece.PieceType.ROOK && r.getColor() == WHITE){
+					//we can castle queenside
+					str = str + "Q";
+				}
+			}
+		}
+		
+		pl = getOpponent(pl.getType());
+		k = pl.getKing();
+		//check black next
+		//if king has moved, this color has no castle opportunity
+		if(!k.hasMoved()){
+			//for black, we will check Kingside first (H8)
+			rookStart = board.getSquareAt(H, EIGHT);
+			if(rookStart.isOccupied()){
+				r = rookStart.getPiece();
+				if(!r.hasMoved() && r.getPieceType() == Piece.PieceType.ROOK && r.getColor() == BLACK){
+					//we can castle kingside
+					str = str + "k";
+				}
+			}
+			//for white, we will check  queenside second (A8)
+			rookStart = board.getSquareAt(A, EIGHT);
+			if(rookStart.isOccupied()){
+				r = rookStart.getPiece();
+				if(!r.hasMoved() && r.getPieceType() == Piece.PieceType.ROOK && r.getColor() == BLACK){
+					//we can castle queenside
+					str = str + "q";
+				}
+			}
+		}
+		return str;
+	}
+	
+	//sets enPassant if we need to
+	private void setEnPassant(Pawn p, Square dest)
+	{
+		int epRank;
+		
+		if(p.getColor() == WHITE){
+			epRank = dest.getRank() - 1; //behind white pawn
 		}
 		else{
-			player = player_comp;
+			epRank = dest.getRank() + 1; //behind black pawn
 		}
 
-		gameColor = player.getColor();
-		return "KQkq";
+		//set enPassant square
+		enPassantSquare = board.getSquareAt(dest.getFile(), epRank);
+		//set enPassant piece
+		enPassantPiece = p;
+		//set enPassantAvailible to true
+		enPassantAvailible = true;
 	}
-
-	public void nextTurn(boolean didCaptureOrPawnMove)
+	
+	//advances the turn for successful movePiece()
+	private void advanceTurn(boolean didCaptureOrPawnMove, Piece p, Square dest, boolean enPassanted)
 	{
 		if(activeColor == BLACK){
 			fullmoveClock++;
 		}
 		halfmoveClock++;
-		if(didCaptureOrPawnMove){
+		if(didCaptureOrPawnMove && enPassanted){
 			halfmoveClock = 0;
+			//set enPassant square
+			setEnPassant((Pawn)p, dest);
+		}
+		else if(didCaptureOrPawnMove){
+			halfmoveClock = 0;
+			enPassantAvailible = false;
+		}
+		else{
+			enPassantAvailible = false;
 		}
 		activeColor = !activeColor;
 	}
@@ -232,7 +460,17 @@ public class Game
 	{
 		return halfmoveClock;
 	}
-
+	
+	public boolean isThereCheck()
+	{
+		return check;
+	}
+	
+	public Player whoIsInCheck()
+	{
+		return inCheck;
+	}
+	
 	public Player getOpponent(boolean player_type)
 	{
 		if(player_type == USER){

@@ -47,6 +47,7 @@ public class Player
 		color = c;
 		hasSelectedSquare = false;
 		hasSelectedPiece = false;
+		inCheck = false;
 	}
 
 	public Player(boolean t, boolean c, Board b)
@@ -106,6 +107,7 @@ public class Player
 			myKing = new King(this, color, b.getSquareAt(E, EIGHT));
 			pieces.add(myKing);
 		}
+		inCheck = false;
 	}
 
 	public Player(boolean t, boolean c, Game g)
@@ -168,6 +170,7 @@ public class Player
 			myKing = new King(this, color, board.getSquareAt(E, EIGHT));
 			pieces.add(myKing);
 		}
+		inCheck = false;
 	}
 
 	/* METHODS */
@@ -232,17 +235,29 @@ public class Player
 			try{
 				captured = enemyPiece.move(board, myKingSquare);
 				if(captured){
-					inCheck = true;
-					return inCheck;
+			
+					return true;
 				}
+				
 			}
 			catch(MoveException e){
 				//if move exception is thrown, it means this enemy piece does not have the king in check. move along
+				
 			}
 		}
 		//if all enemy pieces can't capture king it is definitely not in check!
-		inCheck = false;
-		return inCheck;
+		return false;
+	}
+	
+	public void toggleCheck()
+	{
+		inCheck = !inCheck;
+		if(inCheck){
+			myKing.setCheck();
+		}
+		else{
+			myKing.unsetCheck();
+		}
 	}
 
 	// Getters
