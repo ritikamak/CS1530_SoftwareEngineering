@@ -7,7 +7,7 @@ public class PlayerTest{
 	public static final boolean WHITE = false;
 	public static final boolean USER = true;
 	public static final boolean COMP = false;
-	//Files
+	//Files 
 	public static final int A = 0;
 	public static final int B = 1;
 	public static final int C = 2;
@@ -93,5 +93,4 @@ public class PlayerTest{
 		//move should be illegal and piece did NOT move forward
 		assertFalse(check);
 	}
-	
 }

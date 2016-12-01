@@ -5,7 +5,7 @@ public class BishopTest{
 	
 	public static final boolean BLACK = true;
 	public static final boolean WHITE = false;
-	//Files
+	//Files 
 	public static final int A = 0;
 	public static final int B = 1;
 	public static final int C = 2;

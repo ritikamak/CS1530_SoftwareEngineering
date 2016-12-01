@@ -2,7 +2,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MoveTemplateTest
-{
+{ 
 	//before starting tests, we make a fake board and create a source square at the center of it
 	Board board = new Board();
 	Square src = board.getSquareAt(3,3);

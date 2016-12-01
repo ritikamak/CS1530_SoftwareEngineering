@@ -5,7 +5,7 @@ public class EnPassantTest{
 	
 	public static final boolean BLACK = true;
 	public static final boolean WHITE = false;
-	//Files
+	//Files 
 	public static final int A = 0;
 	public static final int B = 1;
 	public static final int C = 2;
@@ -30,6 +30,9 @@ public class EnPassantTest{
 	Game game;
 	GameScribe gs;
 	
+	//test that enPassant (special case for pawn capture) is implemented;
+	//check that boolean var "legal" is true after capture occurs.
+	//Implement enPassant by setting up board in ideal situation.
 	@Test
 	public void enPassantTest1(){
 		String myFEN;

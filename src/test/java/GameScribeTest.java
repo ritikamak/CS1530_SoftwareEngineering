@@ -27,6 +27,11 @@ public class GameScribeTest{
 	GameScribe gs;
 	Game game;
 	
+	//test that GameScribe works properly; check that Strings to later be saved 
+	//in .pgn output file are correct. Check that FEN is correct. 
+	//Set up board and sequence of pieces such that resulting myFEN String matches 
+	//what correct String should be after the 3rd turn.
+	//assertEquals(); pass in 2 Strings
 	@Test
 	public void generateFENtest(){
 		String myFEN;
