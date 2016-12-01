@@ -59,10 +59,10 @@ public class InputHandler
 				Chess.newGame();
 				break;
 			case SAVE_GAME:
-				
+				gs.saveGame();
 				break;
 			case LOAD_GAME:
-				
+				Chess.loadGame();
 				break;
 			default:
 		}

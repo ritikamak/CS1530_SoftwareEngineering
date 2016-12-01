@@ -1,5 +1,10 @@
-//I see this class as handling the PGN and FEN translation, perhaps even the save and load file reading and writing
 import java.util.*;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class GameScribe
 {
@@ -19,6 +24,54 @@ public class GameScribe
 	public void saveMoveToCurrentGame(String move)
 	{
 		currentGame.add(move);
+	}
+
+	public void saveGame()
+	{
+		try{
+			Scanner k = new Scanner(System.in);System.out.println("Please enter a name for the output file: ");
+			String f = k.next();
+			//PrintWriter printWriter = new PrintWriter (f);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+			for(String s: currentGame){
+				writer.write(s);
+				writer.newLine();
+			}
+			writer.close ();
+			k.close();
+			System.out.println("great! thanks! game is saved!");
+		}
+		catch (Exception e){
+		}
+	}
+	
+	private void moveByUCI(String move)
+	{
+		Square src;
+		Square dest;
+		Piece p;
+		int r;
+		int f;
+		//get source square
+		f = ((int)move.charAt(0)) - 97;
+		r = ((int)move.charAt(1)) - 49;
+		src = game.getSquareAt(f,r);
+		//get piece
+		p = src.getPiece();
+		//get dest square
+		f = ((int)move.charAt(2)) - 97;
+		r = ((int)move.charAt(3)) - 49;
+		dest = game.getSquareAt(f,r);
+		//move that piece (its hopefully legal?)
+		game.movePiece(p, src, dest);
+	}
+	
+	public void takeALoadOff(ArrayList<String> loadGame)
+	{
+		for(String s: loadGame){
+			moveByUCI(s);
+		}
+		currentGame = loadGame;
 	}
 	
 	public String generateFEN()
