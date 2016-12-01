@@ -335,13 +335,19 @@ public class ChessGUI extends javax.swing.JFrame
 
         whiteLabel.setText("Player");
 
+        //Displays msg of taken pieces in "Player" side panel text box
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+        String playerPanelMsg = ("Player's taken pieces:\n");
+        jTextArea1.setText(playerPanelMsg);
 
+        //Displays msg of taken pieces in "Computer" side panel text box
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
+        String compPanelMsg = ("Computer's taken pieces:\n");
+        jTextArea2.setText(compPanelMsg);
 
 	}
 
