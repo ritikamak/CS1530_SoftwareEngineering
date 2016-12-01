@@ -41,6 +41,7 @@ public class Kibitzer extends Thread{
           }
      }
 
+     //returns a message based on the int that was passed in
      public String message(int i){
           switch (i){
                case 1:
@@ -114,6 +115,7 @@ public class Kibitzer extends Thread{
           return "At least we aren't using C";
      }
 
+     //function to break the loop in kibitzer
      public static void break_Kibitzer(){
           stop_Kibitzer = true;
      }
@@ -126,6 +128,7 @@ public class Kibitzer extends Thread{
           kib.run();
      }
 }
+//creating a separate gui for the kibitzer
 class Kibitzer_gui {
      private JTextArea textArea;
      private JScrollPane areaScrollPane;

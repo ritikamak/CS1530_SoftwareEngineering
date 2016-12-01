@@ -33,7 +33,7 @@ public class Chess
 			}
 			reader.close();
 			k.close();
-		
+
 			//start a new game and send this string array list off to game scribe to do the dirty werk
 			newGame();
 			gamescribe.takeALoadOff(loadGame);
@@ -46,10 +46,12 @@ public class Chess
 			  System.out.println("Sorry, Friendo! We couldn't find a game by that name! (hey?! that rhymes!)");
           }
 	}
-	
+
 	public static void main(String[] args)
 	{
+		//keeps a list of moves
 		fenList = new ArrayList<String>();
+		//start the kibitizer independently of the chess game
 		Kibitzer kib = new Kibitzer();
 		kib.start();
 		game = new Game();
