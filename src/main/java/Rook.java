@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: Rook.
+ *
+ */
 public class Rook extends Piece
 {
 	/* CONSTANTS */
@@ -10,8 +16,7 @@ public class Rook extends Piece
 	/* VARIABLES */
 	boolean kingSide;
 	
-	/*CONSTRUCTORS*/
-
+	/* CONSTRUCTORS */
 	public Rook (Player owner, boolean gameColor, Square position){
 		super(owner, "Rook", gameColor, position);
 		type = PieceType.ROOK;
@@ -77,4 +82,5 @@ public class Rook extends Piece
 	{
 		return kingSide;
 	}
+	
 }

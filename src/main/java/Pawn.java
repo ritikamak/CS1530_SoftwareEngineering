@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: Pawn.
+ *
+ */
 public class Pawn extends Piece
 {
 	/* CONSTANTS */
@@ -12,7 +18,7 @@ public class Pawn extends Piece
 	Square enPassantTargetSquare; //this is a square where the pawn may capture an enPassant Piece
 	boolean hasEnPassantTarget; //boolean affirming the two variables above are good
 	
-	/*CONSTRUCTORS*/
+	/* CONSTRUCTORS */
 	public Pawn (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Pawn", gameColor, position);
@@ -27,6 +33,7 @@ public class Pawn extends Piece
 		hasEnPassantTarget = false;
 	}
 	
+	/* METHODS */
 	public boolean move(Board board, Square dest) throws MoveException
 	{
 		Square src;

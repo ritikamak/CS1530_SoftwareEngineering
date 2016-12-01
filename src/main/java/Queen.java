@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: Queen.
+ *
+ */
 public class Queen extends Piece
 {
 	/* CONSTANTS */
@@ -9,8 +15,7 @@ public class Queen extends Piece
 
 	/* VARIABLES */
 
-	/*CONSTRUCTORS*/
-
+	/* CONSTRUCTORS */
 	public Queen (Player owner, boolean gameColor, Square position){
 		super(owner, "Queen", gameColor, position);
 		type = PieceType.QUEEN;
@@ -69,4 +74,5 @@ public class Queen extends Piece
 			throw new MoveException();
 		}
 	}
+	
 }

@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: Knight.
+ *
+ */
 public class Knight extends Piece
 {
 	/* CONSTANTS */
@@ -9,7 +15,7 @@ public class Knight extends Piece
 
 	/* VARIABLES */
 	
-	/*CONSTRUCTORS*/
+	/* CONSTRUCTORS */
 	public Knight (Player owner, boolean gameColor, Square position){
 		super(owner, "Knight", gameColor, position);
 		type = PieceType.KNIGHT;
@@ -21,7 +27,6 @@ public class Knight extends Piece
 	}
 
 	/* METHODS */
-	
 	public boolean move(Board board, Square dest) throws MoveException
 	{
 		MoveTemplate mt;
@@ -39,4 +44,5 @@ public class Knight extends Piece
 			throw new MoveException();
 		}
 	}
+
 }

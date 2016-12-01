@@ -1,5 +1,11 @@
 import java.util.*;
-/* This is a generic Piece object. As we develop further, it will be a superclass to more specific piece types: kings, queens, knights, bishops, rooks, pawns. */
+
+/**
+ * This is a generic Piece object.
+ * It is a superclass to more specific piece types: 
+ * kings, queens, knights, bishops, rooks, pawns.
+ *
+ */
 public abstract class Piece implements Move
 {
 	/* CONSTANTS */
@@ -8,7 +14,7 @@ public abstract class Piece implements Move
 	public final boolean USER = true;
 	public final boolean COMP = false;
 	
-	/*a public enum for display colors */
+	/* A public enum for display colors */
 	public enum DisplayColor {
 		STANDARD, 
 		BLUE, 
@@ -18,7 +24,7 @@ public abstract class Piece implements Move
 		YELLOW 
 	};
 	
-	/*a public enum for piece type (valuable for gamescribe)*/
+	/* A public enum for piece type (valuable for gamescribe)*/
 	public enum PieceType {
 		PAWN,
 		ROOK,
@@ -39,7 +45,7 @@ public abstract class Piece implements Move
 	public boolean selected; //piece owned by human player is considered selected if its position is the same square that is currently selected
 	public boolean hasMoved;// this variable tracks whether or not a piece has moved this game. primarily used by pawns and castling
 	
-	/* Constructors */
+	/* CONSTRUCTORS */
 	public Piece(Player o, String n, boolean gc, Square pos)
 	{
 		owner = o;
@@ -64,20 +70,19 @@ public abstract class Piece implements Move
 	}
 	
 	/* METHODS */
-
 	public abstract boolean move(Board board, Square dest) throws MoveException;
 	
-	//this "captures" the piece, erasing it from the board and from its owner's array list
+	//This "captures" the piece, erasing it from the board and from its owner's array list
 	public void capture()
 	{
 		owner.takePiece(this.getPosition().evictSquare());
 	}
 	
-	//undoes a capture
+	//Undoes a capture
 	public void uncapture()
 	{
 		owner.returnPiece(this); 
-		this.getPosition().occupySquare(this);//captured piece still remember's its old position
+		this.getPosition().occupySquare(this); //captured piece still remember's its old position
 	}
 	
 	public void toggleSelected()
@@ -91,8 +96,7 @@ public abstract class Piece implements Move
 	}
 	
 	/* GETTERS */
-	
-	//this is a default function for a pathObstructed function. 
+	//This is a default function for a pathObstructed function. 
 	public boolean pathObstructed(Board board, MoveTemplate mt)
 	{
 		Square path[];
@@ -200,13 +204,12 @@ public abstract class Piece implements Move
 		this.name = name;
 	}
 	
-	
 	public void setOwner(Player p)
 	{
 		owner = p;
 	}
 
-	/* toString */
+	/* toString method */
 	public String toString()
 	{
 		String c;

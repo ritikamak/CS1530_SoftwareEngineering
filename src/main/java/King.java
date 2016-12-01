@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: King.
+ *
+ */
 public class King extends Piece
 {
 	/* CONSTANTS */
@@ -12,8 +18,7 @@ public class King extends Piece
 	boolean	hasQueenSideCastle;
 	boolean inCheck;
 	
-	/*CONSTRUCTORS*/
-
+	/* CONSTRUCTORS */
 	public King (Player owner, boolean gameColor, Square position){
 		super(owner, "King", gameColor, position);
 		type = PieceType.KING;
@@ -31,7 +36,6 @@ public class King extends Piece
 	}
 
 	/* METHODS */
-	
 	public boolean move(Board board, Square dest) throws MoveException
 	{
 		boolean isCastle;
@@ -169,4 +173,5 @@ public class King extends Piece
 		hasKingSideCastle = false;
 		hasQueenSideCastle = false;
 	}
+
 }

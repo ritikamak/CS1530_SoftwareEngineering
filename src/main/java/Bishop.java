@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * This is a subclass of Piece.
+ * Piece type: Bishop.
+ *
+ */
 public class Bishop extends Piece
 {
 	/* CONSTANTS */
@@ -9,7 +15,7 @@ public class Bishop extends Piece
 
 	/* VARIABLES */
 
-	/*CONSTRUCTORS*/
+	/* CONSTRUCTORS */
 	public Bishop (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Bishop", gameColor, position);
@@ -23,7 +29,6 @@ public class Bishop extends Piece
 	}
 	
 	/* METHODS */
-
 	public boolean move(Board board, Square dest) throws MoveException
 	{
 		MoveTemplate mt;
@@ -41,4 +46,5 @@ public class Bishop extends Piece
 			throw new MoveException();
 		}
 	}
+
 }
