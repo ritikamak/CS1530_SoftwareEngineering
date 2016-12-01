@@ -153,7 +153,12 @@ public class InputHandler
 		theHuman.unsetSelected();
 		gui.refreshBoard();
 		if(!success){
-			ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
+			if(game.hasCheckMate()){
+				ErrorMsg.infoBox("Checkmate. Game is over. GG.", "Game Over");
+			}
+			else{
+				ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
+			}
 		}
 		else{
 			toSave = src.toString();

@@ -49,7 +49,9 @@ public class Game
 	int fullmoveClock; 
 	//the number of halfmoves (one turn) since the last capture or pawn advance -- starts at 0
 	int halfmoveClock; 
-
+	//game's over when this is true
+	boolean checkMate;
+	
 	/* CONSTRUCTORS */
 	/*Default constructor gives player the first move*/
 	public Game()
@@ -61,6 +63,7 @@ public class Game
 		fullmoveClock = 1;
 		halfmoveClock = 0;
 		enPassantAvailible = false;
+		checkMate = false;
 	}
 	/*Providing a color to constructor will set the player's color to the parameter provided*/
 	public Game(boolean color)
@@ -71,6 +74,7 @@ public class Game
 		fullmoveClock = 1;
 		halfmoveClock = 0;
 		enPassantAvailible = false;
+		checkMate = false;
 	}
 
 	/* METHODS */
@@ -160,6 +164,148 @@ public class Game
 		//using the src and dest squares provided to the move, we can reset the pieces to those positions
 		updatePieceAndSquare(r, dest, false);
 		updatePieceAndSquare(k, src, false);
+	}
+	
+	/* this is the same as our regular movePiece() except it doesn't change any game values perfomring the move theoretically to determin legality*/
+	public boolean movePieceTheoretically(Piece p, Square src, Square dest)
+	{
+		boolean capture;
+		boolean pawnMoved; //for halfturns
+		boolean castled;
+		boolean enPassanted; //if we need to set enPassant
+		Piece destPiece; //piece, if any, on the dest square
+		Player activePlayer; //player who is moving
+		Player passivePlayer; //player who is not moving
+		
+		pawnMoved = false;
+		castled = false;
+		enPassanted = false;
+		destPiece = null;
+		//make initial move
+		switch(p.getPieceType()){
+			//when moving a king, there's a couple factors to consider (mainly w/r/t castling)
+			case KING:
+				try{
+					capture = p.move(board, dest);
+					if(capture){
+						destPiece = dest.getPiece();
+						//this is a castle (and King.move() considered it valid)
+						if(destPiece.getPieceType() == Piece.PieceType.ROOK && destPiece.getColor() == p.getColor()){
+							performCastle((King)p, (Rook)destPiece);
+							castled = true;
+						}
+						else{
+							//capture piece
+							updatePieceAndSquare(destPiece, dest, true);
+							//move king
+							updatePieceAndSquare(p, dest, false);
+						}
+					}
+					else{
+						//justmove king
+						updatePieceAndSquare(p, dest, false);
+					}
+				}
+				catch(MoveException e){
+					//total move failure, return false
+					return false;
+				}
+				break;
+				
+			case PAWN:
+				try{
+					//inform pawn of its option to capture enPassant
+					if(enPassantAvailible){
+						((Pawn)p).setEnPassantTarget(enPassantSquare, enPassantPiece);
+					}
+					capture = p.move(board, dest);
+					pawnMoved = true;
+					//capture and move pawn
+					if(capture){
+						if(dest.isOccupied() == false){
+							destPiece = enPassantPiece;
+						}
+						else{
+							destPiece = dest.getPiece();
+						}
+						//capture piece
+						updatePieceAndSquare(destPiece, destPiece.getPosition(), true);
+						//move pawn
+						updatePieceAndSquare(p, dest, false);
+					}
+					// or just move pawn
+					else{
+						updatePieceAndSquare(p, dest, false);
+						//determine if we need to set enPassant
+						if(p.hasMoved() == false && Math.abs(dest.getRank() - src.getRank()) == 2){
+							enPassanted = true;
+						}
+					}
+				}
+				catch(MoveException e){
+					if(enPassantAvailible){
+						((Pawn)p).unsetEnPassantTarget();
+					}
+					return false;
+				}
+				break;
+				
+			default:
+				try{
+					capture = p.move(board, dest);
+					if(capture){
+						destPiece = dest.getPiece();
+						//capture piece
+						updatePieceAndSquare(destPiece, dest, true);
+						//move piece
+						updatePieceAndSquare(p, dest, false);
+					}
+					else{
+						//just move piece
+						updatePieceAndSquare(p, dest, false);
+					}
+				}
+				catch(MoveException e){
+					//total move failure, return false
+					return false;
+				}
+		}
+		
+		//after making initial move, verify active player is not in check
+		activePlayer = p.getOwner();
+		if(activePlayer.isInCheck()){
+		//active player cannot put themselves in check, so we need to undo move and return false
+			//rewind move
+			updatePieceAndSquare(p, src, false);
+			//undo capture (if able)
+			if(capture){
+				//if move was a castle (not quite a capture)
+				if(castled){
+					unperformCastle((King)p, (Rook)destPiece, src, dest);
+				}
+				//otherwise, just call uncapture to reset the piece to its original position
+				else{
+					destPiece.uncapture(); 
+				}
+			}
+			//since we had to rewind move, move is a failure, return false
+			return false;	
+		}
+		//rewind move
+			updatePieceAndSquare(p, src, false);
+			//undo capture (if able)
+			if(capture){
+				//if move was a castle (not quite a capture)
+				if(castled){
+					unperformCastle((King)p, (Rook)destPiece, src, dest);
+				}
+				//otherwise, just call uncapture to reset the piece to its original position
+				else{
+					destPiece.uncapture(); 
+				}
+			}
+		//return true, indicating move success
+		return true;
 	}
 	
 	/*this is a big function that coordinates several of the moving parts which both check for the legality of and resolove a move*/
@@ -270,7 +416,7 @@ public class Game
 		//after making initial move, verify active player is not in check
 		activePlayer = p.getOwner();
 		if(activePlayer.isInCheck()){
-			//active player cannot put themselves in check, so we need to undo move and return false
+		//active player cannot put themselves in check, so we need to undo move and return false
 			//rewind move
 			updatePieceAndSquare(p, src, false);
 			//undo capture (if able)
@@ -284,8 +430,12 @@ public class Game
 					destPiece.uncapture(); 
 				}
 			}
+			//this might also just be checkmate
+			if(determineCheckmate() == true){
+				checkMate = true;
+			}
 			//since we had to rewind move, move is a failure, return false
-			return false;
+			return false;	
 		}
 		
 		//check if we need to unset check (active player moved OUT of check)
@@ -401,6 +551,33 @@ public class Game
 		return str;
 	}
 	
+	public boolean determineCheckmate()
+	{
+		ArrayList<Piece> pieces;
+		Square src;
+		Square dest;
+		
+		if(!check){
+			return false;
+		}
+		//get player's pieces
+		pieces = inCheck.getPieces();
+		for(Piece p : pieces){
+			src = p.getPosition();
+			//for each piece determine legality of each move to any other square on the board
+			for(int f = 0; f < 7; f++){
+				for(int r = 0; r < 7; r++){
+					dest = getSquareAt(f,r);
+					boolean legal = movePieceTheoretically(p, src, dest);
+					if(legal == true){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	//sets enPassant if we need to
 	private void setEnPassant(Pawn p, Square dest)
 	{
@@ -499,4 +676,8 @@ public class Game
 		}
 	}
 	
+	public boolean hasCheckMate()
+	{
+		return checkMate;
+	}
 }

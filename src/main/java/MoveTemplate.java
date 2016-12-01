@@ -78,6 +78,9 @@ public class MoveTemplate
 				}
 				//if diagonal move is legal, we also need to set the slope and adjust the moveLen for diagonal movement by dividing it in half
 				else{
+					if(moveVector[X] == 0){
+						throw new MoveTemplateException("this MoveTemplate violates the rules of a DIAGONAL movement pattern.");
+					}
 					//in diagonal's case, slope is just good ol' fashion rise/run (which should come out to either 1 or -1)
 					slope = moveVector[Y] / moveVector[X];
 					moveLen = moveLen / 2;
