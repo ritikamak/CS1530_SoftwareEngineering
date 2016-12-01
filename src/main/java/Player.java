@@ -230,7 +230,11 @@ public class Player
 
 	public String printTakenPieces()
 	{		
-		return captured_pieces.toString();
+		String arraylistStringified = "";
+		for (Piece elem : captured_pieces) {
+			arraylistStringified = arraylistStringified.concat(elem + "\n");
+		}
+		return arraylistStringified;
 	}
 
 	public void returnPiece(Piece returned)
