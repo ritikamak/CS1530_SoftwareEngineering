@@ -8,17 +8,50 @@ public class Rook extends Piece
 	public static final boolean COMP = false;
 
 	/* VARIABLES */
-
+	boolean kingSide;
+	
 	/*CONSTRUCTORS*/
 
 	public Rook (Player owner, boolean gameColor, Square position){
 		super(owner, "Rook", gameColor, position);
 		type = PieceType.ROOK;
+		if(gameColor == WHITE){
+			if(position.getFile() == 7){
+				kingSide = true;
+			}
+			else{
+				kingSide = false;
+			}
+		}
+		else{
+			if(position.getFile() == 7){
+				kingSide = false;
+			}
+			else{
+				kingSide = true;
+			}
+		}
 	}
 	
 	public Rook (boolean gameColor, Square position){
 		super("Rook", gameColor, position);
 		type = PieceType.ROOK;
+		if(gameColor == WHITE){
+			if(position.getFile() == 7){
+				kingSide = true;
+			}
+			else{
+				kingSide = false;
+			}
+		}
+		else{
+			if(position.getFile() == 7){
+				kingSide = false;
+			}
+			else{
+				kingSide = true;
+			}
+		}
 	}
 
 	/* METHODS */
@@ -27,17 +60,21 @@ public class Rook extends Piece
 		MoveTemplate mt;
 		
 		try{
-			//rook is pretty easy in terms of error checking, MoveTemplate with orthoganal pattern will do all the work for us. 
+			//rook is generally pretty easy in terms of error checking, MoveTemplate with orthoganal pattern will do all the work for us. 
 			mt = new MoveTemplate(MoveTemplate.MovePattern.ORTHOGONAL, this.getPosition(), dest);
 			if(pathObstructed(board, mt)){
 				throw new MoveException("Path obstructed");
 			}
 			//if there are no obstructions the move is legal
 			return dest.isOccupied();
-			//will build support for castling later
 		}
 		catch(MoveTemplateException e){
 			throw new MoveException(e.toString());
 		}
+	}
+	
+	public boolean isKingSide()
+	{
+		return kingSide;
 	}
 }

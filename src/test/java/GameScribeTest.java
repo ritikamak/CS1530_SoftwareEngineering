@@ -42,23 +42,17 @@ public class GameScribeTest{
 		assertEquals(startingPosition, myFEN);
 		//move white pawn from e2 to e4, test new FEN is correct
 		Piece p = game.getSquareAt(E,TWO).getPiece();
-		game.movePiece(p, game.getSquareAt(E,TWO), game.getSquareAt(E,FOUR), false);
-		game.setEnPassant(game.getSquareAt(E,THREE));
-		game.nextTurn(true);
+		game.movePiece(p, game.getSquareAt(E,TWO), game.getSquareAt(E,FOUR));
 		myFEN = gs.generateFEN();
 		assertEquals(strTurn1, myFEN);
 		//move black pawn from c7 to c5, test new FEN is correct
 		p = game.getSquareAt(C,SEVEN).getPiece();
-		game.movePiece(p, game.getSquareAt(C,SEVEN), game.getSquareAt(C,FIVE), false);
-		game.setEnPassant(game.getSquareAt(C,SIX));
-		game.nextTurn(true);
+		game.movePiece(p, game.getSquareAt(C,SEVEN), game.getSquareAt(C,FIVE));
 		myFEN = gs.generateFEN();
 		assertEquals(strTurn2, myFEN);
 		//move white knight from g1 to f3, test new FEN is correct
 		p = game.getSquareAt(G,ONE).getPiece();
-		game.movePiece(p, game.getSquareAt(G,ONE), game.getSquareAt(F,THREE), false);
-		game.unsetEnPassant();
-		game.nextTurn(false);
+		game.movePiece(p, game.getSquareAt(G,ONE), game.getSquareAt(F,THREE));
 		myFEN = gs.generateFEN();
 		assertEquals(strTurn3, myFEN);
 	}

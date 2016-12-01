@@ -8,19 +8,23 @@ public class Pawn extends Piece
 	public static final boolean COMP = false;
 	
 	/* VARIABLES */
+	Piece enPassantTarget; //this is the piece captured by moving into enPassant target square
+	Square enPassantTargetSquare; //this is a square where the pawn may capture an enPassant Piece
+	boolean hasEnPassantTarget; //boolean affirming the two variables above are good
 	
 	/*CONSTRUCTORS*/
-
 	public Pawn (Player owner, boolean gameColor, Square position)
 	{
 		super(owner, "Pawn", gameColor, position);
 		type = PieceType.PAWN;
+		hasEnPassantTarget = false;
 	}
 	
 	public Pawn (boolean gameColor, Square position)
 	{
 		super("Pawn", gameColor, position);
 		type = PieceType.PAWN;
+		hasEnPassantTarget = false;
 	}
 	
 	public boolean move(Board board, Square dest) throws MoveException
@@ -29,7 +33,9 @@ public class Pawn extends Piece
 		int sf, sr, df, dr, rise, run;
 		MoveTemplate mt;
 		MoveTemplate.MovePattern pattern;
+		boolean enPassantCapture;
 		
+		enPassantCapture = false;
 		src = this.getPosition(); //source square
 		sf = src.getFile(); //source file
 		sr = src.getRank(); //source rank
@@ -86,7 +92,13 @@ public class Pawn extends Piece
 			}
 			//if moving diagonnally, pawn must have a legal capture target
 			else if(pattern == MoveTemplate.MovePattern.DIAGONAL && dest.isOccupied() == false){
-				throw new MoveException("Pawn cannot move diagonally without capture target.");
+				//however, if enPassant target is availible, move's still good
+				if(hasEnPassantTarget && enPassantTargetSquare == dest){
+					enPassantCapture = true;
+				}
+				else{
+					throw new MoveException("Pawn cannot move diagonally without capture target.");
+				}
 			}
 			//finally, we need to check if pawn's path is obstructed and if it is capturing something
 			if(pathObstructed(board, mt)){
@@ -97,7 +109,7 @@ public class Pawn extends Piece
 				throw new MoveException("Pawn's movement is obstructed.");
 			}
 			else{
-				return dest.isOccupied();
+				return (dest.isOccupied() || enPassantCapture);
 			}
 		}
 		//if the movetemplate constructor has issues, move is illegal
@@ -105,4 +117,17 @@ public class Pawn extends Piece
 			throw new MoveException("Illegal pawn Move");
 		}
 	}
+	
+	public void setEnPassantTarget(Square epSqr, Piece epTar)
+	{
+		hasEnPassantTarget = true;
+		enPassantTargetSquare = epSqr;
+		enPassantTarget = epTar;
+	}
+	
+	public void unsetEnPassantTarget()
+	{
+		hasEnPassantTarget = false;
+	}
+	
 }

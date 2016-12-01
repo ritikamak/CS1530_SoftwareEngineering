@@ -113,38 +113,13 @@ public class InputHandler
 	// attempts to move piece
 	private static void attemptMove(GameInput gi, Piece p, Square src, Square dest)
 	{
-		boolean capture;
-		boolean check;
-		Player inputPlayer; //player at the source of this input
-		Player opposingPlayer; //that player's opponent
-		Piece capturedPiece;
-	
-		try{
-			//we begin by letting our piece move function determine the legality of the move (an exception will be thrown if there is a problem)
-			//if move is successful, it will return true or false depending on whether the move captures a piece or not
-			capture = p.move(game.getBoard(), dest);
-			game.movePiece(p, src, dest, capture);
-			//next we need to test if move resulted in check
-			inputPlayer = game.getPlayer(gi.getType());
-			opposingPlayer = game.getPlayer(!gi.getType());
-			//if input player's own move put them in check, thats illegal and we need to rollback the move
-			if(inputPlayer.isInCheck()){
-				game.undoMovePiece();
-				System.out.println("Detected an illegal move: cannot put/leave own king in check.");
-			}
-			//if input player has put opponent in check as a result of their move, notify game that there is a player in check
-			else if(opposingPlayer.isInCheck()){
-				game.playerInCheck(opposingPlayer);
-				System.out.println(opposingPlayer.getKing().toString() + " is in check!");
-			}
-			//else, no one is in check and game needs to know that
-			else{
-				game.playerOutOfCheck();
-			}
+		boolean success;
+		
+		success = game.movePiece(p, src, dest);
+		if(!success){
+			System.out.println("That move was determined to be illegal. Try another move.");
 		}
-		catch(MoveException e){
-			System.out.println("Detected an illegal move: " + e.toString());
-		}
+		
 		theHuman.unsetSelected();
 		gui.refreshBoard();
 	}

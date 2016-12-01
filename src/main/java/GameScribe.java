@@ -119,7 +119,13 @@ public class GameScribe
 	/* this function helps generateFEN by returning a generated string for field3 of a FEN record */
 	private String generateFENF3()
 	{
-		return game.canCastle(game.getActiveColor());
+		String str;
+		
+		str = game.fenCastleString();
+		if(str.equals("")){
+			str = "-";
+		}
+		return str;
 	}
 	
 	/* this function helps generateFEN by returning a generated string for field4 of a FEN record */

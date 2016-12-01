@@ -48,16 +48,21 @@ public class PlayerTest{
 	public void isInCheckTest2(){
 		game = new Game();
 		game.setup();
-		user = game.getOpponent(COMP);
-		comp = game.getOpponent(USER);
+		user = game.getPlayer(USER);
+		comp = game.getPlayer(COMP);
+		boolean check;
 		
-		//move white king into middle at C4
+		//manually set white king in middle at C4
 		king = user.getKing();
-		game.movePiece(king, king.getPosition(), game.getSquareAt(C,FOUR), false);
-		//move black pawn from d7 to d5 (putting our king in check)
-		attacker = game.getSquareAt(D,SEVEN).getPiece();
-		game.movePiece(attacker, attacker.getPosition(), game.getSquareAt(D,FIVE), false);
-		assertTrue(user.isInCheck());
+		king.setPosition(game.getSquareAt(C,FOUR));
+		game.getSquareAt(C,FOUR).occupySquare(king);
+		//move black pawn forward from d7 to d5 putting king in check
+		check = game.movePiece(game.getSquareAt(D,SEVEN).getPiece(),game.getSquareAt(D,SEVEN), game.getSquareAt(D,FIVE));
+		//move should be legal and piece moved forward
+		assertTrue(check);
+		//and user should be in check
+		assertTrue(game.isThereCheck());
+		assertTrue(game.whoIsInCheck() == user);
 	}
 	
 	//king in check after friendly move (illegal)
@@ -67,21 +72,26 @@ public class PlayerTest{
 		game.setup();
 		user = game.getOpponent(COMP);
 		comp = game.getOpponent(USER);
+		boolean check;
 		
-		//move white king into middle at C4
+		//manually set white king in middle at C4
 		king = user.getKing();
-		game.movePiece(king, king.getPosition(), game.getSquareAt(C,FOUR), false);
-		//move black bishop from c8 to e6 (putting our king in check)
-		attacker = game.getSquareAt(C,EIGHT).getPiece();
-		game.movePiece(attacker, attacker.getPosition(), game.getSquareAt(E,SIX), false);
-		assertTrue(user.isInCheck());
-		//move white pawn from d2 to d5 to block
-		obstruction = game.getSquareAt(D,TWO).getPiece();
-		game.movePiece(obstruction, obstruction.getPosition(), game.getSquareAt(D,FIVE), false);
-		assertFalse(user.isInCheck());
-		//move white pawn from d5, opening white king up to check again (illegal)
-		game.movePiece(obstruction, obstruction.getPosition(), game.getSquareAt(D,SIX), false);
-		assertTrue(user.isInCheck());
+		king.setPosition(game.getSquareAt(C,FOUR));
+		game.getSquareAt(C,FOUR).occupySquare(king);
+		//manually set white pawn in middle at d5
+		obstruction = game.getSquareAt(D, TWO).getPiece();
+		obstruction.getPosition().evictSquare();
+		obstruction.setPosition(game.getSquareAt(D, FIVE));
+		game.getSquareAt(D,FIVE).occupySquare(obstruction);
+		//manually set black bishop at e6
+		attacker = game.getSquareAt(C, EIGHT).getPiece();
+		attacker.getPosition().evictSquare();
+		attacker.setPosition(game.getSquareAt(E,SIX));
+		game.getSquareAt(E,SIX).occupySquare(attacker);
+		//attempt to move white pawn at d5 to d6
+		check = game.movePiece(obstruction,obstruction.getPosition(), game.getSquareAt(D,SIX));
+		//move should be illegal and piece did NOT move forward
+		assertFalse(check);
 	}
 	
 }
