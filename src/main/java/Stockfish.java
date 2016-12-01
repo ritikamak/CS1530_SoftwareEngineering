@@ -150,6 +150,46 @@ public class Stockfish {
 		for (int i = 1; i < 18; i++) {
 			System.out.println(rows[i]);
 		}
+		// for (int i = 1; i < 18; i+=2) {
+		// 	for(int j = 1; i < 18; i+=2){
+		// 		if(rows[i].getCharAt(j) == 'r'){
+		// 			Piece p = new Rook()
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'n'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'b'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'q'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'k'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'p'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'R'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'N'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'B'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'Q'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'K'){
+		//
+		// 		}
+		// 		else if(rows[i].getCharAt(j) == 'P'){
+		//
+		// 		}
+		// 	}
+		// }
 	}
 
 	/**
