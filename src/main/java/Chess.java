@@ -6,7 +6,9 @@ public class Chess
 {
 	public static Game game;
 	public static ChessGUI gui;
-
+	public static Stockfish stockfish; //stockfish enginee
+	public static ArrayList<String> fenList; //list of player moves;
+	public static GameScribe gamescribe;
 	public static void newGame()
 	{
 		game = new Game();
@@ -20,8 +22,12 @@ public class Chess
 
 	public static void main(String[] args)
 	{
+		fenList = new ArrayList<String>();
+		stockfish = new Stockfish();
+		stockfish.startEngine();
 		Kibitzer kib = new Kibitzer();
 		kib.start();
+		gamescribe = new GameScribe(game);
 		game = new Game();
 		game.setup();
 		gui = new ChessGUI(game);
