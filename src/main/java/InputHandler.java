@@ -14,9 +14,6 @@ public class InputHandler
 	static Game game;
 	static Player theHuman; //user
 	static Player theRobot; //comp
-	static boolean robotColor; 
-	static boolean activeColor;
-	static GameScribe gs;
 	
 	/* Public Methods */
 	
@@ -25,12 +22,9 @@ public class InputHandler
 	public static void initInputHandler(Game g, ChessGUI gu)
 	{
 		game = g;
-		gs = new GameScribe(game);
 		gui = gu;
 		theHuman = game.player_user;
 		theRobot = game.player_comp;
-		robotColor = theRobot.getColor();
-		activeColor = game.getActiveColor();
 	}
 	
 	/* handleApplicationInput() */
@@ -71,7 +65,7 @@ public class InputHandler
 					deselectSquare(gi);
 				}
 				//if the square they previously selected contained one of their own pieces we will attempt to move it
-				else if(src.isOccupied() && src.getPiece().belongsTo() == theHuman && activeColor == theHuman.getColor()){
+				else if(src.isOccupied() && src.getPiece().belongsTo() == theHuman){
 					attemptMove(gi, src.getPiece(), src, dest);
 				}
 				//if no piece they controlled was in the src square, then just highlight the new dest square
@@ -86,8 +80,6 @@ public class InputHandler
 		}
 		//comp game input
 		else{
-			src = gi.getSquare("src");
-			attemptMove(gi, src.getPiece(), src, dest);
 		}
 	}
 	
@@ -124,17 +116,11 @@ public class InputHandler
 		boolean success;
 		
 		success = game.movePiece(p, src, dest);
-		theHuman.unsetSelected();
-		gui.refreshBoard();
 		if(!success){
 			ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
+			//System.out.println("That move was determined to be illegal. Try another move.");
 		}
-		else{
-			activeColor = game.getActiveColor();
-			if(gi.getType() == theHuman.getType()){
-				theRobot.getStockfishMove(gs.generateFEN());
-			}
-		}
+		
 		theHuman.unsetSelected();
 		gui.refreshBoard();
 		gui.updateSidePanel(theHuman, theRobot);

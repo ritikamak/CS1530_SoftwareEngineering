@@ -297,7 +297,8 @@ public class Game
 			//we need to let the player and their king know also
 			passivePlayer.toggleCheck();
 			//we will also announce check
-			System.out.println(passivePlayer.getKing().toString() + " is in check!");
+			ErrorMsg.infoBox(passivePlayer.getKing().toString() + " is in check!", "King In Check Position");
+			//System.out.println(passivePlayer.getKing().toString() + " is in check!");
 		}
 		
 		//then finally, update some other game stuff
@@ -480,7 +481,7 @@ public class Game
 			return player_user;
 		}
 	}
-	
+
 	public Player getPlayer(boolean player_type)
 	{
 		if(player_type == USER){
