@@ -9,20 +9,38 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.GroupLayout.*;
 
-public class Kibitzer extends Thread{
+/**
+ * This class implements the automated kibitzer functionality.
+ * Creates a "Threaded Kibitzer"- a text box that provides random advice
+ * and comments to the user. Text box refreshes and random intervals
+ * (anywhere from 1 to 5 second long intervals) for the entire duration 
+ * of the program's run. Provides random chess-related commentary.
+ *
+ * Extends Thread superclass.
+ * Starts a separate thread which updates the text box.
+ *
+ */
+public class Kibitzer extends Thread
+{
+     /* VARIABLES */
      private int wait_time;
      private int message_number;
      private static boolean stop_Kibitzer;
      private boolean legendary;
      private Kibitzer_gui kib_gui;
 
-     public Kibitzer(){
+     /* CONSTRUCTORS */
+     public Kibitzer()
+     {
           kib_gui = new Kibitzer_gui();
           legendary = false;
           stop_Kibitzer = false;
 
      }
-     public void run(){
+
+     /* METHODS */
+     public void run()
+     {
           //random.nextInt(max - min + 1) + min
           Random r = new Random();
 
@@ -42,8 +60,9 @@ public class Kibitzer extends Thread{
      }
 
      //returns a message based on the int that was passed in
-     public String message(int i){
-          switch (i){
+     public String message(int i)
+     {
+          switch (i) {
                case 1:
                     return "He who hesitates has lost.";
                case 2:
@@ -116,24 +135,38 @@ public class Kibitzer extends Thread{
      }
 
      //function to break the loop in kibitzer
-     public static void break_Kibitzer(){
+     public static void break_Kibitzer()
+     {
           stop_Kibitzer = true;
      }
-     public boolean getStopKibitzer(){
+
+     public boolean getStopKibitzer()
+     {
           return stop_Kibitzer;
      }
+
      //test
-     public static void main(String[] args){
+     public static void main(String[] args)
+     {
           Kibitzer kib = new Kibitzer();
           kib.run();
      }
 }
-//creating a separate gui for the kibitzer
-class Kibitzer_gui {
+
+
+/**
+ * Creates a separate GUI for the kibitzer
+ *
+ */
+class Kibitzer_gui 
+{
+     /* VARIABLES */
      private JTextArea textArea;
      private JScrollPane areaScrollPane;
      private JFrame frame;
      private JLabel label;
+
+     /* CONSTRUCTORS */
      public Kibitzer_gui(){
           //Create and set up the window.
           frame = new JFrame("Kibitizer");
@@ -148,9 +181,12 @@ class Kibitzer_gui {
           frame.pack();
           frame.setVisible(true);
      }
+
+     /* METHODS */
      public void setLabel(String s){
           // System.out.println("s = " + s);
           label.setText(s);
           //textArea.append("\n" + s);
      }
+
 }

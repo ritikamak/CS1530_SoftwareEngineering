@@ -1,18 +1,18 @@
 import javax.swing.JOptionPane;
+
 /**
- * Chess Application GUI
- * @author Pete Stamos petestamos@gmail.com
+ * The Chess Application GUI.
+ *
  */
 public class ChessGUI extends javax.swing.JFrame
 {
-
-    /* Constants */
+    /* CONSTANTS */
 	public static final boolean USER = true;
     public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
 
-    /* Variables */
+    /* VARIABLES */
     //the gui needs a game object to update its display as game state changes
     private Game game;
 	// this is a boolean flag true if the board is flipped
@@ -59,13 +59,13 @@ public class ChessGUI extends javax.swing.JFrame
     private javax.swing.JRadioButton playerColorButton;
     private javax.swing.JButton submitColorsButton;
 
-	/* Constructors */
+	/* CONSTRUCTORS */
 	public ChessGUI(Game g)
 	{
 		initGUI(g);
     }
 
-	/* Public Methods */
+	/* PUBLIC METHODS */
 
 	/* display() */
 	//makes the GUI visible
@@ -106,7 +106,17 @@ public class ChessGUI extends javax.swing.JFrame
 		setPieces();
     }
 
-	/* Private Methods */
+	/* updateSidePanel() */
+	//updates messages on side panel of player & computer's taken pieces
+	public static void updateSidePanel(Player theHuman, Player theRobot)
+	{
+		String updatedHumanPanel = ("Player has taken these pieces:\n" + theRobot.printTakenPieces());
+		jTextArea1.setText(updatedHumanPanel);
+		String updatedCompPanel = ("Computer has taken these pieces:\n" + theHuman.printTakenPieces());
+		jTextArea2.setText(updatedCompPanel);
+  	}
+
+	/* PRIVATE METHODS */
 
 	/* initGUI() */
 	//initializes entire GUI
@@ -123,7 +133,6 @@ public class ChessGUI extends javax.swing.JFrame
 		setBoard();
 		setPieces();
     }
-
 
 	/* flipInt() */
 	//this function returns an int representing the "flipped" rank or file position of original int passed
@@ -350,16 +359,6 @@ public class ChessGUI extends javax.swing.JFrame
         jTextArea2.setText(compPanelMsg);
 
 	}
-
-	/* updateSidePanel() */
-	//updates messages on side panel of player & computer's taken pieces
-	public static void updateSidePanel(Player theHuman, Player theRobot)
-	{
-		String updatedHumanPanel = ("Player has taken these pieces:\n" + theRobot.printTakenPieces());
-		jTextArea1.setText(updatedHumanPanel);
-		String updatedCompPanel = ("Computer has taken these pieces:\n" + theHuman.printTakenPieces());
-		jTextArea2.setText(updatedCompPanel);
-  	}
 
 	/* createCompenents() */
 	//initializes most of the gui components
@@ -964,4 +963,5 @@ public class ChessGUI extends javax.swing.JFrame
 
         pack();
 	}
+	
 }

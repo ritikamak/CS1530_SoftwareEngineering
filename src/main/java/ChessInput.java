@@ -1,17 +1,23 @@
+/**
+ * This is a superclass to more specified subsystems of this 
+ * chess application. 
+ * Handles input coming in from both "user" and "computer".
+ *
+ */
 public class ChessInput
 {
-	/* Constants */
+	/* CONSTANTS */
 	public final boolean USER = true;
 	public final boolean COMP = false;
 	
-	/* Variables */
-	boolean type; //input from user or stockfish engine (aka comp)
-	
-	/* Constructor */
-	
-	/* Methods */
+	/* VARIABLES */
+	boolean type; 
+	//input from user or stockfish engine (aka comp)
+		
+	/* METHODS */
 	public boolean getType()
 	{
 		return this.type;
 	}
+
 }

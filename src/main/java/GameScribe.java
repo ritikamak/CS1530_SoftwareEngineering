@@ -6,8 +6,15 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * Implements "Save Game" and "Load Game" functionalities.
+ * Gets user input through terminal regarding filenames to save games to/ 
+ * to load games from; uses FEN records to load saved games correctly.
+ *
+ */
 public class GameScribe
 {
+	/* VARIABLES */
 	Game game;
 	ArrayList<String> currentGame;
 	public final boolean BLACK = true;
@@ -15,12 +22,14 @@ public class GameScribe
 	public final boolean USER = true;
 	public final boolean COMP = false;
 	
+	/* CONSTRUCTORS */
 	public GameScribe(Game g)
 	{
 		game = g;
 		currentGame = new ArrayList<String>();
 	}
 	
+	/* METHODS */
 	public void saveMoveToCurrentGame(String move)
 	{
 		currentGame.add(move);
@@ -101,7 +110,7 @@ public class GameScribe
 		return FENrecord;
 	}
 	
-		/* this function helps generateFEN by returning a generated string for field1 of a FEN record */
+	/* this function helps generateFEN by returning a generated string for field1 of a FEN record */
 	private String generateFENF1()
 	{
 		int file;
@@ -250,4 +259,5 @@ public class GameScribe
 		str = String.valueOf(turn);
 		return str;
 	}
+
 }

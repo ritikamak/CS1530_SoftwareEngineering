@@ -1,16 +1,23 @@
 import java.util.*;
+
+/**
+ * This is a subclass of ChessInput.
+ * It maps the game through String key and Square value.
+ *
+ */
 public class GameInput extends ChessInput
 {
-	/* Variables */
+	/* VARIABLES */
 	TreeMap map;
 	
-	/* Constructor */
+	/* CONSTRUCTORS */
 	public GameInput(boolean type)
 	{
 		this.type = type;
 		map = new TreeMap();
 	}
 	
+	/* GETTERS&SETTERS */
 	//adds a key and a square value to the map 
 	public void mapSquare(String key, Square value)
 	{
@@ -33,4 +40,5 @@ public class GameInput extends ChessInput
 	{
 		return (boolean)this.map.get(key);
 	}
+
 }

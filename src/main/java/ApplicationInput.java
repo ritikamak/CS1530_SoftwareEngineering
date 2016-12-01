@@ -1,7 +1,13 @@
 import java.util.*;
+
+/**
+ * This is a subclass of ChessInput.
+ * It maps the application's instructional input operations it uses.
+ *
+ */
 public class ApplicationInput extends ChessInput
 {
-	/* Constants */
+	/* CONSTANTS */
 	/* Application Options */
 	public enum AppOp {
 		CHANGE_PIECE_DISPLAY_COLOR,
@@ -11,12 +17,11 @@ public class ApplicationInput extends ChessInput
 		LOAD_GAME
 	};
 	
-	/* Variables */
+	/* VARIABLES */
 	AppOp cmd; // the cmd variable represents what application operations this instance of application input should handle
 	TreeMap map; //this map will store any additional instructions the input might communicate
 	
-	/* Constructor */
-	
+	/* CONSTRUCTORS */
 	public ApplicationInput(AppOp cmd)
 	{
 		this.type = type;
@@ -31,8 +36,7 @@ public class ApplicationInput extends ChessInput
 		map = new TreeMap();
 	}
 	
-	/* Methods */
-	
+	/* METHODS */
 	//adds a key and a DisplayColor value to this ApplicationInput's map variable.
 	public void mapDisplayColor(String key, Piece.DisplayColor value)
 	{

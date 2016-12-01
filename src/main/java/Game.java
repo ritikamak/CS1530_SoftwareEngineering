@@ -1,5 +1,10 @@
 import java.util.*;
-/* Each chess game is an object. As you can see below, the chess game object holds two player objects and a board object. */
+
+/**
+ * Each chess game is an object. As you can see below in this class, the
+ * chess game object holds two player objects and a board object.
+ *
+ */
 public class Game
 {
 	/* CONSTANTS */
@@ -38,9 +43,12 @@ public class Game
 	boolean enPassantAvailible;
 	
 	//game turn variables
-	boolean activeColor; //which color moves NEXT? (effectively a turn tracker)
-	int fullmoveClock; //a number which increments after every black move (two turns)
-	int halfmoveClock; //the number of halfmoves (one turn) since the last capture or pawn advance -- starts at 0
+	//which color moves NEXT? (effectively a turn tracker)
+	boolean activeColor; 
+	//a number which increments after every black move (two turns)
+	int fullmoveClock; 
+	//the number of halfmoves (one turn) since the last capture or pawn advance -- starts at 0
+	int halfmoveClock; 
 
 	/* CONSTRUCTORS */
 	/*Default constructor gives player the first move*/
@@ -435,7 +443,7 @@ public class Game
 		activeColor = !activeColor;
 	}
 
-	/* some getters */
+	/* GETTERS */
 	public Square getSquareAt(int file, int rank)
 	{
 		return board.getSquareAt(file, rank);
@@ -490,4 +498,5 @@ public class Game
 			return player_comp;
 		}
 	}
+	
 }

@@ -1,13 +1,25 @@
 import java.util.*;
 import java.io.*;
 import javax.swing.JOptionPane;
+
+/**
+ * The Chess class sets up the program/the GUI initially.
+ * Deals with the implementation of "New Game" and "Load Game"
+ * by communicating with the user through both the GUI and 
+ * the console. 
+ *
+ */
 public class Chess
 {
+	/* CONSTANTS */
+
+	/* VARIABLES */
 	public static Game game;
 	public static ChessGUI gui;
 	public static ArrayList<String> fenList; //list of player moves;
 	public static GameScribe gamescribe;
 
+	/* METHODS */
 	public static void newGame()
 	{
 		game = new Game();
@@ -61,4 +73,5 @@ public class Chess
 		InputHandler.initInputHandler(game, gui, gamescribe);
 		gui.display(true);
 	}
+	
 }

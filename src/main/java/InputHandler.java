@@ -1,15 +1,23 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * Handles input coming in from both "user" and "computer".
+ * Creates objects of ChessGUI, Game, Player's- user and comp, and GameScribe.
+ * Handles actions done by human player and AI player (button clicks, moves 
+ * attempted, etc) and how those chosen actions affect the backend of the chess 
+ * game/implementation of the rules, and how they affect the GUI as a result. 
+ *
+ */
 public class InputHandler
 {
-	/* Constants */
+	/* CONSTANTS */
 	public static final boolean USER = true;
     public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
 
-	/* variables */
+	/* VARIABLES */
 	static ChessGUI gui;
 	static Game game;
 	static Player theHuman; //user
@@ -18,7 +26,7 @@ public class InputHandler
 	static boolean activeColor;
 	static GameScribe gs;
 
-	/* Public Methods */
+	/* PUBLIC METHODS */
 
 	/* initInputHandler() */
 	// this gets the input handler initialized
@@ -108,7 +116,7 @@ public class InputHandler
 		}
 	}
 
-	/* Private Methods */
+	/* PRIVATE METHODS */
 
 	/* highlightNewSquare() */
 	// highlights the most recently selected square
