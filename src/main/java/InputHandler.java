@@ -32,6 +32,17 @@ public class InputHandler
 		robotColor = theRobot.getColor();
 		activeColor = game.getActiveColor();
 	}
+	
+	public static void initInputHandler(Game g, ChessGUI gu, GameScribe gscribe)
+	{
+		game = g;
+		gs = gscribe;
+		gui = gu;
+		theHuman = game.player_user;
+		theRobot = game.player_comp;
+		robotColor = theRobot.getColor();
+		activeColor = game.getActiveColor();
+	}
 
 	/* handleApplicationInput() */
 	// this routes an application input to the proper handler function
@@ -48,12 +59,10 @@ public class InputHandler
 				Chess.newGame();
 				break;
 			case SAVE_GAME:
-				SaveGame savegame = new SaveGame();
-				savegame.save();
+				
 				break;
 			case LOAD_GAME:
-				LoadGame loadgame = new LoadGame();
-				loadgame.load();
+				
 				break;
 			default:
 		}
@@ -130,6 +139,7 @@ public class InputHandler
 	private static void attemptMove(GameInput gi, Piece p, Square src, Square dest)
 	{
 		boolean success;
+		String toSave;
 
 		success = game.movePiece(p, src, dest);
 		theHuman.unsetSelected();
@@ -138,7 +148,9 @@ public class InputHandler
 			ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
 		}
 		else{
-			Chess.fenList.add(gs.generateFEN());
+			toSave = src.toString();
+			toSave = toSave+dest.toString();
+			gs.saveMoveToCurrentGame(toSave);
 			activeColor = game.getActiveColor();
 			if(gi.getType() == theHuman.getType()){
 				theRobot.getStockfishMove(gs.generateFEN());

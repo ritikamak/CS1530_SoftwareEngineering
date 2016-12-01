@@ -1,8 +1,10 @@
 //I see this class as handling the PGN and FEN translation, perhaps even the save and load file reading and writing
+import java.util.*;
 
 public class GameScribe
 {
 	Game game;
+	ArrayList<String> currentGame;
 	public final boolean BLACK = true;
 	public final boolean WHITE = false;
 	public final boolean USER = true;
@@ -11,9 +13,42 @@ public class GameScribe
 	public GameScribe(Game g)
 	{
 		game = g;
+		currentGame = new ArrayList<String>();
 	}
 	
-	/* this function helps generateFEN by returning a generated string for field1 of a FEN record */
+	public void saveMoveToCurrentGame(String move)
+	{
+		currentGame.add(move);
+	}
+	
+	public String generateFEN()
+	{
+		/*A FEN record contains six fields sperated by a space */
+		String FENrecord;
+		
+		/*field one is piece placement, which lists pieces starting with rank 8 and moving left to right*/
+		String piecePlacement = generateFENF1() + " ";
+		
+		/*field two is the active color, 'w' means white moves NEXT, 'b' means black moves NEXT */
+		String activeColor = generateFENF2() + " ";
+		
+		/*field three is castling availablility.*/
+		String castlingAvailibility =  generateFENF3()+ " ";
+		
+		/*en passant target square in algebraic notation*/
+		String enPassant = generateFENF4() + " ";
+		
+		/* halfmove clock - number of half moves since the last capture or pawn advance */
+		String halfClock = generateFENF5() + " ";
+		
+		/* fullmove clock*/
+		String fullClock = generateFENF6();
+		
+		FENrecord = piecePlacement + activeColor + castlingAvailibility + enPassant + halfClock + fullClock;
+		return FENrecord;
+	}
+	
+		/* this function helps generateFEN by returning a generated string for field1 of a FEN record */
 	private String generateFENF1()
 	{
 		int file;
@@ -161,33 +196,5 @@ public class GameScribe
 		turn = game.getFullmoveClock();
 		str = String.valueOf(turn);
 		return str;
-	}
-	
-	
-	public String generateFEN()
-	{
-		/*A FEN record contains six fields sperated by a space */
-		String FENrecord;
-		
-		/*field one is piece placement, which lists pieces starting with rank 8 and moving left to right*/
-		String piecePlacement = generateFENF1() + " ";
-		
-		/*field two is the active color, 'w' means white moves NEXT, 'b' means black moves NEXT */
-		String activeColor = generateFENF2() + " ";
-		
-		/*field three is castling availablility.*/
-		String castlingAvailibility =  generateFENF3()+ " ";
-		
-		/*en passant target square in algebraic notation*/
-		String enPassant = generateFENF4() + " ";
-		
-		/* halfmove clock - number of half moves since the last capture or pawn advance */
-		String halfClock = generateFENF5() + " ";
-		
-		/* fullmove clock*/
-		String fullClock = generateFENF6();
-		
-		FENrecord = piecePlacement + activeColor + castlingAvailibility + enPassant + halfClock + fullClock;
-		return FENrecord;
 	}
 }
