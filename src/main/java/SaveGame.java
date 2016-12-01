@@ -1,4 +1,5 @@
-import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.util.Scanner;
 public class SaveGame{
@@ -11,12 +12,12 @@ public class SaveGame{
                System.out.println("Please enter a name for the output file: ");
                String f = k.next();
                f = f + ".pgn";
-               PrintWriter printWriter = new PrintWriter (f);
+               //PrintWriter printWriter = new PrintWriter (f);
+               BufferedWriter writer = new BufferedWriter(new FileWriter(f));
                for(String s: Chess.fenList){
-                    printWriter.println(s);
+                    writer.write(s);
                }
-
-               printWriter.close ();
+               writer.close ();
                k.close();
           }
           catch (Exception e){

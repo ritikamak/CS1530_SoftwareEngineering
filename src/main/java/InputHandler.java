@@ -52,8 +52,8 @@ public class InputHandler
 				savegame.save();
 				break;
 			case LOAD_GAME:
-				// LoadGame loadgame = new LoadGame();
-				// loadgame.load();
+				LoadGame loadgame = new LoadGame();
+				loadgame.load();
 				break;
 			default:
 		}
