@@ -1,17 +1,23 @@
 import java.io.PrintWriter;
 import java.io.File;
-public class SaveGame extends Thread{
+import java.util.Scanner;
+public class SaveGame{
      public SaveGame(){
 
      }
-     public void run(){
+     public void save(){
           try{
-               System.out.println("here");
-               PrintWriter printWriter = new PrintWriter ("save_game.pgn");
+               Scanner k = new Scanner(System.in);
+               System.out.println("Please enter a name for the output file: ");
+               String f = k.next();
+               f = f + ".pgn";
+               PrintWriter printWriter = new PrintWriter (f);
                for(String s: Chess.fenList){
                     printWriter.println(s);
                }
+
                printWriter.close ();
+               k.close();
           }
           catch (Exception e){
 

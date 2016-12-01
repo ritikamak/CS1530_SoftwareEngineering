@@ -8,18 +8,18 @@ public class InputHandler
     public static final boolean COMP = true;
     public static final boolean BLACK = true;
     public static final boolean WHITE = false;
-	
+
 	/* variables */
 	static ChessGUI gui;
 	static Game game;
 	static Player theHuman; //user
 	static Player theRobot; //comp
-	static boolean robotColor; 
+	static boolean robotColor;
 	static boolean activeColor;
 	static GameScribe gs;
-	
+
 	/* Public Methods */
-	
+
 	/* initInputHandler() */
 	// this gets the input handler initialized
 	public static void initInputHandler(Game g, ChessGUI gu)
@@ -32,7 +32,7 @@ public class InputHandler
 		robotColor = theRobot.getColor();
 		activeColor = game.getActiveColor();
 	}
-	
+
 	/* handleApplicationInput() */
 	// this routes an application input to the proper handler function
 	public static void handleApplicationInput(ApplicationInput ai)
@@ -47,10 +47,18 @@ public class InputHandler
 			case NEW_GAME:
 				Chess.newGame();
 				break;
+			case SAVE_GAME:
+				SaveGame savegame = new SaveGame();
+				savegame.save();
+				break;
+			case LOAD_GAME:
+				// LoadGame loadgame = new LoadGame();
+				// loadgame.load();
+				break;
 			default:
 		}
 	}
-	
+
 	/* handleGameInput() */
 	// this routes a game input to the proper handler function
 	public static void handleGameInput(GameInput gi)
@@ -58,7 +66,7 @@ public class InputHandler
 		boolean type;
 		Square src;
 		Square dest;
-		
+
 		type = gi.getType();
 		dest = gi.getSquare("dest");
 		//user game input
@@ -90,39 +98,39 @@ public class InputHandler
 			attemptMove(gi, src.getPiece(), src, dest);
 		}
 	}
-	
+
 	/* Private Methods */
-	
+
 	/* highlightNewSquare() */
 	// highlights the most recently selected square
 	private static void highlightNewSquare(GameInput gi)
 	{
 		Square dest;
 		Square src;
-		
+
 		dest = gi.getSquare("dest");
 		theHuman.setSelected(dest);
 		gui.refreshBoard();
 	}
-	
+
 	/* deselectSquare() */
 	// deselects currently selected square
 	private static void deselectSquare(GameInput gi)
 	{
 		Square dest;
 		Square src;
-		
+
 		dest = gi.getSquare("dest");
 		theHuman.unsetSelected();
 		gui.refreshBoard();
 	}
-	
+
 	/* attemptMove() */
 	// attempts to move piece
 	private static void attemptMove(GameInput gi, Piece p, Square src, Square dest)
 	{
 		boolean success;
-		
+
 		success = game.movePiece(p, src, dest);
 		theHuman.unsetSelected();
 		gui.refreshBoard();
@@ -130,6 +138,7 @@ public class InputHandler
 			ErrorMsg.infoBox("That move was determined to be illegal. Try another move.", "Illegal Move");
 		}
 		else{
+			Chess.fenList.add(gs.generateFEN());
 			activeColor = game.getActiveColor();
 			if(gi.getType() == theHuman.getType()){
 				theRobot.getStockfishMove(gs.generateFEN());
@@ -139,7 +148,7 @@ public class InputHandler
 		gui.refreshBoard();
 		gui.updateSidePanel(theHuman, theRobot);
 	}
-	
+
 	/* changePieceDisplayColor() */
 	//this function handles piece color change
 	private static void changePieceDisplayColor(ApplicationInput ai)
@@ -160,13 +169,13 @@ public class InputHandler
 		//refresh gui
 		gui.refreshPieces();
 	}
-	
+
 	/* flipTheBoard() */
-	// this function flips the board, it also sounds like "flipthebird" 
+	// this function flips the board, it also sounds like "flipthebird"
 	private static void flipTheBoard(ApplicationInput ai)
 	{
 		//I'm the mother-flippin' Rhyme-nocerous! I'm the hiphop-oppotamous my lyrics are bottomless...
 		gui.flipBoard();
 	}
-	
+
 }

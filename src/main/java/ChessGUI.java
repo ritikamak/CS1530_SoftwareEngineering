@@ -470,11 +470,25 @@ public class ChessGUI extends javax.swing.JFrame
         saveGameButton.setText("Save Game");
         saveGameButton.setBorderPainted(true);
         saveGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        saveGameButton.setRequestFocusEnabled(false);
+       saveGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 ApplicationInput ai = new ApplicationInput(ApplicationInput.AppOp.SAVE_GAME);
+               InputHandler.handleApplicationInput(ai);
+            }
+        });
 
 
         loadGameButton.setText("Load Game");
         loadGameButton.setBorderPainted(true);
         loadGameButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        loadGameButton.setRequestFocusEnabled(false);
+       loadGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 ApplicationInput ai = new ApplicationInput(ApplicationInput.AppOp.LOAD_GAME);
+              InputHandler.handleApplicationInput(ai);
+            }
+        });
 
 		durationText.setText("Duration: 00:00");
 
