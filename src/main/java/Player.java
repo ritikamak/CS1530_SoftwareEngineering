@@ -39,6 +39,7 @@ public class Player
 	boolean inCheck; //a player can be in check
 	Game game; //a player is involved in a current game
 	King myKing; // the player's king(for check functions)
+	Stockfish compootaBrain; //this is the compoota brain for comp to generate moves
 
 	/* CONSTRUCTORS */
 	public Player(boolean t, boolean c)
@@ -196,6 +197,22 @@ public class Player
 		return pieces;
 	}
 
+	//starts stockfish, returns true/false if engine started
+	public boolean startStockfish()
+	{
+		boolean robotOverlordConfirmed;
+		
+		compootaBrain = new Stockfish();
+		robotOverlordConfirmed = compootaBrain.startEngine();
+		return robotOverlordConfirmed;
+	}
+	
+	//stops stockfish
+	public void stopStockfish()
+	{
+		compootaBrain.stopEngine();
+	}
+	
 	public void takePiece(Piece captured)
 	{
 		pieces.remove(captured);
