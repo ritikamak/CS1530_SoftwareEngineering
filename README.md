@@ -1,8 +1,8 @@
 # chess-application
-A chess app developed using Stockfish and Gradle.
+A chess app programmed in Java. Designed using Model-View-Controller design pattern. Developed using Stockfish and Swing. Deployed and tested using Gradle and JUnit.
 
 ## Features:
-* Ability to change color of pieces
+* Ability to change piece colors
 * Ability to flip the board
 * Automated kibitzer
 * Side panel showing taken pieces
