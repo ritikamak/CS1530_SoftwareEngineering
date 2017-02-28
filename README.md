@@ -10,5 +10,5 @@ A chess app developed using Stockfish and Gradle.
 * Notifications for Check
 * Notifications for Checkmate
 * New game
-* Save game
-* Load game
+* Save game -- PGN format
+* Load game -- PGN format
